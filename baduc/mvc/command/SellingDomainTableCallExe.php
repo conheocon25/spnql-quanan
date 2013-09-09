@@ -36,10 +36,7 @@
 			if (!isset($Count)){
 				$flag = true;
 				$Count = 1;
-				if ($Table->getType()==1)
-					$Price = $Course->getPrice2();
-				else
-					$Price = $Course->getPrice1();
+				$Price = $Course->getPrice1();
 			}
 						
 			//Nếu chưa có Session thì tạo

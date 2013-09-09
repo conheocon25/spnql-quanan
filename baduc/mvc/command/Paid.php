@@ -1,32 +1,36 @@
-<?php		
+<?php
 	namespace MVC\Command;	
 	class Paid extends Command {
-		function doExecute( \MVC\Controller\Request $request ){
-			require_once("mvc/base/domain/HelperFactory.php");
+		function doExecute( \MVC\Controller\Request $request ) {
+			require_once("mvc/base/domain/HelperFactory.php");			
 			//-------------------------------------------------------------
 			//THAM SỐ TOÀN CỤC
-			//-------------------------------------------------------------			
+			//-------------------------------------------------------------
 			$Session = \MVC\Base\SessionRegistry::instance();
 			
 			//-------------------------------------------------------------
+			//THAM SỐ GỬI ĐẾN
+			//-------------------------------------------------------------
+						
+			//-------------------------------------------------------------
 			//MAPPER DỮ LIỆU
 			//-------------------------------------------------------------
-			$mTerm = new \MVC\Mapper\Term();			
-			$mPaidGeneral = new \MVC\Mapper\PaidGeneral();
-									
+						
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------						
-			$Terms = $mTerm->findAll();
-			$Terms1 = $mTerm->findAll();
-						
+			$Title = "KHOẢN CHI";
+			$Navigation = array(
+				array("ỨNG DỤNG", "/app")				
+			);
+			
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
-			//-------------------------------------------------------------						
-			$request->setObject('Terms', $Terms);
-			$request->setObject('Terms1', $Terms1);
+			//-------------------------------------------------------------																		
+			$request->setProperty('Title', $Title );
+			$request->setObject("Navigation", $Navigation);
 			
-			$request->setProperty('URLHeader', "/app");
+			return self::statuses('CMD_DEFAULT');
 		}
 	}
 ?>

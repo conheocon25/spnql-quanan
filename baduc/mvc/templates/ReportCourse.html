@@ -2,7 +2,7 @@
 	<BR/>
 	<table width="100%" border="0" cellpadding="2" >
 		<tr>			
-			<td width="50%" align="left"><B>NHÀ HÀNG BA ĐỨC</B></td>
+			<td width="50%" align="left"><B>KARAOKE BA ĐỨC</B></td>
 			<td width="50%" align="right"><B tal:content="Title"/></td>
 		</tr>
 		<tr>			
@@ -27,7 +27,7 @@
 				<th width="15%" align="right"><B>SỐ LƯỢNG</B></th>
 				<th width="15%" align="right"><B>PHẦN TRĂM</B></th>
 			</tr>
-			<tr tal:repeat="Course Category/getCourses">
+			<tr tal:repeat="Course Category/getCourseAll">
 				<td align="center" tal:content="repeat/Course/number" />
 				<td align="left" tal:content="Course/getName" />
 				<td align="left" tal:content="Course/getUnit" />
