@@ -20,13 +20,18 @@
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------										
-			$Title = "THIẾT LẬP / KHOẢN CHI / THÊM MỚI";
+			$Title = "THÊM MỚI";
+			$Navigation = array(
+				array("ỨNG DỤNG", "/app"),
+				array("THIẾT LẬP", "/setting"),
+				array("DANH MỤC CHI", "/setting/termpaid")
+			);
 						
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------						
 			$request->setProperty('Title', $Title);
-			$request->setProperty('URLHeader', '/setting#term');
+			$request->setObject('Navigation', $Navigation);
 		}
 	}
 ?>

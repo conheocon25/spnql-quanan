@@ -1,43 +1,49 @@
-<!DOCTYPE html> 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
-		<span metal:use-macro="macros.xhtml/IncludeCSS_Mobile"/>
-		<span metal:use-macro="macros.xhtml/IncludeJS_Mobile"/>		
-		<script type="text/javascript" language="javascript" src="/mvc/templates/script/user/Paid.js"/>
+		<span metal:use-macro="mAdmin.xhtml/IncludeMETA"/>
+		<span metal:use-macro="mAdmin.xhtml/IncludeCSS"/>		
+		<span metal:use-macro="mAdmin.xhtml/IncludeJS"/>
 	</head>
-<body>		
-	<div data-role="page" class="type-interior" tal:repeat="Term Terms" tal:attributes="id Term/getIdPrint">
-		<span metal:use-macro="macros.xhtml/header"/>
-		<div data-role="content">
-			<div class="content-primary">
-				<ul data-role="listview" data-theme="c" data-dividertheme="b" data-filter="true" data-filter-placeholder="gõ vào ngày hoặc giá trị">
-					<li data-role="list-divider" tal:content="Term/getName"/>					
-					<li tal:repeat="Paid Term/getPaids">
-						<a data-ajax="false" tal:attributes="href Paid/getURLUpdLoad">
-							<h3><span tal:content="repeat/Paid/number"/>. <span tal:content="Paid/getDatePrint"/></h3>
-							<p><span tal:content="Paid/getNote" /></p>
-							<p class="ui-li-aside"><strong tal:content="Paid/getValuePrint"></strong></p>
-						</a>
-						<a tal:attributes="href Paid/getURLDelLoad" data-theme='c' data-icon="delete"/>
-					</li>
-					<li>
-						<a data-corners="false" data-ajax="false" tal:attributes="href Term/getURLPaidInsLoad" data-theme="c">Thêm mới ...</a>
-						<a data-ajax="false" tal:attributes="href Term/getURLPaidInsLoad" data-theme='c' data-icon="plus"/>
-					</li>					
-				</ul>
+	<body>
+		<div class="container-fluid">
+			<span metal:use-macro="mAdmin.xhtml/Header"/>
+			<div class="row-fluid">
+				<div class="row-fluid">
+					<div class="span3">
+						<div class="menu">
+							<ul class="nav nav-list" tal:condition="php: @\MVC\Base\SessionRegistry::instance()->getCurrentUser()->isAdmin()">
+								<li class="nav-header">KHOẢN CHI</li>
+								<li>
+									<a tal:attributes="href '/paid/general'">
+										<i class="icon-dollar" />
+										CHUNG
+									</a>
+								</li>
+								<li>
+									<a tal:attributes="href '/paid/payroll'">
+										<i class="icon-dollar" />
+										LƯƠNG
+									</a>
+								</li>								
+								<li>
+									<a tal:attributes="href '/paid/supplier'">
+										<i class="icon-dollar" />
+										NHÀ CUNG CẤP
+									</a>
+								</li>
+							</ul>							
+						</div>
+					</div>
+					<div class="span9">
+						<div class="content">
+							<span metal:use-macro="mAdmin.xhtml/LocationBar"/>
+							<center><img src="/data/images/bg_manager.jpg" width="50%" style="opacity:.25;"/></center>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="content-secondary">
-				<ul data-role="listview" data-theme="c" data-dividertheme="d">
-					<li data-role="list-divider">CHI PHÍ</li>
-					<li tal:repeat="Term1 Terms1" tal:attributes="data-theme php: Term1->getId()==Term->getId() ? 'a':'c'">
-						<a data-transition="none" tal:attributes="href php:'#' . Term1->getIdPrint()">
-							<span tal:content="repeat/Term1/number" />. <span tal:content="Term1/getName" />
-						</a>
-					</li>
-				</ul>
-			</div>
+			<span metal:use-macro="mAdmin.xhtml/Footer"/>
 		</div>
-		<span metal:use-macro="macros.xhtml/footer"/>
-	</div>		
-</body>
+	</body>
 </html>

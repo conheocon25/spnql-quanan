@@ -2,7 +2,7 @@
 	<BR/>
 	<table width="100%" border="0" cellpadding="2" >
 		<tr>			
-			<td width="50%" align="left"><B>NHÀ HÀNG BA ĐỨC</B></td>
+			<td width="50%" align="left"><B>KARAOKE BA ĐỨC</B></td>
 			<td width="50%" align="right"><B tal:content="Title"/></td>
 		</tr>
 		<tr>			
@@ -17,26 +17,25 @@
 	<BR />
 	<table width="100%" border="1" cellpadding="2" >
 		<tr>			
-			<th width="15%" align="right"><B>NGÀY</B></th>
-			<th width="55%" align="left"><B>GHI CHÚ</B></th>
-			<th width="30%" align="right"><B>TỔNG TIỀN</B></th>
+			<th width="10%" align="right"><B>NGÀY</B></th>
+			<th width="20%" align="left"><B>MỤC</B></th>
+			<th width="50%" align="left"><B>DIỄN GIẢI</B></th>
+			<th width="20%" align="right"><B>TỔNG TIỀN</B></th>
 		</tr>
-		<tr tal:repeat="Paid php:Tracking->getPaidAll( Term->getId() )">
+		<tr tal:repeat="Paid PaidAll">
 			<td align="right" tal:content="Paid/getDatePrint" />
+			<td align="left" tal:content="Paid/getTerm/getName" />
 			<td align="left" tal:content="Paid/getNote" />
 			<td align="right" tal:content="Paid/getValuePrint" />
 		</tr>
 		<tr>
-			<th align="right" colspan="2"><H3>TỔNG CỘNG</H3></th>
+			<th align="right" colspan="3"><H3>TỔNG CỘNG</H3></th>
 			<th align="right">
-				<H3 tal:content="php:Tracking->getPaidAllValuePrint( Term->getId() )" />
+				<H3 tal:content="Sum" />
 			</th>
 		</tr>
 	</table>					
-	<P align="right">
-		(<span tal:content="php:Tracking->getPaidAllValueStrPrint( Term->getId() )" />)
-	</P>
-	
+		
 	<table width="100%" border="0" cellpadding="2" >
 		<tr>
 			<td width="35%" align="center"></td>

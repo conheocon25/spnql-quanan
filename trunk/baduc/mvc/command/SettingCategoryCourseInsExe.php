@@ -35,10 +35,10 @@
 					$Name,
 					$ShortName,
 					$Unit,
-					$Price1==null?0:$Price1,
-					$Price2==null?0:$Price2,
-					$Price3==null?0:$Price3,
-					$Price4==null?0:$Price4,
+					$Price1,
+					0,
+					0,
+					0,
 					""
 			);
 			$mCourse->Insert($Course);
