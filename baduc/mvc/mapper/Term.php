@@ -7,7 +7,7 @@ class Term extends Mapper implements \MVC\Domain\TermFinder{
     function __construct() {
         parent::__construct();
 				
-		$tblTerm = "r3d_term";
+		$tblTerm = "baduc_term";
 		
 		$selectAllStmt = sprintf("select * from %s ORDER BY name", $tblTerm);
 		$selectStmt = sprintf("select *  from %s where id=?", $tblTerm);

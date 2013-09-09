@@ -28,7 +28,7 @@ class Ticket extends Mapper implements \MVC\Domain\UserFinder {
         * (2) format định dạng các Stmt có sử dụng tiền tố
         * (3) prepare các Stmt 
         */		
-		$tblTicket = "r3d_ticket";
+		$tblTicket = "baduc_ticket";
 						
 		$selectAllStmt = sprintf("select * from %s", $tblTicket);
 		$selectStmt = sprintf("select * from %s where id=?", $tblTicket);
