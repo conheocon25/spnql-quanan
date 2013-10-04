@@ -36,9 +36,8 @@
 			$CollectAll = $mCollectGeneral->findByPage(array($IdTerm, $Page, $Config->getValue() ));
 			$PN = new \MVC\Domain\PageNavigation( $Term->getCollectAll()->count(), $Config->getValue(), $Term->getURLCollect());
 			
-			$Title = "KHOẢN CHI";
+			$Title = "KHOẢN THU";
 			$Navigation = array(
-				array("ỨNG DỤNG", "/app"),
 				array("THU / CHI", "/money"),				
 			);
 			

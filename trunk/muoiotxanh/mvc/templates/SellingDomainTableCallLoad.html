@@ -3,8 +3,7 @@
 	<head>
 		<div metal:use-macro="mAdmin.xhtml/IncludeMETA"/>
 		<div metal:use-macro="mAdmin.xhtml/IncludeCSS"/>
-	</head>
-	
+	</head>	
 	<body data-menu-position="closed">
 		<div metal:use-macro="mAdmin.xhtml/Header"/>
 		<div class="menu">
@@ -19,45 +18,33 @@
 		<div id="content">
 			<div metal:use-macro="mAdmin.xhtml/ContentHeader"/>
 			<div metal:use-macro="mAdmin.xhtml/LocationBar"/>
-			<div class="container-fluid">
+			<div class="container-fluid">							
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-12">
 						<div class="widget-box">
-							<div class="widget-title">
-								<span class="icon"><i class="icon-table"/></span>
-								<h5 tal:content="Title"/> 
-							</div>
-							<div class="widget-content nopadding">
-								<div role="grid" class="dataTables_wrapper">
-									<table class="Table table table-striped table-hover" tal:attributes="alt URLCall">
-										<thead>
-											<tr>
-												<th width="32">STT</th>
-												<th><div class="text-left">TÊN</div></th>
-												<th width="60">TĂNG</th>
-												<th width="60"></th>
-												<th width="60">GIẢM</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr class="Course" tal:repeat="Course Category/getCourseAll" tal:attributes="alt Course/getId">
-												<td width="32">
-													<div tal:content="repeat/Course/number" />
-												</td>
-												<td>											
-													<span tal:content="Course/getName"/>
-												</td>										
-												<td>
-													<button class="Plus btn" tal:attributes="alt Course/getId">Tăng</button>
-												</td>
-												<td><span class="count" tal:content="string:0"/></td>
-												<td>											
-													<button class="Minus btn" tal:attributes="alt Course/getId">Giảm</button>
-												</td>
-											</tr>									
-										</tbody>
-									</table>
-								</div>  
+							<div class="widget-content nopadding">								
+								<table class="Table table table-bordered table-striped table-hover" tal:attributes="alt URLCall">
+									<thead>
+										<tr>
+											<th width="32">STT</th>
+											<th><div class="text-left">TÊN</div></th>
+											<th width="60">TĂNG</th>
+											<th width="60"></th>
+											<th width="60">GIẢM</th>
+										</tr>
+									</thead>
+									<tbody role="alert" aria-live="polite" aria-relevant="all">
+										<tr class="Course gradeA odd" tal:repeat="Course Category/getCourseAll" tal:attributes="alt Course/getId">
+											<td width="32">
+												<div class="text-center" tal:content="repeat/Course/number" />
+											</td>
+											<td><span tal:content="Course/getName"/></td>
+											<td><button class="Plus" tal:attributes="alt Course/getId">Tăng</button></td>
+											<td><div class="count text-left" tal:content="string:0"/></td>
+											<td><button class="Minus" tal:attributes="alt Course/getId">Giảm</button></td>
+										</tr>									
+									</tbody>
+								</table>																
 							</div>
 						</div>
 					</div>
@@ -65,9 +52,9 @@
 			</div>
 		</div>
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
-		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
+		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>		
 		<script type="text/javascript">
-			/*<![CDATA[*/			
+			/*<![CDATA[*/
 			$('.Plus').click(function(){
 				var URL = $(".Table").attr('alt');
 				var IdCourse = $(this).attr('alt');
@@ -86,7 +73,7 @@
 				});		
 				$(this.parentNode.parentNode.childNodes[7]).html( Count);
 				
-			});	
+			});
 						
 			$('.Minus').click(function(){
 				var URL = $(".Table").attr('alt');
@@ -107,6 +94,6 @@
 				$(this.parentNode.parentNode.childNodes[7]).html( Count);
 			});	
 			/*]]>*/
-		</script>
+		</script>		
 	</body>
 </html>

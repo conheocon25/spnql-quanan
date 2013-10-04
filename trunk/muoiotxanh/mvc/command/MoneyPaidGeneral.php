@@ -38,7 +38,6 @@
 			
 			$Title = "KHOẢN CHI";
 			$Navigation = array(
-				array("ỨNG DỤNG", "/app"),
 				array("THU / CHI", "/money")			
 			);
 			
