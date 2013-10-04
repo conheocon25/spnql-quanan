@@ -20,7 +20,7 @@ abstract class Mapper implements \MVC\Domain\Finder {
             
 			$dsn = "mysql:host=localhost;";
 			$dbname = "dbname=spngroup_quanan_muoiotxanh";			
-			$user = "spngroup_userdb";
+			$user = "spngroup_userdb";			         
 			$pass = "admin068198";
 						
             if ( is_null( $dsn ) ) {
