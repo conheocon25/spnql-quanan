@@ -11,6 +11,5 @@
 	$mUser 				= new \MVC\Mapper\User();
 	$mConfig 			= new \MVC\Mapper\Config();
 	$mTermPaid 			= new \MVC\Mapper\TermPaid();
-	$mTermCollect 		= new \MVC\Mapper\TermCollect();
-	$$mSupplier 		= new \MVC\Mapper\Supplier();
+	$mTermCollect 		= new \MVC\Mapper\TermCollect();	
 ?>

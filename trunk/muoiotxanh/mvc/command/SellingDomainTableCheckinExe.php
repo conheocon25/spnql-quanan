@@ -27,8 +27,8 @@
 									
 			//Nếu chưa có Session thì tạo
 			$SessionTable = $Table->getSessionActive();	
-			$IdUser = $Session->getCurrentIdUser();			
-			if (!isset($SessionTable)){
+			$IdUser = $Session->getCurrentIdUser();						
+			if (!isset($SessionTable)){				
 				$dSession = new \MVC\Domain\Session(
 					null,					//Id
 					$IdTable,				//IdTable
