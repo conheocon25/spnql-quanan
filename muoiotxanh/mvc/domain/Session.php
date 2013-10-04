@@ -19,7 +19,7 @@ class Session extends Object{
 	private $Surtax;
 	private $Payment;
 	private $Value;
-	
+			
 	private $Table;
 	private $Employee;
 
@@ -139,49 +139,94 @@ class Session extends Object{
 	}
 	
 	//Ghi chú
-	function getNote( ) {return $this->Note;}	
-	function setNote( $Note ) {$this->Note = $Note;$this->markDirty();}
+	function getNote( ) {
+        return $this->Note;
+    }
+	
+	function setNote( $Note ) {
+        $this->Note = $Note;
+        $this->markDirty();
+    }
 	
 	//Giảm giá
-	function setDiscountValue( $DiscountValue ) {$this->DiscountValue = $DiscountValue;$this->markDirty();}
-	function getDiscountValue( ){return $this->DiscountValue;}
-	function getDiscountValuePrint(){$num = new Number($this->getDiscountValue());return $num->formatCurrency()." đ";}
+	function setDiscountValue( $DiscountValue ) {
+        $this->DiscountValue = $DiscountValue;
+        $this->markDirty();
+    }
+	function getDiscountValue( ){
+        return $this->DiscountValue;
+    }
+	function getDiscountValuePrint(){
+		$num = new Number($this->getDiscountValue());
+		return $num->formatCurrency()." đ";
+	}
 	
-	function setDiscountPercent( $DiscountPercent ){
+	function setDiscountPercent( $DiscountPercent ) {
         $this->DiscountPercent = $DiscountPercent;
         $this->markDirty();
     }
-	function getDiscountPercent( ){return $this->DiscountPercent;}
+	function getDiscountPercent( ){
+        return $this->DiscountPercent;
+    }
 	function getDiscountPercentPrint(){
 		$num = new Number($this->getDiscountPercent());
 		return $num->formatCurrency()." %";
 	}
-	function getDiscountPercentValue( ){
-		return (int)((($this->DiscountPercent*$this->getPreValue())/100)/1000)*1000;
-	}
-	function getDiscountPercentValuePrint(){
-		$num = new Number($this->getDiscountPercentValue());
-		return $num->formatCurrency()." đ";
-	}
 	
 	//Phụ thu
-	function setSurtax( $Surtax ) {$this->Surtax = $Surtax;$this->markDirty();}
-	function getSurtax( ) {return $this->Surtax;}
-	function getSurtaxPrint(){$num = new Number($this->getSurtax());return $num->formatCurrency()." đ";}
+	function setSurtax( $Surtax ) {
+        $this->Surtax = $Surtax;
+        $this->markDirty();
+    }
+	function getSurtax( ) {
+        return $this->Surtax;
+    }
+	function getSurtaxPrint(){		
+		$num = new Number($this->getSurtax());
+		return $num->formatCurrency()." đ";
+	}
 		
 	//Tình trạng
-	function getStatus( ) {return $this->Status;}	
-	function setStatus( $Status ) {$this->Status = $Status;$this->markDirty();}
+	function getStatus( ) {
+        return $this->Status;
+    }
+	
+	function setStatus( $Status ) {
+        $this->Status = $Status;
+        $this->markDirty();
+    }
 			
-	function getStatusPrint(){if ( isset($this->DateTime) )return "Đang có khách";else return "Chưa có khách";}
+	function getStatusPrint(){
+        if ( isset($this->DateTime) )
+			return "Đang có khách";
+		else
+			return "Chưa có khách";
+    }
 	
 	//Tiền khách trả
-	function getPayment( ) {return $this->Payment;}	
-	function setPayment( $Payment ) {$this->Payment = $Payment;$this->markDirty();}	
-	function getPaymentPrint( ){$N = new \MVC\Library\Number($this->Payment);return $N->formatCurrency()." đ";}
+	function getPayment( ) {
+        return $this->Payment;
+    }
 	
-	function getRemain( ){$Remain = $this->getPayment() - $this->getValue(); return $Remain;}	
-	function getRemainPrint( ){$N = new \MVC\Library\Number( $this->getRemain() ); return $N->formatCurrency()." đ";}
+	function setPayment( $Payment ) {
+        $this->Payment = $Payment;
+        $this->markDirty();
+    }
+	
+	function getPaymentPrint( ){
+		$N = new \MVC\Library\Number($this->Payment);
+        return $N->formatCurrency()." đ";
+    }
+	
+	function getRemain( ){
+		$Remain = $this->getPayment() - $this->getValue();
+		return $Remain;
+    }
+	
+	function getRemainPrint( ){
+		$N = new \MVC\Library\Number( $this->getRemain() );
+        return $N->formatCurrency()." đ";
+	}
 	
 	//Tính ra tiền giờ làm tròn 15 phút
 	function getHours(){	
@@ -190,12 +235,57 @@ class Session extends Object{
 		$M = round(($diff - $H*3600)/60,0);
 		return $H." giờ ".$M." phút";		
 	}
-	function getValueHours(){			
-		return 0;
+	function getValueHours(){
+		//Lấy thông số Config
+		$mConfig = new \MVC\Mapper\Config();
+			
+		$IsVIP = $this->getTable()->getType();
+		$Value = 0;
+				
+		if ($IsVIP==1){			
+			$Price1 = $mConfig->findByName('PRICE_HOUR_VIP_1')->getValue();
+			$Price2 = $mConfig->findByName('PRICE_HOUR_VIP_2')->getValue();									
+		}else{
+			$Price1 = $mConfig->findByName('PRICE_HOUR_NORMAL_1')->getValue();
+			$Price2 = $mConfig->findByName('PRICE_HOUR_NORMAL_2')->getValue();			
+		}
+				
+		$HDS = \date("H", strtotime($this->getDateTime())) + \date("i", strtotime($this->getDateTime()))/60;
+		$HD = (strtotime($this->getDateTimeEnd()) - strtotime($this->getDateTime()))/3600;
+		$HDE = $HDS + $HD;
+		//echo $HDS;
+		if ($HDS >=7){
+			//echo "TH1";
+			//Giá ban ngày
+			if ($HDE <19){
+				$Value = ($HDE - $HDS)*$Price1;
+			}else{				
+				if ($HDS>=19){
+					//echo "TH1.1:".$HDS." - ".$HDE.":";
+					$Value = ($HDE - $HDS)*$Price2;
+				}else{					
+					$Value = ($HDE - 19)*$Price2;
+					$Value += (19 - $HDS)*$Price1;
+				}
+			}
+		}else{
+			//echo "TH2";
+			//Vào chơi từ lúc qua ngày mới
+			if ($HDE <7){
+				//echo "TH21 ".($HDE - $HDS);
+				$Value = ($HDE - $HDS)*$Price2;
+			}else{
+				//lố quá ngày mới, chưa có ngoại lệ			
+				//echo "TH22";
+			}
+		}
+		
+		return $Value;
 	}
 	function getValueHoursPrint(){		
 		$num = new Number($this->getValueHours());
 		return $num->formatCurrency()." đ";
+		//return $this->getValueHours();
 	}
 	
 	//---------------------------------------------------------										
@@ -211,11 +301,20 @@ class Session extends Object{
 	}
 	
 	function getValue(){
+		if ($this->Value <= 0 || $this->Value == null){
+			$mSD = new \MVC\Mapper\SessionDetail();
+			$Value = $this->getSurtax() + (int)(($mSD->evaluate(array($this->getId())) + 500 + $this->getValueHours() - $this->getDiscountValue())*(1.0 - $this->getDiscountPercent()/100.0)/1000)*1000;
+			return $Value;
+		}
+		return $this->Value;
+	}
+	
+	function getReValue(){
 		$mSD = new \MVC\Mapper\SessionDetail();
 		$Value = $this->getSurtax() + (int)(($mSD->evaluate(array($this->getId())) + 500 + $this->getValueHours() - $this->getDiscountValue())*(1.0 - $this->getDiscountPercent()/100.0)/1000)*1000;
 		return $Value;
 	}
-			
+	
 	function getValuePrint(){
 		$num = new Number($this->getValue());
 		return $num->formatCurrency()." đ";
@@ -225,16 +324,40 @@ class Session extends Object{
 		$num = new Number($this->getValue());
 		return $num->readDigit()." đồng";
 	}
-			
-	function getValueBase(){
-		$Value = 0;
-		$SDs = $this->getDetails();
-		while($SDs->valid()){
-			$Value += $SDs->current()->getValueBase();
-			$SDs->next();
-		}
-		return $Value;
+	
+	function toJSON(){
+		$json = array(
+			'Id' 				=> $this->getId(),
+			'IdTable'			=> $this->getIdTable(),
+			'IdUser'			=> $this->getIdUser(),
+			'IdCustomer'		=> $this->getIdCustomer(),
+			'DateTime'			=> $this->getDateTime(),
+			'DateTimeEnd'		=> $this->getDateTimeEnd(),
+			'Note'				=> $this->getNote(),
+			'Status'			=> $this->getStatus(),
+			'DiscountValue'		=> $this->getDiscountValue(),
+			'DiscountPercent'	=> $this->getDiscountPercent(),
+			'Surtax'			=> $this->getSurtax(),
+			'Payment'			=> $this->getPayment(),
+			'Value'				=> $this->getValue()
+		);
+		return json_encode($json);
 	}
+	function setArray( $Data ){
+        $this->Id 				= $Data[0];
+		$this->IdTable			= $Data[1];
+		$this->IdUser			= $Data[2];
+		$this->IdCustomer		= $Data[3];
+		$this->DateTime			= $Data[4];
+		$this->DateTimeEnd		= $Data[5];
+		$this->Note				= $Data[6];
+		$this->Status			= $Data[7];
+		$this->DiscountValue	= $Data[8];
+		$this->DiscountPercent	= $Data[9];
+		$this->Surtax			= $Data[10];
+		$this->Payment			= $Data[11];
+		$this->Value			= $Data[12];
+    }
 	
 	//-------------------------------------------------------------------------------
 	//DEFINE URL

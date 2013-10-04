@@ -83,7 +83,8 @@
 				}				
 				$SD->setPrice($Price);
 				$mSD->update($SD);
-			}						
+			}			
+			$Session->setValue( $Session->getReValue() );
 			$mSession->update($Session);
 			
 			//-------------------------------------------------------------

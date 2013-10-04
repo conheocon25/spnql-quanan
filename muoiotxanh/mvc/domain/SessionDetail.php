@@ -10,7 +10,7 @@ class SessionDetail extends Object{
 	private $IdCourse;
 	private $Count;	
 	private $Price;
-	
+			
 	private $Course;
 	private $Session;
 
@@ -22,14 +22,17 @@ class SessionDetail extends Object{
 		$this->Price = $Price;
         parent::__construct( $Id );
     }
+	
 	function setId( $Id) {$this->Id = $Id;}
     function getId( ) {return $this->Id;}
-	function getIdPrint( ) {
-        return "SessionDetail".$this->Id;
-    }
-				
+	function getIdPrint( ) {return "SessionDetail".$this->Id;}
+	
+	function setId1( $Id1) {$this->Id1 = $Id1;}
+    function getId1( ) {return $this->Id1;}
+		
 	function setIdSession( $IdSession ) {$this->IdSession = $IdSession;$this->markDirty();}
-	function getIdSession( ) {return $this->IdSession;}	
+	function getIdSession( ) {return $this->IdSession;}
+	
 	function getSession( ) {
 		if (!isset($this->Session)){
 			$mSession = new \MVC\Mapper\Session();
@@ -40,12 +43,33 @@ class SessionDetail extends Object{
 	
 	function setIdCourse( $IdCourse ) {$this->IdCourse = $IdCourse;$this->markDirty();}
 	function getIdCourse( ) {return $this->IdCourse;}		
-	function getCourse( ) {	$mCourse = new \MVC\Mapper\Course(); $Course = $mCourse->find($this->IdCourse); return $Course;}
-	
+	function getCourse( ) {
+		if (!isset($this->Course)){
+			$mCourse = new \MVC\Mapper\Course();
+			$this->Course = $mCourse->find($this->IdCourse);
+		}
+        return $this->Course;
+    }	
     function setCount( $Count ) {$this->Count = $Count;$this->markDirty();}   
 	function getCount( ) {return $this->Count;}
 	function getCountPrint( ) {$num = new Number($this->Count);return $num->formatCurrency();}
-			
+	
+	function getCountExchange( $IdResource ) {
+		$mR2C = new \MVC\Mapper\R2C();
+		$R2CAll = $mR2C->findBy(array( $this->getIdCourse() ));
+		
+		$Rate = 1;
+		while ($R2CAll->valid()){
+			$R2C = $R2CAll->current();
+			if ($R2C->getIdResource() == $IdResource){
+				$Rate = (float)$R2C->getValue2()/(float)$R2C->getValue1();
+				break;
+			}
+			$R2CAll->next();
+		}		
+        return (float)($this->Count)*$Rate;
+    }
+	
 	function setPrice( $Price) {$this->Price = $Price;}
 	function getPrice( ) {return $this->Price;}
 	function getPricePrint( ) {$num = new Number($this->Price);return $num->formatCurrency();}
@@ -53,9 +77,24 @@ class SessionDetail extends Object{
 	function getValue( ) {return $this->Price*$this->Count;}
 	function getValuePrint( ) {$num = new Number($this->getValue());return $num->formatCurrency()." đ";}
 	
-	function getValueBase( ){
-		return $this->getValue()* ( 1.0 - (float)($this->getCourse()->getRate())/100.0);		
+	function toJSON(){
+		$json = array(
+			'Id' 			=> $this->getId(),
+			'IdSession'		=> $this->getIdSession(),
+			'IdCourse'		=> $this->getIdCourse(),
+			'Name'			=> $this->getCourse()->getName(),
+			'Count'			=> $this->getCount(),			
+			'Price'			=> $this->getPrice()
+		);
+		return json_encode($json);
 	}
+	function setArray( $Data ){
+        $this->Id 				= $Data[0];
+		$this->IdSession		= $Data[1];
+		$this->IdCourse			= $Data[2];
+		$this->Count			= $Data[3];
+		$this->Price			= $Data[4];
+    }
 	
 	//-------------------------------------------------------------------------------
 	//DEFINE URL
@@ -64,26 +103,26 @@ class SessionDetail extends Object{
 		$Session = $this->getSession();
 		$Table = $Session->getTable();
 		$Domain = $Table->getDomain();		
-		return "/selling/".$Domain->getId()."/".$Table->getId()."/detail/".$this->getId()."/upd/load";
+		return "/selling/".$Domain->getId()."/".$Table->getId()."/".$Session->getId()."/".$this->getId()."/upd/load";
     }
 	function getURLUpdExe(){		
 		$Session = $this->getSession();
 		$Table = $Session->getTable();
 		$Domain = $Table->getDomain();		
-		return "/selling/".$Domain->getId()."/".$Table->getId()."/detail/".$this->getId()."/upd/exe";
+		return "/selling/".$Domain->getId()."/".$Table->getId()."/".$Session->getId()."/".$this->getId()."/upd/exe";
     }
 	
 	function getURLDelLoad(){			
 		$Session = $this->getSession();
 		$Table = $Session->getTable();
-		$Domain = $Table->getDomain();
-		return "/selling/".$Domain->getId()."/".$Table->getId()."/detail/".$this->getId()."/del/load";
+		$Domain = $Table->getDomain();		
+		return "/selling/".$Domain->getId()."/".$Table->getId()."/".$Session->getId()."/".$this->getId()."/del/load";
     }
 	function getURLDelExe(){		
 		$Session = $this->getSession();
 		$Table = $Session->getTable();
 		$Domain = $Table->getDomain();
-		return "/selling/".$Domain->getId()."/".$Table->getId()."/detail/".$this->getId()."/del/exe";
+		return "/selling/".$Domain->getId()."/".$Table->getId()."/".$Session->getId()."/".$this->getId()."/del/exe";
     }
 		
 	//---------------------------------------------------------------------------------	

@@ -32,8 +32,7 @@
 			$ConfigAll = $mConfig->findAll();
 			
 			$Title = "DANH MỤC MÓN";
-			$Navigation = array(
-				array("ỨNG DỤNG", "/app"),
+			$Navigation = array(				
 				array("THIẾT LẬP", "/setting")
 			);
 			if (!isset($Page)) $Page=1;
@@ -45,12 +44,12 @@
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------									
 			$request->setProperty('Title', $Title);
-			$request->setProperty('ActiveAdmin', 'Category');
 			$request->setProperty('Page', $Page);
+			$request->setProperty('ActiveAdmin', 'Category');
 			$request->setObject('Navigation', $Navigation);
-			$request->setObject('CategoryAll1', $CategoryAll1);
 			$request->setObject('PN', $PN);
 			
+			$request->setObject('CategoryAll1', $CategoryAll1);
 			$request->setObject('CategoryAll', $CategoryAll);			
 			$request->setObject('DomainAll', $DomainAll);
 			$request->setObject('EmployeeAll', $EmployeeAll);
