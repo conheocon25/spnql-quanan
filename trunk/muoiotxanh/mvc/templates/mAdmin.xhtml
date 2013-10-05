@@ -52,6 +52,7 @@
 		<script src="/mvc/templates/theme/cms/js/unicorn.tables.js"></script>
 		<script src="/mvc/templates/theme/cms/js/jquery.gritter.min.js"></script>
 		<script src="/mvc/templates/theme/cms/js/bootstrap-datepicker.js"></script>
+		<script src="/mvc/templates/theme/cms/js/bootstrap-datepicker.vi.js"></script>
 	</span>
 	
 	<!-- ======================================================================== -->
@@ -59,7 +60,7 @@
 	<!-- ======================================================================== -->
 	<div metal:define-macro="Header">
 		<div id="header">
-			<h1><a>Restaurant Management App</a></h1>	
+			<h1><a>Restaurant Management App</a></h1>
 			<a id="menu-trigger" href="#"><i class="glyphicon glyphicon-align-justify"/></a>	
 		</div>
 		<div id="user-nav">
@@ -83,9 +84,7 @@
 	<!-- ======================================================================== -->
 	<!-- CONTENT HEADER															  -->
 	<!-- ======================================================================== -->
-	<div metal:define-macro="ContentHeader" id="content-header">
-		<h1>HỆ THỐNG QUẢN LÝ QUÁN MUỐI ỚT XANH</h1>
-	</div>
+	<div metal:define-macro="ContentHeader" id="content-header"><h1>HỆ THỐNG QUẢN LÝ QUÁN MUỐI ỚT XANH</h1></div>
 	
 	<!-- ======================================================================== -->
 	<!-- PAGE BAR																  -->
@@ -160,6 +159,11 @@
 			<li tal:attributes="class php:ActiveAdmin=='Category'?'active':'disable'">
 				<a tal:attributes="href '/setting/category'" >
 					<i class="glyphicons-fast_food" />DANH MỤC MÓN
+				</a>
+			</li>
+			<li tal:attributes="class php:ActiveAdmin=='Supplier'?'active':'disable'">
+				<a tal:attributes="href '/setting/supplier'" >
+					<i class="glyphicons-truck" />NHÀ CUNG CẤP
 				</a>
 			</li>
 			<li tal:attributes="class php:ActiveAdmin=='Domain'?'active':'disable'">

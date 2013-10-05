@@ -29,15 +29,7 @@
 										<tr>									
 											<td><div class="text-right">KẾT THÚC : </div></td>
 											<td><div  class="text-left" tal:content="Session/getDateTimeEndPrint"/></td>
-										</tr>
-										<tr>
-											<td><div class="text-right">SỐ GIỜ : </div></td>
-											<td><div  class="text-left" tal:content="Session/getHours"/></td>									
-										</tr>
-										<tr>									
-											<td><div class="text-right">TIỀN GIỜ : </div></td>
-											<td><div  class="text-left" tal:content="Session/getValueHoursPrint"/></td>
-										</tr>
+										</tr>										
 									</table>
 									<table class="table table-bordered table-striped table-hover">
 										<thead>
@@ -66,8 +58,14 @@
 										</tbody>
 										<tfoot>
 											<tr>
+												<td colspan="4"><div class="text-right">GIẢM GIÁ</div></td>
+												<td><div class="text-right" tal:content="Session/getDiscountPercentPrint"/></td>
+												<td />
+											</tr>
+											<tr>
 												<td colspan="4"><div class="text-right">TỔNG CỘNG</div></td>
 												<td><div class="text-right" tal:content="Session/getValuePrint"/></td>
+												<td />
 											</tr>
 										</tfoot>
 									</table>									
@@ -134,8 +132,7 @@
 							</div>
 						</div>
 						<!-- END DIALOG EDIT -->
-						<!-- END UPDATE DIALOG  -->
-					
+										
 						<!-- UPDATE SESSION DIALOG  -->
 						<div id="DialogSessionEdit" class="modal fade">
 							<div class="modal-dialog">
@@ -265,25 +262,7 @@
 					}
 				});
 			});
-		
-			//-----------------------------------------------------------------------------------
-			//Insert 1 CATEGORY
-			$('#URLInsButton').click(function(){
-				var Data = [];
-				Data[0] = 'null';
-				Data[1] = $('#Name1').val();
-
-				var URL = "/object/ins/Category";
-				$.ajax({
-					type: "POST",
-					data: {Data:Data},
-					url: URL,
-					success: function(msg){
-						location.reload();
-					}
-				});
-			});
-			
+								
 			//-----------------------------------------------------------------------------------
 			//Load 1 SESSION DETAIL
 			//-----------------------------------------------------------------------------------
@@ -339,8 +318,7 @@
 				Data[9] = $('#DiscountPercent2').val();
 				Data[10] = $('#Surtax2').val();
 				Data[11] = $('#Payment2').val();
-				Data[12] = '0';
-																							
+																											
 				var URL = "/object/upd/Session";
 				$.ajax({
 					type: "POST",
