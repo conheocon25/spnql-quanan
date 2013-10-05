@@ -148,10 +148,11 @@
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
 		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
 		<script src="/mvc/templates/theme/cms/js/bootstrap-datepicker.js"></script>
+		<script src="/mvc/templates/theme/cms/js/bootstrap-datepicker.vi.js"></script>
 		<script type="text/javascript">
 		/*<![CDATA[*/
-			$('#Date1').datepicker();
-			$('#Date2').datepicker();
+			$('#Date1').datepicker({language:'vi'});
+			$('#Date2').datepicker({language:'vi'});
 			//-----------------------------------------------------------------------------------
 			//Delete 1 COLLECT GENERAL			
 			//-----------------------------------------------------------------------------------
