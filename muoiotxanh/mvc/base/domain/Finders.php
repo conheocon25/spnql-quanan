@@ -30,4 +30,5 @@ interface UnitFinder extends Finder {}
 interface ConfigFinder extends Finder {}
 interface TrackingFinder extends Finder {}
 interface GuestFinder extends Finder {}
+interface ResourceFinder extends Finder {}
 ?>

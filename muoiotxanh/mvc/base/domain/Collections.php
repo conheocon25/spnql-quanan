@@ -21,4 +21,6 @@ interface ConfigCollection extends \Iterator {function add( Object $Config );}
 interface TrackingCollection extends \Iterator {function add( Object $Tracking);}
 interface PageCollection extends \Iterator {function add( Object $Page);}
 interface GuestCollection extends \Iterator {function add( Object $Guest);}
+interface SupplierCollection extends \Iterator {function add( Object $Supplier);}
+interface ResourceCollection extends \Iterator {function add( Object $Resource);}
 ?>
