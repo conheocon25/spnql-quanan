@@ -100,16 +100,14 @@
 					</div>
 					<!-- END UPDATE DIALOG  -->
 					<div metal:use-macro="mDialog.xhtml/DialogDel"/>
-					<div metal:use-macro="mDialog.xhtml/DialogDelSelected"/>
-					
+					<div metal:use-macro="mDialog.xhtml/DialogDelSelected"/>					
 				</div>
 			</div>
 		</div>
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
 		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
 		<script type="text/javascript">
-		/*<![CDATA[*/
-					
+		/*<![CDATA[*/					
 			$('#URLDelSelectedButton').click(function(){
 				var count = 0;
 				var Data = [];
