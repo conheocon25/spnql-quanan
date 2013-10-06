@@ -1,6 +1,5 @@
 <?php
 namespace MVC\Mapper;
-
 require_once( "mvc/base/Mapper.php" );
 class Session extends Mapper implements \MVC\Domain\SessionFinder {
 
@@ -49,8 +48,7 @@ class Session extends Mapper implements \MVC\Domain\SessionFinder {
 								S.datetime DESC
 							"
 		, $tblTable, $tblSession);
-	
-				
+					
 		$findLastStmt = sprintf("select * from %s where idtable=? and status<1 order by datetime desc limit 1", $tblSession);
 		$findLastAllStmt = sprintf("select * from %s where status<1 order by datetime desc", $tblSession);
 		$findNowAllStmt = sprintf("select * from %s where date(datetime) = date(now())", $tblSession);
