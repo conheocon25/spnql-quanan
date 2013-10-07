@@ -59,10 +59,8 @@ RewriteRule ^selling/([0-9]+)/([0-9]+)/([0-9]+)/checkout/exe$		?cmd=SellingDomai
 #---------------------------------------------------------------------------------------------------------------------------
 RewriteRule ^report$ 									?cmd=Report [L]
 
-RewriteRule ^report/selling/([0-9]+)$ 					?cmd=ReportSelling&Type=$1 [L]
-RewriteRule ^report/selling/([0-9]+)/refresh$ 			?cmd=ReportSellingRefresh&IdTrack=$1 [L]
 RewriteRule ^report/selling/([0-9]+)/general$ 			?cmd=ReportSellingGeneral&IdTrack=$1 [L]
-RewriteRule ^report/selling/([a-z0-9_-]+)/detail$ 		?cmd=ReportSellingDetail&Type=$1 [L]
+RewriteRule ^report/selling/([a-z0-9_-]+)/detail$ 		?cmd=ReportSellingDetail&Date=$1 [L]
 
 RewriteRule ^report/([0-9]+)$ 							?cmd=ReportDetail&IdTrack=$1 [L]
 RewriteRule ^report/ins/load$ 							?cmd=ReportDetailInsLoad [L]
@@ -71,6 +69,17 @@ RewriteRule ^report/([0-9]+)/upd/load$ 					?cmd=ReportDetailUpdLoad&IdTrack=$1 
 RewriteRule ^report/([0-9]+)/upd/exe$ 					?cmd=ReportDetailUpdExe&IdTrack=$1 [L]
 RewriteRule ^report/([0-9]+)/del/load$ 					?cmd=ReportDetailDelLoad&IdTrack=$1 [L]
 RewriteRule ^report/([0-9]+)/del/exe$ 					?cmd=ReportDetailDelExe&IdTrack=$1 [L]
+
+#---------------------------------------------------------------------------------------------------------------------------
+# IMPORT
+#---------------------------------------------------------------------------------------------------------------------------
+RewriteRule ^import$ 												?cmd=Import [L]
+RewriteRule ^import/([0-9]+)$ 										?cmd=ImportSupplier&IdSupplier=$1 [L]
+RewriteRule ^import/([0-9]+)/page/([0-9]+)$ 						?cmd=ImportSupplier&IdSupplier=$1&Page=$2 [L]
+RewriteRule ^import/([0-9]+)/([0-9]+)$ 								?cmd=ImportSupplierOrder&IdSupplier=$1&IdOrder=$2 [L]
+RewriteRule ^import/([0-9]+)/([0-9]+)/print$ 						?cmd=ImportSupplierOrderPrint&IdSupplier=$1&IdOrder=$2 [L]
+RewriteRule ^import/([0-9]+)/([0-9]+)page/([0-9]+)$ 				?cmd=ImportSupplierOrder&IdSupplier=$1&IdOrder=$2&Page=$3 [L]
+RewriteRule ^import/([0-9]+)/([0-9]+)/([0-9]+)/([0-9]+)/([0-9]+)$ 	?cmd=ImportSupplierOrderExe&IdSupplier=$1&IdOrder=$2&IdResource=$3&Count=$4&Price=$5 [L]
 
 #---------------------------------------------------------------------------------------------------------------------------
 # MONEY
