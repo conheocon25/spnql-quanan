@@ -18,6 +18,8 @@ interface SessionFinder  extends Finder {}
 interface SessionDetailFinder  extends Finder {}
 interface CategoryFinder  extends Finder {}
 interface CourseFinder  extends Finder {}
+interface OrderImportFinder  extends Finder {}
+interface OrderImportDetailFinder  extends Finder {}
 interface SupplierFinder extends Finder {}
 interface PayRollFinder extends Finder {}
 interface PaidGeneralFinder extends Finder {}

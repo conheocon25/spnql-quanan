@@ -9,6 +9,8 @@ interface SessionCollection extends \Iterator {function add( Object $session );	
 interface SessionDetailCollection extends \Iterator {function add( Object $SessionDetail );	}
 interface CategoryCollection extends \Iterator {function add( Object $category );	}
 interface CourseCollection extends \Iterator {function add( Object $course );	}
+interface OrderImportCollection extends \Iterator {function add( Object $OrderImport );	}
+interface OrderImportDetailCollection extends \Iterator {function add( Object $OrderImportDetail );}
 interface PayRollCollection extends \Iterator {function add( Object $PayRoll );}
 interface PaidGeneralCollection extends \Iterator {function add( Object $PaidGeneral );}
 interface TermPaidCollection extends \Iterator {function add( Object $TermPaid );}
