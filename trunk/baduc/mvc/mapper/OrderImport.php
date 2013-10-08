@@ -7,14 +7,14 @@ class OrderImport extends Mapper implements \MVC\Domain\OrderImportFinder {
     function __construct() {
         parent::__construct();
 		
-		$tblOrderImport = "baduc_order_import";
-		$tblOrderImportDetail = "baduc_order_import_detail";
+		$tblOrderImport = "tbl_order_import";
+		$tblOrderImportDetail = "tbl_import_detail";
 								
 		$selectAllStmt = sprintf("select * from %s", $tblOrderImport);
 		$selectStmt = sprintf("select * from %s where id=?", $tblOrderImport);
 		$updateStmt = sprintf("update %s set idsupplier=?, date=?, description=? where id=?", $tblOrderImport);
 		$insertStmt = sprintf("insert into %s ( idsupplier, date, description ) values( ?, ?, ?)", $tblOrderImport);
-		$deleteStmt = sprintf("delete from %s where id=?", $tblOrderImport);
+		$deleteStmt = sprintf("delete from %s where id=?", $tblOrderImport);		
 		$findByStmt = sprintf("
 			select 
 				*

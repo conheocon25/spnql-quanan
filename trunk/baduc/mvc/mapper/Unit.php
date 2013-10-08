@@ -7,14 +7,14 @@ class Unit extends Mapper implements \MVC\Domain\UnitFinder{
     function __construct() {
         parent::__construct();
 				
-		$tblUnit = "baduc_unit";
+		$tblUnit = "tbl_unit";
 		
 		$selectAllStmt = sprintf("select * from %s ORDER BY name", $tblUnit);
 		$selectStmt = sprintf("select *  from %s where id=?", $tblUnit);
 		$updateStmt = sprintf("update %s set name=? where id=?", $tblUnit);
 		$insertStmt = sprintf("insert into %s (name) values(?)", $tblUnit);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblUnit);
-		$findByPageStmt = sprintf("SELECT * FROM  %s LIMIT :start,:max", $tblUnit);
+		$findByPageStmt = sprintf("SELECT * FROM  %s ORDER BY name LIMIT :start,:max", $tblUnit);
 		
         $this->selectAllStmt = self::$PDO->prepare($selectAllStmt);
         $this->selectStmt = self::$PDO->prepare($selectStmt);
@@ -63,7 +63,7 @@ class Unit extends Mapper implements \MVC\Domain\UnitFinder{
 		$this->findByPageStmt->bindValue(':start', ((int)($values[0])-1)*(int)($values[1]), \PDO::PARAM_INT);
 		$this->findByPageStmt->bindValue(':max', (int)($values[1]), \PDO::PARAM_INT);
 		$this->findByPageStmt->execute();
-        return new SupplierCollection( $this->findByPageStmt->fetchAll(), $this );
+        return new UnitCollection( $this->findByPageStmt->fetchAll(), $this );
     }
 	
 }
