@@ -1,88 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<span metal:use-macro="mAdmin.xhtml/IncludeMETA"/>
-		<span metal:use-macro="mAdmin.xhtml/IncludeCSS"/>		
-		<span metal:use-macro="mAdmin.xhtml/IncludeJS"/>
+		<div metal:use-macro="mAdmin.xhtml/IncludeMETA"/>
+		<div metal:use-macro="mAdmin.xhtml/IncludeCSS"/>
 	</head>
+	
 	<body>
-		<div class="container-fluid">
-			<span metal:use-macro="mAdmin.xhtml/Header"/>
-			<div class="row-fluid">
-				<div class="row-fluid">
-					<div class="span3">
-						<div class="menu">
-							<ul class="nav nav-list" tal:condition="php: @\MVC\Base\SessionRegistry::instance()->getCurrentUser()->isAdmin()">
-								<li class="nav-header">CHỨC NĂNG</li>
-								<li>
-									<a tal:attributes="href '/selling'">
-										<i class="icon-shopping-cart" />
-										BÁN HÀNG
-									</a>
-								</li>
-								<li>
-									<a tal:attributes="href '/import'">
-										<i class="icon-truck" />
-										NHẬP HÀNG
-									</a>
-								</li>
-								<li>
-									<a tal:attributes="href '/paid'">
-										<i class="icon-dollar" />
-										KHOẢN CHI
-									</a>
-								</li>
-								<li>
-									<a tal:attributes="href '/collect'">
-										<i class="icon-dollar" />
-										KHOẢN THU
-									</a>
-								</li>
-								<li>
-									<a tal:attributes="href '/report'">
-										<i class="icon-book" />
-										BÁO CÁO
-									</a>
-								</li>
-								<li>
-									<a tal:attributes="href '/setting'">
-										<i class="icon-gear" />
-										THIẾT LẬP
-									</a>
-								</li>
-							</ul>
-							<ul class="nav nav-list" tal:condition="php: @\MVC\Base\SessionRegistry::instance()->getCurrentUser()->isSeller()">
-								<li class="nav-header">CHỨC NĂNG</li>
-								<li>
-									<a tal:attributes="href '/selling'">
-										<i class="icon-shopping-cart" />
-										BÁN HÀNG
-									</a>
-								</li>
-							</ul>
-						</div>
-						<BR/>
-						<div class="menu">
-							<ul class="nav nav-list">
-								<li class="nav-header">THỐNG KÊ</li>
-								<li>									
-									<i class="icon-user" /> <span tal:content="php:@\MVC\Library\Statistic::getOnlinePrint()"/> trực tuyến
-								</li>
-								<li>									
-									<i class="icon-bar-chart" /> <span class="bubble" tal:content="php:@\MVC\Library\Statistic::getCountPrint()"/> lượt xem
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="span9">
-						<div class="content">
-							<span metal:use-macro="mAdmin.xhtml/LocationBar"/>
-							<center><img src="/data/images/bg_manager.jpg" width="50%" style="opacity:.25;"/></center>
-						</div>
+		<div metal:use-macro="mAdmin.xhtml/Header"/>
+		<div metal:use-macro="mAdmin.xhtml/StyleTools"/>
+		<div metal:use-macro="mAdmin.xhtml/MenuApp"/>
+		<div id="content">
+			<div metal:use-macro="mAdmin.xhtml/ContentHeader"/>
+			<div metal:use-macro="mAdmin.xhtml/Locationbar"/>
+			<div class="container-fluid">				
+				<div class="row">
+					<div class="col-12">
+						<div class="widget-box">							
+							<div class="widget-content">
+								<div class="row">
+									<div class="col-12 col-sm-4">
+										<ul class="site-stats">
+											<li><div class="cc"><i class="glyphicons-tags"></i> <strong tal:content="CategoryAll/count"/> <small> danh mục</small></div></li>
+											<li><div class="cc"><i class="glyphicons-drink"></i> <strong tal:content="CourseAll/count"/> <small> món</small></div></li>
+											<li><div class="cc"><i class="glyphicons-show_big_thumbnails"></i> <strong tal:content="DomainAll/count"/> <small>Khu vực</small></div></li>
+											<li><div class="cc"><i class="glyphicons-macbook"></i> <strong tal:content="TableAll/count" /> <small>Bàn</small></div></li>
+											<li><div class="cc"><i class="glyphicons-group"></i> <strong tal:content="EmployeeAll/count" /> <small>Nhân viên</small></div></li>
+										</ul>
+									</div>
+									<div class="col-12 col-sm-4">
+										<ul class="site-stats">
+											<li><div class="cc"><i class="glyphicons-user"></i> <strong tal:content="php:@\MVC\Library\Statistic::getOnlinePrint()"/> <small> trực tuyến</small></div></li>
+											<li><div class="cc"><i class="glyphicons-parents"></i> <strong tal:content="php:@\MVC\Library\Statistic::getCountPrint()"/> <small>Lượt xem</small></div></li>
+											<li><div class="cc"><i class="glyphicons-table"></i> <strong tal:content="SessionAll/count"/> <small>Phiếu</small></div></li>
+										</ul>
+									</div>	
+									<div class="col-12 col-sm-4">
+										<ul class="site-stats">
+											<li><div class="cc"><i class="glyphicons-charts"></i> <strong tal:content="SessionLastAll/count"/> <small> đang có khách</small></div></li>
+											<li><div class="cc"><i class="glyphicons-charts"></i> <strong tal:content="SessionNowAll/count"/> <small>phiếu hôm nay</small></div></li>
+										</ul>
+									</div>
+								</div>							
+							</div>
+						</div>					
 					</div>
 				</div>
 			</div>
-			<span metal:use-macro="mAdmin.xhtml/Footer"/>
 		</div>
+
+		<div metal:use-macro="mAdmin.xhtml/Footer"/>
+		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
+		<script src="/mvc/templates/theme/cms/js/excanvas.min.js"></script>
+		<script src="/mvc/templates/theme/cms/js/jquery.flot.min.js"></script>
+		<script src="/mvc/templates/theme/cms/js/jquery.flot.resize.min.js"></script>
+		<script src="/mvc/templates/theme/cms/js/jquery.sparkline.min.js"></script>
+		<script src="/mvc/templates/theme/cms/js/unicorn.dashboard.js"></script>
 	</body>
 </html>

@@ -7,9 +7,9 @@ class Table extends Mapper implements \MVC\Domain\UserFinder {
     function __construct() {
         parent::__construct();
 				
-		$tblTable = "baduc_table";
-		$tblSession = "baduc_session";
-		$tblSessionDetail = "baduc_session_detail";
+		$tblTable = "tbl_table";
+		$tblSession = "tbl_session";
+		$tblSessionDetail = "tbl_session_detail";
 				
 		$selectAllStmt = sprintf("select * from %s", $tblTable);								
 		$selectStmt = sprintf("select * from %s where id=?", $tblTable);
@@ -17,8 +17,7 @@ class Table extends Mapper implements \MVC\Domain\UserFinder {
 		$insertStmt = sprintf("insert into %s (iddomain, name, iduser, type) values(?, ?, ?, ?)", $tblTable);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblTable);
 		$findByDomainStmt = sprintf("select id, iddomain, name, iduser, type from %s where iddomain =?", $tblTable);
-		
-		
+				
 		$findNonGuestStmt = sprintf("
 							SELECT
 								*	 
@@ -39,14 +38,22 @@ class Table extends Mapper implements \MVC\Domain\UserFinder {
 				*	 
 			FROM %s T
 			WHERE 				
-			(
-				SELECT S.status
-				from %s S
-				where T.id = S.idtable
-				order by datetime DESC
-				LIMIT 1
-			) <> 0
-		", $tblTable, $tblSession);
+				(
+					SELECT S.status
+					from %s S
+					where T.id = S.idtable
+					order by datetime DESC
+					LIMIT 1
+				) <> 0 OR 
+				(
+					SELECT S.status
+					from %s S
+					where T.id = S.idtable
+					order by datetime DESC
+					LIMIT 1
+				) is null
+			ORDER BY iddomain
+		", $tblTable, $tblSession, $tblSession);
 		
 		$findGuestStmt = sprintf("
 							SELECT
