@@ -12,11 +12,11 @@
 			</div>
 			<div class="widget-content">
 				<div class="invoice-content">					
-					<B id="CurrentTable" tal:attributes="alt Table/getId;data-name Table/getName" tal:content="Table/getName"/>
-					<div id="IdSession" tal:attributes="alt Table/getSessionActive/getId" />
-				</div>				
-				<div tal:condition="Table/getSessionActive">					
+					<B id="CurrentTable" tal:attributes="alt Table/getId;data-name Table/getName" tal:content="Table/getName"/>					
+				</div>
+				<div tal:condition="Table/getSessionActive">
 					<div>
+						<div id="IdSession" tal:attributes="alt Table/getSessionActive/getId" />
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>										
