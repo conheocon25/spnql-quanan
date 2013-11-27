@@ -12,7 +12,8 @@
 			</div>
 			<div class="widget-content">
 				<div class="invoice-content">					
-					<h3 id="CurrentTable" tal:attributes="alt Table/getId;data-name Table/getName" tal:content="Table/getName"/>
+					<B id="CurrentTable" tal:attributes="alt Table/getId;data-name Table/getName" tal:content="Table/getName"/>
+					<div id="IdSession" tal:attributes="alt Table/getSessionActive/getId" />
 				</div>				
 				<div tal:condition="Table/getSessionActive">					
 					<div>
