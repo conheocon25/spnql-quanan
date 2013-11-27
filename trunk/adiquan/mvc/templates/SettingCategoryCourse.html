@@ -237,7 +237,7 @@
 				$.getJSON(url, function(data){
 					$('#URLUpdButton').attr('alt', data.Id);
 					$('#Name2').attr('value', data.Name);
-					$('#ShortName2').attr('value', data.Name);
+					$('#ShortName2').attr('value', data.ShortName);
 					$('#Unit2').select2('val', data.Unit);
 					$('#Price2').attr('value', data.Price1);
 				});
@@ -264,7 +264,7 @@
 					data: {Data:Data},
 					url: URL,
 					success: function(msg){
-						//location.reload();
+						location.reload();
 					}
 				});
 			});			

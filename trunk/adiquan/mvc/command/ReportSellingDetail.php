@@ -32,7 +32,7 @@
 			while (strtotime($Date) <= strtotime($DateEnd)){								
 				
 				//THỐNG KÊ THEO CA 1 TỪ 6H SÁNG ĐẾN 2H CHIỀU
-				$Date1 = \date("Y-m-d", strtotime($Date))." 06:00:00";
+				$Date1 = \date("Y-m-d", strtotime($Date))." 00:00:00";
 				$Date2 = \date("Y-m-d", strtotime($Date))." 13:59:59";
 				$SessionAll = $mSession->findByTracking( array($Date1, $Date2 ) );
 				
