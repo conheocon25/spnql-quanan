@@ -385,12 +385,12 @@ class CUSTOMPDF extends TCPDF {
         $this->SetFont('arial', 'B', 14);
         // Title
 		$this->Ln(6);		
-        $this->Cell(0, 5, 'QUÁN ĂN LÀNG CHÀI', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Cell(0, 5, 'ADI QUÁN', 0, false, 'C', 0, '', 0, false, 'M', 'M');
 		$this->SetFont('arial', '', 11);
 		$this->Ln(5);			 
-        $this->Cell(0, 0, '196 Tôn Đức Thắng, P. Mỹ Phú, TP.CL', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Cell(0, 0, 'Long Xuyên, An Giang', 0, false, 'C', 0, '', 0, false, 'M', 'M');
 		$this->Ln(5);
-        $this->Cell(0, 0, '067.3857.067', 0, false, 'C', 0, '', 0, false, 'M', 'M');		
+        $this->Cell(0, 0, '0919 153 189', 0, false, 'C', 0, '', 0, false, 'M', 'M');		
     }
 
     // Page footer

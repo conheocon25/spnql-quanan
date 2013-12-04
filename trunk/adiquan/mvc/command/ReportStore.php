@@ -18,72 +18,65 @@
 			//MAPPER DỮ LIỆU
 			//-------------------------------------------------------------			
 			$mTracking 	= new \MVC\Mapper\Tracking();
-			$mCourse 	= new \MVC\Mapper\Course();
+			$mTS 		= new \MVC\Mapper\TrackingStore();
+			$mResource 	= new \MVC\Mapper\Resource();
+			$mSD 		= new \MVC\Mapper\SessionDetail();
 			$mR2C  		= new \MVC\Mapper\R2C();
 			
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------
-			$Tracking 	= $mTracking->find($IdTrack);			
-			$CourseAll = $mCourse->findAll();
+			$Tracking 		= $mTracking->find($IdTrack);
+			$ResourceAll 	= $mResource->findAll();
 			
-			$Data 		= array();
-			$Sum 		= 0;
-			while ($CourseAll->valid()){
-				$Course = $CourseAll->current();				
+			//Xóa những dữ liệu tồn kho cũ
+			$mTS->deleteByTracking(array($IdTrack));
+			
+			while ($ResourceAll->valid()){
+				$Resource = $ResourceAll->current();				
 				
 				//Tính phần nhập hàng
-				$R2CAll = $mR2C->findBy(array($Course->getId()));
-				
+				$R2CAll = $mR2C->findByResource(array($Resource->getId()));
+												
 				//Nếu có trong bảng ánh xạ mới tính toán
 				if ($R2CAll->count()>0){
+					
+					//Tính số lượng hàng nhập trong kì
+					$CountImport = $Tracking->getResourceImport( $Resource->getId() );
+					
+					//Tính số lượng hàng nhập xuất kho bán trong kì
 					$R2CAll->rewind();
-					
-					$PriceAverage 	= 0;
-					$OldCount		= 0;
-					$ImportCount	= 0;
-					
-					//Nhiều nhà cung cấp cho một sản phẩm bán cho nên phải lấy tổng số lượng hoặc trung bình cộng giá
+					$CountExport = 0;
 					while ($R2CAll->valid()){
 						$R2C = $R2CAll->current();
-						$PriceAverage += $R2C->getResource()->getPriceAverage();						
-						$ImportCount  += $Tracking->getResourceImport( $R2C->getIdResource() )*$R2C->getRate();
+						$IdCourse = $R2C->getIdCourse();
+						$CountExport += round(($Tracking->getCourseExport( $IdCourse ))*$R2C->getValue1()/$R2C->getValue2(),1);
 						$R2CAll->next();
 					}
-					$OldCount  	  += $Tracking->getCourseOld( $Course->getId() );
-					$PriceAverage = $PriceAverage/$R2CAll->count()/$R2C->getRate();
-																			
-					//Bán hàng thực tế
-					$ExportCount  	= $Tracking->getCountCourse( $Course->getId() );
 					
-					$NewCount  		= $OldCount + $ImportCount - $ExportCount;
-					$NewValue  		= $NewCount*$PriceAverage;
+					//Tính toán tồn cũ còn trước đó
+					$TSAllPre = $mTS->findByPre(array($IdTrack, $Resource->getId()));
+					if ($TSAllPre->count()==0){
+						$CountOld = 0;
+					}else{
+						$CountOld = $TSAllPre->current()->getCountRemain();
+					}
 					
-					$NNewValue		= new \MVC\Library\Number($NewValue);
-					$NPriceAverage	= new \MVC\Library\Number($PriceAverage);
-					
-					$Data[] = array(	
-						$Course->getId(), 
-						$Course->getName(),
-						$Course->getUnit(),
-						$OldCount,
-						$ImportCount,
-						$ExportCount, 
-						$NPriceAverage->formatCurrency(),
-						$NewCount,
-						$NNewValue->formatCurrency()
+					$TS = new \MVC\Domain\TrackingStore(
+						null,
+						$IdTrack,
+						$Resource->getId(), 
+						$CountOld,
+						$CountImport, 
+						$CountExport,
+						$Resource->getPrice()
 					);
-					$Sum += $NewValue;
+					$mTS->insert($TS);																				
+										
 				}
-				$CourseAll->next();
-			}
-			$NSum = new \MVC\Library\Number($Sum);
-			
-			if ($Save=="yes"){
-				if ($Sum<0)$Sum=0;
-				$Tracking->setStoreValue($Sum);
-				$mTracking->update($Tracking);
-			}
+				$ResourceAll->next();
+			}						
+			$TSAll = $mTS->findBy(array($IdTrack));
 			
 			$Title = "TỒN KHO";
 			$Navigation = array(				
@@ -95,10 +88,9 @@
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------									
 			$request->setProperty('Title'		, $Title);
-			$request->setProperty('Sum'			, $NSum->formatCurrency() );
-			$request->setObject('Tracking'		, $Tracking);
-			$request->setObject('Data'			, $Data);
 			$request->setObject('Navigation'	, $Navigation);
+			$request->setObject('Tracking'		, $Tracking);
+			$request->setObject('TSAll'			, $TSAll);			
 		}
 	}
 ?>
