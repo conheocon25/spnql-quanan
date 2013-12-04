@@ -5,10 +5,10 @@ class TrackingStore extends Object{
 
     private $Id;
 	private $IdTracking;
-	private $IdCourse;
+	private $IdResource;
 	private $CountOld;
 	private $CountImport;
-	private $CountExport;	
+	private $CountExport;
 	private $Price;
 	
 	//-------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ class TrackingStore extends Object{
     function __construct( 
 		$Id=null, 
 		$IdTracking=null, 
-		$IdCourse=null, 
+		$IdResource=null, 
 		$CountOld=null, 
 		$CountImport=null, 
 		$CountExport=null, 		
@@ -25,7 +25,7 @@ class TrackingStore extends Object{
 	) {
         $this->Id = $Id;
 		$this->IdTracking = $IdTracking;
-		$this->IdCourse = $IdCourse;
+		$this->IdResource = $IdResource;
 		$this->CountOld = $CountOld;
 		$this->CountImport = $CountImport;
 		$this->CountExport = $CountExport;
@@ -40,9 +40,9 @@ class TrackingStore extends Object{
     function setIdTracking( $IdTracking ) {$this->IdTracking = $IdTracking;$this->markDirty();}   
 	function getIdTracking( ) {return $this->IdTracking;}
 	
-	function setIdCourse( $IdCourse ) {$this->IdCourse = $IdCourse;$this->markDirty();}   
-	function getIdCourse( ) {return $this->IdCourse;}
-	function getCourse(){ $mCourse = new \MVC\Mapper\Course(); $Course = $mCourse->find( $this->getIdCourse() ); return $Course;}
+	function setIdResource( $IdResource ) {$this->IdResource = $IdResource;$this->markDirty();}   
+	function getIdResource( ) {return $this->IdResource;}
+	function getResource(){ $mResource = new \MVC\Mapper\Resource(); $Resource = $mResource->find( $this->getIdResource() ); return $Resource;}
 	
 	function setCountOld( $CountOld ) {$this->CountOld = $CountOld;$this->markDirty();}   
 	function getCountOld( ) {return $this->CountOld;}

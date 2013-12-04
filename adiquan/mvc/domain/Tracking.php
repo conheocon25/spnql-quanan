@@ -280,8 +280,15 @@ class Tracking extends Object{
 		return $TSAll->current()->getCountRemain();
 	}
 	function getResourceOldPrint($IdResource){return \round( $this->getResourceOld($IdResource) ,1 );}
-	function getResourceImport($IdResource){$mOD = new \MVC\Mapper\OrderImportDetail();$Count = $mOD->trackByCount( array($IdResource, $this->getDateStart(), $this->getDateEnd()) );return ($Count?$Count:0);}	
+	
+	function getResourceImport($IdResource){$mOD = new \MVC\Mapper\OrderImportDetail();$Count = $mOD->trackByCount( array($IdResource, $this->getDateStart(), $this->getDateEnd()) );return ($Count?$Count:0);}
+	function getCourceExport($IdCourse){
+		$mSD = new \MVC\Mapper\SessionDetail();
+		$Count = $mSD->trackByCount( array($IdCourse, $this->getDateStart(), $this->getDateEnd()) );
+		return ($Count?$Count:0);
+	}
 		
+	
 	function getTrackingStore(){
 		$mTrackingStore = new \MVC\Mapper\TrackingStore();
 		$TrackingStoreAll = $mTrackingStore->findBy(array($this->getId()));		
@@ -391,8 +398,9 @@ class Tracking extends Object{
 	//-------------------------------------------------------------------------------------
 	function getCountCategory($IdCategory){$mSD = new \MVC\Mapper\SessionDetail();$Count = $mSD->trackByCategory( array($IdCategory, $this->getDateStart(), $this->getDateEnd()) );return $Count;}
 	function getCountCategoryPrint($IdCategory){$N = new \MVC\Library\Number($this->getCountCategory($IdCategory));return $N->formatCurrency();}	
-	function getCountCourse($IdCourse){$mSD = new \MVC\Mapper\SessionDetail();$Count = $mSD->trackByCount( array($IdCourse, $this->getDateStart(), $this->getDateEnd()) );return $Count;}
-	function getCountCoursePrint($IdCourse){$N = new \MVC\Library\Number($this->getCountCourse($IdCourse));return $N->formatCurrency();}
+	
+	function getCourseExport($IdCourse){$mSD = new \MVC\Mapper\SessionDetail();$Count = $mSD->trackByCount( array($IdCourse, $this->getDateStart(), $this->getDateEnd()) );return $Count;}
+	function getCourseExportPrint($IdCourse){$N = new \MVC\Library\Number($this->getCourseExport($IdCourse));return $N->formatCurrency();}
 	
 	function getCountCourse1($IdCourse){$mSD = new \MVC\Mapper\SessionDetail();$Count = $mSD->trackByCount1( array($IdCourse, $this->getDateStart(), $this->getDateEnd()) );return $Count;}
 	function getCountCourse1Print($IdCourse){$N = new \MVC\Library\Number($this->getCountCourse1($IdCourse));return $N->formatCurrency();}
