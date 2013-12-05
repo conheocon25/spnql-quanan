@@ -3,20 +3,45 @@
 	<body>				
 		<div id="Session" class="widget-box">
 			<div class="widget-title">
-				<span class="icon"><i class="glyphicon glyphicon-th-list"></i></span>
+				<span class="icon">
+					<i class="glyphicon glyphicon-th-list"></i>
+				</span>
 				<h5>PHIẾU TÍNH TIỀN</h5>
 				<div class="buttons" tal:condition="Table/getSessionActive">
 					<a title="Icon Title" class="btn Checkout" tal:attributes="alt Table/getSessionActive/getURLCheckoutExe"><i class="glyphicon glyphicon-shopping-cart"></i> <span class="text">Tính tiền</span></a>
 					<a title="Icon Title" class="btn" target="blank" tal:attributes="href Table/getSessionActive/getURLPrint"><i class="glyphicons-print"></i> <span class="text">In phiếu</span></a>
 				</div>
 			</div>
-			<div class="widget-content">
-				<div class="invoice-content">					
-					<B id="CurrentTable" tal:attributes="alt Table/getId;data-name Table/getName" tal:content="Table/getName"/>					
+			<div class="widget-content nopadding size-12">
+				<div class="invoice-content" tal:condition="not:Table/getSessionActive">
+					<div class="invoice-head">
+						<div class="invoice-meta">
+							<center><h3 id="CurrentTable" tal:attributes="alt Table/getId" tal:content="Table/getName"/></center>
+						</div>
+					</div>
 				</div>
-				<div tal:condition="Table/getSessionActive">
+				<div class="invoice-content" tal:condition="Table/getSessionActive">
 					<div>
-						<div id="IdSession" tal:attributes="alt Table/getSessionActive/getId" />
+						<div class="invoice-meta">
+							<h3 id="CurrentTable" tal:attributes="alt Table/getId" tal:content="Table/getName"/>
+							<div id="IdSession" tal:attributes="alt Table/getSessionActive/getId" />
+						</div>
+						<div class="invoice-to">
+							<ul>
+								<li>									
+									<span tal:content="Table/getSessionActive/getUser/getName"/>
+								</li>
+							</ul>
+						</div>
+						<div class="invoice-from">
+							<ul>
+								<li>									
+									<span tal:content="Table/getSessionActive/getDateTimePrint"/>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>										
@@ -43,11 +68,7 @@
 								</tr>
 							</tbody>
 						</table>
-						<table width="100%">
-							<tr>
-								<td style="text-align:right;">Giảm giá:</td>
-								<td tal:content="Table/getSessionActive/getDiscountPercentPrint" style="color:#5476A6;text-align:right;"/>
-							</tr>
+						<table width="100%">							
 							<tr>
 								<td style="text-align:right;">Tổng cộng:</td>
 								<td tal:content="Table/getSessionActive/getValuePrint" style="color:#5476A6;text-align:right;"/>
@@ -102,26 +123,26 @@
 		</div>
 		
 		<div id="Session" class="widget-box">			
-			<div class="widget-content">
+			<div class="widget-content nopadding">
 				<div>
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>										
 								<th width="30">STT</th>
-								<th><div class="text-left">Ngày</div></th>
-								<th><div class="text-right">Giá trị</div></th>
+								<th><div class="text-left">NGÀY</div></th>
+								<th><div class="text-right">PHIẾU</div></th>
 								<th width="30"><i class="glyphicons-bin"/></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr tal:repeat="Session Table/getSessionRecent">
 								<td><div class="text-center" tal:content="repeat/Session/number"/></td>
+								<td><div class="text-left" tal:content="Session/getDateTimePrint"/></td>
 								<td>
-									<a target="blank" tal:attributes="href Session/getURLPrint">
-										<span class="text" tal:content="Session/getDateTimePrint"/>
+									<a tal:attributes="href Session/getURLPrint" target="blank">
+										<div class="text-right" tal:content="Session/getValuePrint"/>
 									</a>
 								</td>
-								<td><div class="text-right" tal:content="Session/getValuePrint"/></td>
 								<td class="center">
 									<a class="remove-session-item" href="#DialogSessionDel" data-toggle="modal" tal:attributes="data-id Session/getId">
 										<i class="glyphicons-remove_2"/>
@@ -147,9 +168,10 @@
 					</div>
 				</div>
 			</div>
-		</div>		
-        
-		<script>							
+		</div>
+		
+        <script>
+		
 			//-----------------------------------------------------------------------------------
 			//Delete 1 DETAIL			
 			//-----------------------------------------------------------------------------------
@@ -158,23 +180,14 @@
 			});
 			//Khi người dùng Click vào nút URLDelButton thì tiến  hành gọi Ajax xóa tự động
 			$('#URLDelButton').click(function(e){								
-				var URL 		= "/object/del/SessionDetail/" + $(this).attr('alt');
-				var IdTable 	= $("#CurrentTable").attr('alt');
-				var TableName 	= $("#CurrentTable").attr('data-name');
+				var URL = "/object/del/SessionDetail/" + $(this).attr('alt');
+				var IdTable = $("#CurrentTable").attr('alt');
 				$("#DialogDel").modal('hide');
 				e.stopImmediatePropagation();
 				$.ajax({
 					type: "POST",					
 					url: URL,
 					success: function(msg){
-						//Hiển thị notify message
-						$.gritter.add({
-							title		:'Thông tin',
-							class_name	: 'gritter-white',
-							text		:'Đã chọn bàn xóa xong món của bàn ' + TableName,
-							time		:5000,
-							sticky		: false
-						});
 						$("#Session").load("/sellingbeta/load/table/"+IdTable);
 					}
 				});
@@ -211,7 +224,6 @@
 				var IdTable = $("#CurrentTable").attr('alt');				
 				URL = "/sellingbeta/call/table/"+IdTable+"/"+IdCourse+"/"+Delta;
 				e.stopImmediatePropagation();
-												
 				$.ajax({
 					type: "POST", 
 					async: false,
@@ -219,14 +231,6 @@
 					dataType: 'json',
 					success: function(data){
 						var TableActive = "#" + $("#TableActive").attr('alt');
-						$.gritter.add({
-							title		:'Thông tin',
-							class_name	: 'gritter-white',
-							text		:'Gọi món ' + data.Name + " " + data.Count + " (" + data.Unit + ")",
-							time		:5000,
-							sticky		: false
-						});
-				
 						$("#Session").load("/sellingbeta/load/table/"+IdTable);
 						
 						//Đánh dấu Table có khách
@@ -257,21 +261,11 @@
 			//-----------------------------------------------------------------------------------
 			$('.Checkout').click(function(e){
 				var URL = $(this).attr('alt');
-				var IdTable 	= $("#CurrentTable").attr('alt');
-				var TableName 	= $("#CurrentTable").attr('data-name');
+				var IdTable = $("#CurrentTable").attr('alt');
 				$.ajax({
 					type: "POST",					
 					url: URL,
 					success: function(msg){
-					
-						$.gritter.add({
-							title		: 'Thông tin',
-							class_name	: 'gritter-white',
-							text		: 'Tính tiền bàn ' + TableName,
-							time		: 5000,
-							sticky		: false
-						});
-						
 						var TableActive = "#" + $("#TableActive").attr('alt');
 						$("#Session").load("/sellingbeta/load/table/"+IdTable);
 																		
@@ -286,8 +280,7 @@
 			//-----------------------------------------------------------------------------------
 			$('#URLUpdButton').click(function(e){
 				//alert("co");
-				var IdTable 	= $("#CurrentTable").attr('alt');
-				var TableName 	= $("#CurrentTable").attr('data-name');
+				var IdTable = $("#CurrentTable").attr('alt');
 				var Data = [];
 				Data[0] = $('#URLUpdButton').attr('alt');				
 				Data[1] = $('#IdSession').attr('alt')				
@@ -304,15 +297,8 @@
 					data: {Data:Data},
 					url: URL,
 					success: function(msg){
-						$.gritter.add({
-							title		: 'Thông tin',
-							class_name	: 'gritter-white',
-							text		: 'Đã cập nhật món bàn ' + TableName,
-							time		: 5000,
-							sticky		: false
-						});
+						$("#Session").load("/sellingbeta/load/table/"+IdTable);
 						
-						$("#Session").load("/sellingbeta/load/table/"+IdTable);						
 					}
 				});
 			});		

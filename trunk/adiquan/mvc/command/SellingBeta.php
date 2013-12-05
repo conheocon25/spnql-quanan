@@ -17,6 +17,7 @@
 			//-------------------------------------------------------------			
 			$mDomain 	= new \MVC\Mapper\Domain();
 			$mCategory 	= new \MVC\Mapper\Category();
+			$mSD 		= new \MVC\Mapper\SessionDetail();
 			
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
@@ -24,7 +25,7 @@
 			$DomainAll 		= $mDomain->findAll();
 			$CategoryAll 	= $mCategory->findAll();			
 			$Domain			= $DomainAll->current();
-						
+			$Top10			= $mSD->findByTop10(array());
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------									
@@ -39,6 +40,7 @@
 			$request->setObject('Domain'		, $Domain);
 			$request->setObject('DomainAll'		, $DomainAll);
 			$request->setObject('CategoryAll'	, $CategoryAll);
+			$request->setObject('Top10'			, $Top10);
 			
 			return self::statuses('CMD_DEFAULT');
 		}

@@ -26,7 +26,7 @@
 					<div class="col-12">
 						<div class="widget-box">
 							<div class="widget-content nopadding">								
-								<table class="table table-striped table-hover">
+								<table class="table table-bordered table-striped table-hover">
 									<thead>
 										<tr>										
 											<th><div class="text-left">NGÀY</div></th>
@@ -71,11 +71,13 @@
 											</td>
 										</tr>
 										<tr>
-											<td align="right">TỔNG HỢP</td>
-											<td align="center"></td>
-											<td align="center"></td>
-											<td align="center"></td>
-											<td align="center"></td>											
+											<td align="right"><B>TỔNG CỘNG</B></td>
+											<td align="right"><B tal:content="ValueSelling/formatCurrency"/></td>
+											<td align="right"><B tal:content="ValueImport/formatCurrency"/></td>
+											<td align="right"><B tal:content="ValueStore/formatCurrency"/></td>
+											<td align="right"><B tal:content="ValuePaid/formatCurrency"/></td>
+											<td align="right"><B tal:content="ValueCollect/formatCurrency"/></td>
+											<td align="right"><B tal:content="ValueNew/formatCurrency"/></td>
 										</tr>
 									</tbody>
 								</table>								
