@@ -23,8 +23,12 @@
 			//-------------------------------------------------------------
 			$Tracking = $mTracking->find($IdTrack);
 			$TrackingAll = $mTracking->findAll();
+			
+			$TDAll = $Tracking->getDailyAll();
+			if ($TDAll->count()==0){
+				$Tracking->generateDaily();
+			}
 						
-			$DateCurrent = 'THÁNG '.\date("m/Y", strtotime($Tracking->getDateStart()));
 			$Title = $Tracking->getName();
 			$Navigation = array(				
 				array("BÁO CÁO", "/report")
@@ -32,12 +36,11 @@
 			
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
-			//-------------------------------------------------------------									
-			$request->setProperty('DateCurrent', $DateCurrent);
-			$request->setProperty('Title', $Title);
-			$request->setObject('Navigation', $Navigation);
-			$request->setObject('TrackingAll', $TrackingAll);
-			$request->setObject('Tracking', $Tracking);						
+			//-------------------------------------------------------------												
+			$request->setProperty('Title'		, $Title);
+			$request->setObject('Navigation'	, $Navigation);
+			$request->setObject('TrackingAll'	, $TrackingAll);
+			$request->setObject('Tracking'		, $Tracking);
 		}
 	}
 ?>
