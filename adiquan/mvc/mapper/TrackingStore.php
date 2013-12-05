@@ -8,15 +8,16 @@ class TrackingStore extends Mapper implements \MVC\Domain\TrackingStoreFinder{
 				
 		$tblTrackingStore = "tbl_tracking_store";
 		
-		$selectAllStmt = sprintf("select * from %s ORDER BY date_start", $tblTrackingStore);
-		$selectStmt = sprintf("select *  from %s where id=?", $tblTrackingStore);
-		$updateStmt = sprintf("update %s set date_start=?, date_end=? where id=?", $tblTrackingStore);
-		$insertStmt = sprintf("insert into %s (id_tracking, id_resource, count_old, count_import, count_export, price) values(?, ?, ?, ?, ?, ?)", $tblTrackingStore);
-		$deleteStmt = sprintf("delete from %s where id=?", $tblTrackingStore);
-		$deleteByTrackingStmt = sprintf("delete from %s where id_tracking=?", $tblTrackingStore);
-		$findByStmt = sprintf("select *  from %s where id_tracking=?", $tblTrackingStore);
-		$findByPreStmt = sprintf("select *  from %s where id_tracking<? AND id_resource=? ORDER BY id_tracking DESC", $tblTrackingStore);
-		$findByCourseStmt = sprintf("select *  from %s where id_tracking=? AND id_resource=?", $tblTrackingStore);
+		$selectAllStmt 				= sprintf("select * from %s ORDER BY date_start", $tblTrackingStore);
+		$selectStmt 				= sprintf("select *  from %s where id=?", $tblTrackingStore);
+		$updateStmt 				= sprintf("update %s set date_start=?, date_end=? where id=?", $tblTrackingStore);
+		$insertStmt 				= sprintf("insert into %s (id_tracking, id_td, id_resource, count_old, count_import, count_export, price) values(?, ?, ?, ?, ?, ?, ?)", $tblTrackingStore);
+		$deleteStmt 				= sprintf("delete from %s where id=?", $tblTrackingStore);
+		$deleteByTrackingStmt 		= sprintf("delete from %s where id_tracking=? AND id_td=?", $tblTrackingStore);
+		$findByStmt 				= sprintf("select *  from %s where id_tracking=?", $tblTrackingStore);
+		$findByDailyStmt			= sprintf("select *  from %s where id_tracking=? AND id_td=?", $tblTrackingStore);
+		$findByPreStmt 				= sprintf("select *  from %s where id_tracking<? AND id_resource=? ORDER BY id_tracking DESC", $tblTrackingStore);
+		$findByCourseStmt 			= sprintf("select *  from %s where id_tracking=? AND id_resource=?", $tblTrackingStore);
 		
         $this->selectAllStmt 		= self::$PDO->prepare($selectAllStmt);
         $this->selectStmt 			= self::$PDO->prepare($selectStmt);
@@ -25,17 +26,16 @@ class TrackingStore extends Mapper implements \MVC\Domain\TrackingStoreFinder{
 		$this->deleteStmt 			= self::$PDO->prepare($deleteStmt);
 		$this->deleteByTrackingStmt = self::$PDO->prepare($deleteByTrackingStmt);
 		$this->findByStmt 			= self::$PDO->prepare($findByStmt);
+		$this->findByDailyStmt 		= self::$PDO->prepare($findByDailyStmt);
 		$this->findByPreStmt 		= self::$PDO->prepare($findByPreStmt);
 		$this->findByCourseStmt 	= self::$PDO->prepare($findByCourseStmt);
     }
-    function getCollection( array $raw ) {
-        return new TrackingStoreCollection( $raw, $this );
-    }
-
+    function getCollection( array $raw ) {return new TrackingStoreCollection( $raw, $this );}
     protected function doCreateObject( array $array ) {
         $obj = new \MVC\Domain\TrackingStore( 
 			$array['id'],
 			$array['id_tracking'],
+			$array['id_td'],
 			$array['id_resource'],
 			$array['count_old'],
 			$array['count_import'],
@@ -44,14 +44,11 @@ class TrackingStore extends Mapper implements \MVC\Domain\TrackingStoreFinder{
 		);
 	    return $obj;
     }
-
-    protected function targetClass() {        
-		return "TrackingStore";
-    }
-
+    protected function targetClass(){return "TrackingStore";}
     protected function doInsert( \MVC\Domain\Object $object ) {
         $values = array( 
 			$object->getIdTracking(),
+			$object->getIdTD(),
 			$object->getIdResource(),
 			$object->getCountOld()?$object->getCountOld():0,
 			$object->getCountImport()?$object->getCountImport():0,
@@ -66,6 +63,7 @@ class TrackingStore extends Mapper implements \MVC\Domain\TrackingStoreFinder{
     protected function doUpdate( \MVC\Domain\Object $object ) {
         $values = array( 
 			$object->getIdTracking(),
+			$object->getIdTD(),
 			$object->getIdResource(),
 			$object->getCountOld(),
 			$object->getCountImport(),
@@ -85,6 +83,11 @@ class TrackingStore extends Mapper implements \MVC\Domain\TrackingStoreFinder{
 	function findBy(array $values) {
 		$this->findByStmt->execute( $values );
         return new TrackingStoreCollection( $this->findByStmt->fetchAll(), $this );
+    }
+	
+	function findByDaily(array $values) {
+		$this->findByDailyStmt->execute( $values );
+        return new TrackingStoreCollection( $this->findByDailyStmt->fetchAll(), $this );
     }
 	
 	function findByPre(array $values) {

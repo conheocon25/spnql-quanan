@@ -5,6 +5,7 @@ class TrackingStore extends Object{
 
     private $Id;
 	private $IdTracking;
+	private $IdTD;
 	private $IdResource;
 	private $CountOld;
 	private $CountImport;
@@ -17,28 +18,32 @@ class TrackingStore extends Object{
     function __construct( 
 		$Id=null, 
 		$IdTracking=null, 
+		$IdTD=null, 
 		$IdResource=null, 
 		$CountOld=null, 
 		$CountImport=null, 
 		$CountExport=null, 		
 		$Price=Null
 	) {
-        $this->Id = $Id;
-		$this->IdTracking = $IdTracking;
-		$this->IdResource = $IdResource;
-		$this->CountOld = $CountOld;
-		$this->CountImport = $CountImport;
-		$this->CountExport = $CountExport;
-		$this->Price = $Price;
+        $this->Id 			= $Id;
+		$this->IdTracking 	= $IdTracking;
+		$this->IdTD 		= $IdTD;
+		$this->IdResource 	= $IdResource;
+		$this->CountOld 	= $CountOld;
+		$this->CountImport 	= $CountImport;
+		$this->CountExport 	= $CountExport;
+		$this->Price 		= $Price;
 		
         parent::__construct( $Id );
     }
 
     function getId() {return $this->Id;}	
-	function getIdPrint(){return "s" . $this->getId();}	
-	
+		
     function setIdTracking( $IdTracking ) {$this->IdTracking = $IdTracking;$this->markDirty();}   
 	function getIdTracking( ) {return $this->IdTracking;}
+	
+	function setIdTD( $IdTD ) {$this->IdTD = $IdTD;$this->markDirty();}   
+	function getIdTD( ) {return $this->IdTD;}
 	
 	function setIdResource( $IdResource ) {$this->IdResource = $IdResource;$this->markDirty();}   
 	function getIdResource( ) {return $this->IdResource;}
@@ -80,9 +85,7 @@ class TrackingStore extends Object{
 	//-------------------------------------------------------------------------------
 	//DEFINE URL
 	//-------------------------------------------------------------------------------
-	function getURLUpdLoad(){	return "/report/store/".$this->getIdTracking()."/".$this->getId()."/upd/load";}
-	function getURLUpdExe(){	return "/report/store/".$this->getIdTracking()."/".$this->getId()."/upd/exe";}
-	
+		
 	//--------------------------------------------------------------------------
     static function findAll() {$finder = self::getFinder( __CLASS__ ); return $finder->findAll();}
     static function find( $Id ) {$finder = self::getFinder( __CLASS__ ); return $finder->find( $Id );}

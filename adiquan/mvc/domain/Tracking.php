@@ -137,9 +137,35 @@ class Tracking extends Object{
 		$this->EstateRate 			= $Data[10];
 		$this->StoreValue 			= $Data[11];
     }
+	
 	//-------------------------------------------------------------------------------
 	//GET LISTs
 	//-------------------------------------------------------------------------------
+	function getDailyAll(){
+		$mTD 	= new \MVC\Mapper\TrackingDaily();
+		$TDAll 	= $mTD->findBy(array($this->getId()));
+		return $TDAll;
+	}
+	function generateDaily(){		
+		$Date = $this->getDateStart();
+		$EndDate = $this->getDateEnd();
+		$mTD = new \MVC\Mapper\TrackingDaily();
+		
+		while (strtotime($Date) <= strtotime($EndDate)){
+			$TD = new \MVC\Domain\TrackingDaily(
+				null,
+				$this->getId(), 
+				$Date, 
+				0, 
+				0, 
+				0, 
+				0, 
+				0
+			);
+			$mTD->insert($TD);
+			$Date = \date("Y-m-d", strtotime("+1 day", strtotime($Date)));
+		}
+	}
 	
 	//-------------------------------------------------------------------------------	
 	//TỔNG HỢP THU = TỔNG THU DOANH SỐ + TỔNG THU KHÁC + TỔNG THU KHÁCH HÀNG
@@ -264,23 +290,7 @@ class Tracking extends Object{
 	
 	//-------------------------------------------------------------------------------------
 	//THEO DÕI SỐ TỒN KHO
-	//-------------------------------------------------------------------------------------		
-	function getCourseOld($IdCourse){
-		$mTracking 		= new \MVC\Mapper\Tracking();
-		$mTS 			= new \MVC\Mapper\TrackingStore();
-		$TrackingAll 	= $mTracking->findByNearest(array($this->getDateStart()));
-		
-		if ($TrackingAll->count()==0)
-			return -1;
-		
-		$IdTracking = $TrackingAll->current()->getId();
-		$TSAll = $mTS->findByCourse( array($IdTracking, $IdCourse));
-		if ($TSAll->count()==0)
-			return -2;
-		return $TSAll->current()->getCountRemain();
-	}
-	function getResourceOldPrint($IdResource){return \round( $this->getResourceOld($IdResource) ,1 );}
-	
+	//-------------------------------------------------------------------------------------					
 	function getResourceImport($IdResource){$mOD = new \MVC\Mapper\OrderImportDetail();$Count = $mOD->trackByCount( array($IdResource, $this->getDateStart(), $this->getDateEnd()) );return ($Count?$Count:0);}
 	function getCourceExport($IdCourse){
 		$mSD = new \MVC\Mapper\SessionDetail();
