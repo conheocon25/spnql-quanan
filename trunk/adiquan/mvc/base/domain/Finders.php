@@ -41,6 +41,7 @@ interface UnitFinder 			extends Finder {}
 interface ConfigFinder 			extends Finder {}
 interface TrackingFinder 		extends Finder {}
 interface TrackingStoreFinder 	extends Finder {}
+interface TrackingCourseFinder 	extends Finder {}
 interface TrackingDailyFinder 	extends Finder {}
 
 interface R2CFinder 			extends Finder {}

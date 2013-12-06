@@ -33,6 +33,7 @@ if ( ! isset( $EG_DISABLE_INCLUDES ) ) {
 	
 	require_once( "mvc/mapper/Tracking.php");
 	require_once( "mvc/mapper/TrackingStore.php");
+	require_once( "mvc/mapper/TrackingCourse.php");
 	require_once( "mvc/mapper/TrackingDaily.php");
 	
 	require_once( "mvc/mapper/R2C.php");

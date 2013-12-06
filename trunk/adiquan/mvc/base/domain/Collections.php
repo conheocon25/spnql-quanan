@@ -32,7 +32,8 @@ interface UnitCollection 			extends \Iterator {function add( Object $Unit );}
 interface ConfigCollection 			extends \Iterator {function add( Object $Config );}
 interface TrackingCollection 		extends \Iterator {function add( Object $Tracking);}
 interface TrackingStoreCollection 	extends \Iterator {function add( Object $TrackingStore);}
-interface TrackingDailyCollection 	extends \Iterator {function add( Object $TrackingStoreDaily);}
+interface TrackingCourseCollection 	extends \Iterator {function add( Object $TrackingCourse);}
+interface TrackingDailyCollection 	extends \Iterator {function add( Object $TrackingDaily);}
 
 interface R2CCollection 			extends \Iterator {function add( Object $R2C);}
 interface PageCollection 			extends \Iterator {function add( Object $Page);}
