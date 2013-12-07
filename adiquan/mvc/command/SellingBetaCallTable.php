@@ -17,11 +17,12 @@
 			//-------------------------------------------------------------
 			//MAPPER DỮ LIỆU
 			//-------------------------------------------------------------
-			$mTable = new \MVC\Mapper\Table();
-			$mCategory = new \MVC\Mapper\Category();
-			$mCourse = new \MVC\Mapper\Course();
-			$mSession = new \MVC\Mapper\Session();
-			$mSD = new \MVC\Mapper\SessionDetail();
+			$mTable 	= new \MVC\Mapper\Table();
+			$mCategory 	= new \MVC\Mapper\Category();
+			$mCourse 	= new \MVC\Mapper\Course();
+			$mSession 	= new \MVC\Mapper\Session();
+			$mSD 		= new \MVC\Mapper\SessionDetail();
+			$mCL 		= new \MVC\Mapper\CourseLog();
 						
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
@@ -61,11 +62,30 @@
 					$Course->getPrice1()
 				);
 				$mSD->insert($SD);
+				
+				//Thêm nhật kí gọi món
+				$CL = new \MVC\Domain\CourseLog(
+					null,
+					$IdCourse,
+					\date('Y-m-d H:i:s'),
+					1
+				);
+				$mCL->insert($CL);
+				
 			}else{
 				$SD = $mSD->find($IdSD);									
 				$Count = $SD->getCount() + $Delta;				
 				$SD->setCount($Count);
 				$mSD->update($SD);
+				
+				//Thêm nhật kí gọi món
+				$CL = new \MVC\Domain\CourseLog(
+					null,
+					$SD->getIdCourse(),
+					\date('Y-m-d H:i:s'),
+					$Delta
+				);
+				$mCL->insert($CL);
 			}						
 			
 			//-------------------------------------------------------------

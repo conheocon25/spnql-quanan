@@ -52,7 +52,7 @@
 		<command name="ReportCustomerDetail"><view>ReportCustomerDetail</view></command>				
 						
 		<!-- ============================================================================== -->
-		<!-- SELLING.DOMAIN		 															-->
+		<!-- SELLING		 																-->
 		<!-- ============================================================================== -->
 		<command name="SellingBeta"><view>SellingBeta</view></command>
 		<command name="SellingBetaLoadDomain"><view>SellingBetaLoadDomain</view></command>
@@ -62,6 +62,8 @@
 		<command name="SellingDomainTablePrint"><view>SellingDomainTablePrint</view></command>
 		<command name="SellingDomainTableCheckinExe"><status value="CMD_OK"><forward>SellingDomain</forward></status><view>SellingDomainTableCheckinExe</view></command>
 		<command name="SellingDomainTableCheckoutExe"><status value="CMD_OK"><forward>SellingDomain</forward></status><view>SellingDomainTableCheckoutExe</view></command>
+		
+		<command name="CallLog"><view>CallLog</view></command>
 		
 		<!-- ============================================================================== -->
 		<!-- PAYROLL			 															-->

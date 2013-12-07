@@ -71,6 +71,8 @@ RewriteRule ^selling/([0-9]+)/([0-9]+)/([0-9]+)/print$				?cmd=SellingDomainTabl
 RewriteRule ^selling/([0-9]+)/([0-9]+)/checkin/exe$					?cmd=SellingDomainTableCheckinExe&IdDomain=$1&IdTable=$2 [L]
 RewriteRule ^selling/([0-9]+)/([0-9]+)/([0-9]+)/checkout/exe$		?cmd=SellingDomainTableCheckoutExe&IdDomain=$1&IdTable=$2&IdSession=$3 [L]
 
+RewriteRule ^calllog$ 												?cmd=CallLog [L]
+
 #---------------------------------------------------------------------------------------------------------------------------
 # MONEY
 #---------------------------------------------------------------------------------------------------------------------------

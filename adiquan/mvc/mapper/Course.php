@@ -11,9 +11,9 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 		
 		$selectAllStmt = sprintf("select * from %s ORDER BY name", $tblCourse);								
 		$selectStmt = sprintf("select * from %s where id=?", $tblCourse);
-		$updateStmt = sprintf("update %s set idcategory=?, name=?, shortname=?, unit=?, price1=?, price2=?, price3=?, price4=?, picture=? where id=?", $tblCourse);
-		$insertStmt = sprintf("insert into %s (idcategory, name, shortname, unit, price1, price2, price3, price4, picture) 
-							values(?, ?, ?, ?, ?, ?, ?, ?, ?)", $tblCourse);
+		$updateStmt = sprintf("update %s set idcategory=?, name=?, shortname=?, unit=?, price1=?, price2=?, price3=?, price4=?, picture=?, prepare=? where id=?", $tblCourse);
+		$insertStmt = sprintf("insert into %s (idcategory, name, shortname, unit, price1, price2, price3, price4, picture, prepare) 
+							values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $tblCourse);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblCourse);
 		$findByPageStmt = sprintf("
 							SELECT *
@@ -34,7 +34,8 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 								C.price3, 
 								C.price4,
 								C.picture, 
-								sum(SD.count) as count
+								sum(SD.count) as count,
+								C.prepare
 							FROM 
 								 %s C LEFT JOIN %s SD
 								 ON C.id = SD.idcourse
@@ -68,7 +69,8 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 			$array['price2'],
 			$array['price3'],
 			$array['price4'],
-			$array['picture']			
+			$array['picture'],
+			$array['prepare']			
 		);
         return $obj;
     }
@@ -87,7 +89,8 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 			$object->getPrice2(),
 			$object->getPrice3(),
 			$object->getPrice4(),
-			$object->getPicture()
+			$object->getPicture(),
+			$object->getPrepare()
 		); 
         $this->insertStmt->execute( $values );
         $id = self::$PDO->lastInsertId();
@@ -105,21 +108,16 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 			$object->getPrice3(),
 			$object->getPrice4(),
 			$object->getPicture(),
+			$object->getPrepare(),
 			$object->getId()
 		);
         $this->updateStmt->execute( $values );
     }
 
-	protected function doDelete(array $values) {
-        return $this->deleteStmt->execute( $values );
-    }
+	protected function doDelete(array $values) {return $this->deleteStmt->execute( $values );}	
+	function selectStmt() {return $this->selectStmt;}
+    function selectAllStmt() {return $this->selectAllStmt;}
 	
-	function selectStmt() {
-        return $this->selectStmt;
-    }
-    function selectAllStmt() {
-        return $this->selectAllStmt;
-    }
 	function findByCategory( $values ) {
         $this->findByCategoryStmt->execute( $values );
 		return new CourseCollection( $this->findByCategoryStmt->fetchAll(), $this );
