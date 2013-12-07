@@ -108,7 +108,10 @@
 		<ul tal:condition="php: @\MVC\Base\SessionRegistry::instance()->getCurrentUser()->isAdmin()">
 			<li tal:attributes="class php:ActiveAdmin=='SellingBeta'?'active':'disable'">
 				<a tal:attributes="href '/sellingbeta'"><i class="glyphicons-drink" />BÁN HÀNG</a>
-			</li>			
+			</li>
+			<li tal:attributes="class php:ActiveAdmin=='CallLog'?'active':'disable'">
+				<a tal:attributes="href '/calllog'"><i class="glyphicons-clock" />NHẬT KÝ GỌI</a>
+			</li>
 			<li tal:attributes="class php:ActiveAdmin=='Import'?'active':'disable'">
 				<a tal:attributes="href '/import'"><i class="glyphicons-truck" />NHẬP HÀNG</a>
 			</li>
