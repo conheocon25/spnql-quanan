@@ -29,7 +29,8 @@
 			//-------------------------------------------------------------			
 			$Table = $mTable->find($IdTable);
 			$Course = $mCourse->find($IdCourse);
-												
+			
+			
 			//Nếu chưa có Session thì tạo
 			$Session = $Table->getSessionActive();			
 			if (!isset($Session)){
@@ -64,14 +65,16 @@
 				$mSD->insert($SD);
 				
 				//Thêm nhật kí gọi món
-				$CL = new \MVC\Domain\CourseLog(
-					null,
-					$IdCourse,
-					\date('Y-m-d H:i:s'),
-					1
-				);
-				$mCL->insert($CL);
-				
+				if ($SD->getCourse()->getPrepare()>0){
+					$CL = new \MVC\Domain\CourseLog(
+						null,
+						$IdTable,
+						$IdCourse,
+						\date('Y-m-d H:i:s'),
+						1
+					);
+					$mCL->insert($CL);
+				}
 			}else{
 				$SD = $mSD->find($IdSD);									
 				$Count = $SD->getCount() + $Delta;				
@@ -79,15 +82,17 @@
 				$mSD->update($SD);
 				
 				//Thêm nhật kí gọi món
-				$CL = new \MVC\Domain\CourseLog(
-					null,
-					$SD->getIdCourse(),
-					\date('Y-m-d H:i:s'),
-					$Delta
-				);
-				$mCL->insert($CL);
-			}						
-			
+				if ($SD->getCourse()->getPrepare()>0){
+					$CL = new \MVC\Domain\CourseLog(
+						null,
+						$IdTable,
+						$SD->getIdCourse(),					
+						\date('Y-m-d H:i:s'),
+						$Delta
+					);
+					$mCL->insert($CL);
+				}
+			}
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------												

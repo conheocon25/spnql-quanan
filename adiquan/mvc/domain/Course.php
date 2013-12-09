@@ -1,11 +1,9 @@
 <?php
 Namespace MVC\Domain;
 use MVC\Library\Number;
-
 require_once( "mvc/base/domain/DomainObject.php");
 
 class Course extends Object{
-
     private $Id;
 	private $IdCategory;
 	private $Name;
@@ -115,8 +113,7 @@ class Course extends Object{
 		$this->Prepare 		= $Data[10];
     }
 	
-	function getURLRecipe(){return "/setting/category/".$this->getIdCategory()."/".$this->getId()."/recipe";}
-	
+	function getURLRecipe(){return "/setting/category/".$this->getIdCategory()."/".$this->getId()."/recipe";}	
 	function getRecipeAll(){
 		$mR2C = new \MVC\Mapper\R2C();
 		$R2CAll = $mR2C->findBy(array($this->getId()));

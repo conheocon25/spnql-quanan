@@ -35,7 +35,9 @@
 										<td><span tal:content="CL/getDateTimePrint"/></td>
 										<td align="right"><span tal:content="CL/getRemainWaiting"/> / <span tal:content="CL/getCourse/getPrepare"/></td>
 										<td align="right"><span tal:content="CL/getCount"/></td>
-										<td><a href="">Xác nhận</a></td>
+										<td>											
+											<a class="remove-item" tal:attributes="data-id CL/getId">Xác nhận</a>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -47,22 +49,12 @@
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
 		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
 		<script type="text/javascript">
-		/*<![CDATA[*/
-			$('#DateStart1').datepicker({language: 'vi'});
-			$('#DateEnd1').datepicker({language: 'vi'});
-			
-			$('#DateStart2').datepicker({language: 'vi'});
-			$('#DateEnd2').datepicker({language: 'vi'});
-									
+		/*<![CDATA[*/												
 			//-----------------------------------------------------------------------------------
 			//Delete 1 REPORT			
 			//-----------------------------------------------------------------------------------
-			$('.remove-item').click(function(){
-				$('#URLDelButton').attr('alt', $(this).attr('data-id'));
-			});
-			//Khi người dùng Click vào nút URLDelButton thì tiến  hành gọi Ajax xóa tự động
-			$('#URLDelButton').click(function(){			
-				var URL = "/object/del/Tracking/" + $(this).attr('alt');
+			$('.remove-item').click(function(){				
+				var URL = "/object/del/CourseLog/" + $(this).attr('data-id');
 				$.ajax({
 					type: "POST",
 					url: URL,
@@ -70,26 +62,7 @@
 						location.reload();
 					}
 				});
-			});
-		
-			//-----------------------------------------------------------------------------------
-			//Insert 1 REPORT
-			$('#URLInsButton').click(function(){
-				var Data = [];
-				Data[0] = 'null';
-				Data[1] = $('#DateStart1').val();
-				Data[2] = $('#DateEnd1').val();								
-				var URL = "/object/ins/Tracking";
-				$.ajax({
-					type: "POST",
-					data: {Data:Data},
-					url: URL,
-					success: function(msg){
-						location.reload();
-					}
-				});
-			});
-			
+			});						
 		/*]]>*/
 		</script>
 	</body>
