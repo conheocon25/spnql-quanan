@@ -11,22 +11,22 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
 		
 		$selectAllStmt = sprintf("select * from %s", $tblPayRoll);
 		$selectStmt = sprintf("select * from %s where id=?", $tblPayRoll);
-		$updateStmt = sprintf("update %s set idemployee=?, date=?, state=?, extra=?, late=? where id=?", $tblPayRoll);
-		$insertStmt = sprintf("insert into %s (idemployee, date, state, extra, late) values(?,?,?,?,?)", $tblPayRoll);
+		$updateStmt = sprintf("update %s set id_employee=?, date=?, state=?, extra=?, late=? where id=?", $tblPayRoll);
+		$insertStmt = sprintf("insert into %s (id_employee, date, state, extra, late) values(?,?,?,?,?)", $tblPayRoll);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblPayRoll);
-		$findByStmt = sprintf("select * from %s where idemployee = ? order by date DESC", $tblPayRoll);
+		$findByStmt = sprintf("select * from %s where id_employee = ? order by date DESC", $tblPayRoll);
 				
 		$findByTrackingStmt = sprintf(
 			"select * from %s
 			where
-				idemployee = ? AND `date` >= ? AND `date` <= ?
+				id_employee = ? AND `date` >= ? AND `date` <= ?
 			ORDER BY `date`
 			"
 		, $tblPayRoll);
 		$checkStmt = sprintf("
 			select distinct id 
 			from %s 
-			where idemployee=? and `date`=?
+			where id_employee=? and `date`=?
 		", $tblPayRoll);
 		
         $this->selectAllStmt = self::$PDO->prepare($selectAllStmt);
@@ -43,7 +43,7 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
     protected function doCreateObject( array $array ) {
         $obj = new \MVC\Domain\PayRoll( 
 			$array['id'],
-			$array['idemployee'],
+			$array['id_employee'],
 			$array['date'],
 			$array['state'],
 			$array['extra'],

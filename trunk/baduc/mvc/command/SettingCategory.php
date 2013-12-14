@@ -21,18 +21,10 @@
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------			
-			$CategoryAll = $mCategory->findAll();			
-			$DomainAll = $mDomain->findAll();			
-			$EmployeeAll = $mEmployee->findAll();
-			$UnitAll = $mUnit->findAll();			
-			$CustomerAll = $mCustomer->findAll();
-			$TermPaidAll = $mTermPaid->findAll();
-			$TermCollectAll = $mTermCollect->findAll();			
-			$UserAll = $mUser->findAll();
-			$ConfigAll = $mConfig->findAll();
-			
+			$CategoryAll = $mCategory->findAll();
+						
 			$Title = "DANH MỤC MÓN";
-			$Navigation = array(				
+			$Navigation = array(			
 				array("THIẾT LẬP", "/setting")
 			);
 			if (!isset($Page)) $Page=1;
@@ -44,22 +36,12 @@
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------									
 			$request->setProperty('Title', $Title);
-			$request->setProperty('Page', $Page);
 			$request->setProperty('ActiveAdmin', 'Category');
+			$request->setProperty('Page', $Page);
 			$request->setObject('Navigation', $Navigation);
-			$request->setObject('PN', $PN);
-			
 			$request->setObject('CategoryAll1', $CategoryAll1);
-			$request->setObject('CategoryAll', $CategoryAll);			
-			$request->setObject('DomainAll', $DomainAll);
-			$request->setObject('EmployeeAll', $EmployeeAll);
-			$request->setObject('UnitAll', $UnitAll);			
-			$request->setObject('CustomerAll', $CustomerAll);
-			$request->setObject('TermPaidAll', $TermPaidAll);
-			$request->setObject('TermCollectAll', $TermCollectAll);
-			$request->setObject('UserAll', $UserAll);
-			$request->setObject('ConfigAll', $ConfigAll);
-						
+			$request->setObject('PN', $PN);
+												
 			return self::statuses('CMD_DEFAULT');
 		}
 	}

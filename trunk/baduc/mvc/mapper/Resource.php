@@ -19,7 +19,6 @@ class Resource extends Mapper implements \MVC\Domain\ResourceFinder {
 							SELECT *
 							FROM %s
 							WHERE idsupplier=:idsupplier
-							ORDER BY name
 							LIMIT :start,:max
 				", $tblResource);
 				
@@ -69,15 +68,14 @@ class Resource extends Mapper implements \MVC\Domain\ResourceFinder {
 		);		
         $this->updateStmt->execute( $values );
     }
-
-	protected function doDelete(array $values) {return $this->deleteStmt->execute( $values );}	
+	protected function doDelete(array $values) {return $this->deleteStmt->execute( $values );}			
+    function selectStmt() {return $this->selectStmt;}	
+    function selectAllStmt() {return $this->selectAllStmt;}
+	
 	function findBySupplier(array $values) {
         $this->findBySupplierStmt->execute( $values );
         return new SupplierCollection( $this->findBySupplierStmt->fetchAll(), $this );
     }
-	
-    function selectStmt() {return $this->selectStmt;}	
-    function selectAllStmt() {return $this->selectAllStmt;}
 	
 	function findByPage( $values ) {
 		$this->findByPageStmt->bindValue(':idsupplier', $values[0], \PDO::PARAM_INT);

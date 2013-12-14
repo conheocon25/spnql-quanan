@@ -40,10 +40,8 @@ class Unit extends Object{
 	//-------------------------------------------------------------------------------
 	//DEFINE URL
 	//-------------------------------------------------------------------------------
-	function getURLUpdExe(){	return "/setting/unit/".$this->getId()."/upd/exe";}		
-	function getURLDelExe(){	return "/setting/unit/".$this->getId()."/del/exe";}
-			
-	//--------------------------------------------------------------------------
+				
+	//-------------------------------------------------------------------------------
     static function findAll() {$finder = self::getFinder( __CLASS__ ); return $finder->findAll();}
     static function find( $Id ) {$finder = self::getFinder( __CLASS__ ); return $finder->find( $Id );}
 	

@@ -10,7 +10,7 @@ class Table extends Object{
 	private $Name;
 	private $IdUser;
 	private $Type;
-			
+	
 	private $Sessions;
 	private $SessionsTracking;
 	//-------------------------------------------------------------------------------
@@ -75,10 +75,10 @@ class Table extends Object{
 		return $Session;
 	}
 	
-	function getSessionsTop20(){		
+	function getSessionRecent(){		
 		$mSession = new	\MVC\Mapper\Session();		
-		$Sessions = $mSession->findByTableTop20(array($this->getId()));		
-		return $Sessions;
+		$SessionAll = $mSession->findByTablePage(array($this->getId(), 1, 5));
+		return $SessionAll;
 	}
 	
 	function getSessions(){
@@ -152,13 +152,13 @@ class Table extends Object{
 	}
 	
 	function setArray( $Data ){
-        $this->Id = $Data[0];
-		$this->IdDomain = $Data[1];
-		$this->Name = $Data[2];
-		$this->IdUser = $Data[3];
-		$this->Type = $Data[4];
+        $this->Id 			= $Data[0];
+		$this->IdDomain 	= $Data[1];
+		$this->Name 		= $Data[2];
+		$this->IdUser 		= $Data[3];
+		$this->Type 		= $Data[4];
     }
-		
+			
 	//-------------------------------------------------------------------------------
 	//DEFINE SELLING URL
 	//-------------------------------------------------------------------------------	
@@ -167,20 +167,12 @@ class Table extends Object{
 	
 	function getURLCheckoutExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/checkout/exe";}	
 	function getURLCallLoad(){return "/selling/".$this->IdDomain."/".$this->getId()."/call/load";}
-	function getURLCallExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/call/exe";}
-	
-	function getURLEvalLoad(){return "/selling/".$this->IdDomain."/".$this->getId()."/eval/load";}
-	function getURLEvalExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/eval/exe";}
-	
+	function getURLCallExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/call/exe";}		
+	function getURLEvalExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/eval/exe";}	
 	function getURLMoveLoad(){return "/selling/".$this->IdDomain."/".$this->getId()."/move/load";}
-	function getURLMoveExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/move/exe";}
-	
+	function getURLMoveExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/move/exe";}	
 	function getURLMergeLoad(){return "/selling/".$this->IdDomain."/".$this->getId()."/merge/load";}
-	function getURLMergeExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/merge/exe";}
-	
-	function getURLCancelLoad(){return "/selling/".$this->IdDomain."/".$this->getId()."/del/load";}
-	function getURLCancelExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/del/exe";}
-	
+	function getURLMergeExe(){return "/selling/".$this->IdDomain."/".$this->getId()."/merge/exe";}		
 	function getURLLog(){return "/selling/".$this->IdDomain."/".$this->getId()."/log";}
 
 	//---------------------------------------------------------	
