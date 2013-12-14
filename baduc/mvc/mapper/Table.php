@@ -16,8 +16,9 @@ class Table extends Mapper implements \MVC\Domain\UserFinder {
 		$updateStmt = sprintf("update %s set iddomain=?, name=?, iduser=?, type=? where id=?", $tblTable);
 		$insertStmt = sprintf("insert into %s (iddomain, name, iduser, type) values(?, ?, ?, ?)", $tblTable);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblTable);
-		$findByDomainStmt = sprintf("select id, iddomain, name, iduser, type from %s where iddomain =?", $tblTable);
-				
+		$findByDomainStmt = sprintf("select * from %s where iddomain =?", $tblTable);
+		$findByTypeStmt = sprintf("select * from %s where type =?", $tblTable);
+		
 		$findNonGuestStmt = sprintf("
 							SELECT
 								*	 
@@ -39,20 +40,18 @@ class Table extends Mapper implements \MVC\Domain\UserFinder {
 			FROM %s T
 			WHERE 				
 				(
-					SELECT S.status
-					from %s S
-					where T.id = S.idtable
-					order by datetime DESC
-					LIMIT 1
-				) <> 0 OR 
+					SELECT count(S.id)
+					FROM tbl_session S
+					WHERE T.id = S.idtable	
+				)=0 OR
 				(
-					SELECT S.status
-					from %s S
-					where T.id = S.idtable
+					SELECT S1.status
+					FROM tbl_session S1
+					WHERE T.id = S1.idtable
 					order by datetime DESC
 					LIMIT 1
-				) is null
-			ORDER BY iddomain
+				)=1
+			ORDER BY iddomain, name
 		", $tblTable, $tblSession, $tblSession);
 		
 		$findGuestStmt = sprintf("
@@ -75,13 +74,15 @@ class Table extends Mapper implements \MVC\Domain\UserFinder {
 				*	 
 			FROM %s T
 			WHERE
+			T.id <>? AND
 			(
 				SELECT S.status
 				FROM %s S
 				WHERE T.id = S.idtable
 				GROUP BY S.datetime DESC
 				LIMIT 1
-			) = 0
+			)=0
+			ORDER BY iddomain, name
 		", $tblTable,  $tblSession);
 		$findByPageStmt = sprintf("
 							SELECT *
@@ -96,7 +97,8 @@ class Table extends Mapper implements \MVC\Domain\UserFinder {
         $this->insertStmt = self::$PDO->prepare($insertStmt);
 		$this->deleteStmt = self::$PDO->prepare($deleteStmt);
 							
-		$this->findByDomainStmt = self::$PDO->prepare($findByDomainStmt);							
+		$this->findByDomainStmt = self::$PDO->prepare($findByDomainStmt);
+		$this->findByTypeStmt = self::$PDO->prepare($findByTypeStmt);
 		$this->findNonGuestStmt = self::$PDO->prepare($findNonGuestStmt);		
 		$this->findAllNonGuestStmt = self::$PDO->prepare($findAllNonGuestStmt);
 		$this->findGuestStmt = self::$PDO->prepare($findGuestStmt);
@@ -162,6 +164,11 @@ class Table extends Mapper implements \MVC\Domain\UserFinder {
         $this->findByDomainStmt->execute( $values );
         return new TableCollection( $this->findByDomainStmt->fetchAll(), $this );
     }
+	function findByType($values ) {	
+        $this->findByTypeStmt->execute( $values );
+        return new TableCollection( $this->findByTypeStmt->fetchAll(), $this );
+    }
+	
 	function findNonGuest($values ) {	
         $this->findNonGuestStmt->execute( $values );
         return new TableCollection( $this->findNonGuestStmt->fetchAll(), $this );

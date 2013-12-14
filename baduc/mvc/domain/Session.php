@@ -18,8 +18,7 @@ class Session extends Object{
 	private $DiscountPercent;
 	private $Surtax;
 	private $Payment;
-	
-	
+		
 	//-------------------------------------------------------------------------------
 	//ACCESSING MEMBER PROPERTY
 	//-------------------------------------------------------------------------------
@@ -123,7 +122,7 @@ class Session extends Object{
 		return $DS." - ".$DE;
 	}
 	function getCurrentDatePrint(){$date = new Date();return $date->getCurrentDateVN();}
-	
+		
 	//Ghi chú
 	function getNote( ) {return $this->Note;}	
 	function setNote( $Note ) {$this->Note = $Note;$this->markDirty();}
@@ -165,6 +164,26 @@ class Session extends Object{
         $this->markDirty();
     }
 	
+	//Tính ra tiền giờ làm tròn 15 phút
+	function getHoursReal(){	
+		$diff = strtotime($this->getDateTimeEnd()) - strtotime($this->getDateTime());
+		$H = round($diff/3600, 1);
+		//$M = round(($diff - $H*3600)/60,0);
+		return $H;
+	}
+	
+	function getHours(){	
+		$diff = strtotime($this->getDateTimeEnd()) - strtotime($this->getDateTime());
+		$H = floor($diff/3600);
+		$M = round(($diff - $H*3600)/60,0);
+		return $H." giờ ".$M." phút";		
+	}
+	function getValueHours(){return 0;}
+	function getValueHoursPrint(){		
+		$num = new Number($this->getValueHours());
+		return $num->formatCurrency()." đ";		
+	}
+	
 	function getPaymentPrint( ){$N = new \MVC\Library\Number($this->Payment);return $N->formatCurrency()." đ";}	
 	function getRemain( ){$Remain = $this->getPayment() - $this->getValue();return $Remain;}	
 	function getRemainPrint( ){$N = new \MVC\Library\Number( $this->getRemain() );return $N->formatCurrency()." đ";}
@@ -178,7 +197,7 @@ class Session extends Object{
 			
 	function getValue(){		
 		$mSD = new \MVC\Mapper\SessionDetail();
-		$Value = $this->getSurtax() + (int)(($mSD->evaluate(array($this->getId())) + 500 - $this->getDiscountValue())*(1.0 - $this->getDiscountPercent()/100.0)/1000)*1000;
+		$Value = $this->getSurtax() + (int)(($mSD->evaluate(array($this->getId())) + 500 + $this->getValueHours() - $this->getDiscountValue())*(1.0 - $this->getDiscountPercent()/100.0)/1000)*1000;
 		return $Value;
 	}
 	
@@ -194,7 +213,13 @@ class Session extends Object{
 		}
 		return $Value;
 	}
-		
+	
+	function findItem($IdCourse){
+		$mSD = new \MVC\Mapper\SessionDetail();
+		$SD = $mSD->findItem( array($this->getId(), $IdCourse) );
+		return $SD;
+	}
+	
 	//-------------------------------------------------------------------------------
 	//DEFINE URL
 	//-------------------------------------------------------------------------------
@@ -207,27 +232,7 @@ class Session extends Object{
 		$Domain = $this->getTable()->getDomain();
 		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/".$this->getId()."/checkout/exe";
     }
-	
-	function getURLUpdLoad(){
-		$Domain = $this->getTable()->getDomain();
-		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/log/".$this->getId()."/upd/load";
-    }
-	
-	function getURLUpdExe(){		
-		$Domain = $this->getTable()->getDomain();
-		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/log/".$this->getId()."/upd/exe";
-    }
-	
-	function getURLDelLoad(){		
-		$Domain = $this->getTable()->getDomain();
-		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/log/".$this->getId()."/del/load";
-    }
-	
-	function getURLDelExe(){		
-		$Domain = $this->getTable()->getDomain();
-		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/log/".$this->getId()."/del/exe";
-    }
-	
+			
 	function getURLDetail(){		
 		$Domain = $this->getTable()->getDomain();
 		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/log/".$this->getId()."/detail";

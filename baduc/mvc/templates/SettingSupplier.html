@@ -14,10 +14,10 @@
 			<div metal:use-macro="mAdmin.xhtml/Locationbar"/>
 			<div class="row">
 				<div class="col-12">
-					<a href="#DialogIns" data-toggle="modal" class="btn btn-success btn-ins btn-small">
+					<a href="#DialogIns" data-toggle="modal" class="btn btn-primary btn-ins">
 						<i class="glyphicons-plus"/> Thêm mới
 					</a>
-					<a href="#DialogDelSelected" data-toggle="modal" class="btn btn-success btn-ins btn-small">
+					<a href="#DialogDelSelected" data-toggle="modal" class="btn btn-primary btn-ins">
 						<i class="glyphicons-remove_2"/> Xóa chọn
 					</a>
 					<div class="widget-box">
@@ -27,7 +27,7 @@
 									<tr>
 										<th width="40"><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox"/></th>
 										<th class="left">TÊN</th>
-										<th width="100"><i class="glyphicons-drink"/></th>
+										<th class="right" width="100">MÓN</th>
 										<th width="40"><i class="glyphicons-edit"/></th>
 										<th width="40"><i class="glyphicons-bin"/></th>
 									</tr>
@@ -36,7 +36,7 @@
 									<tr tal:repeat="Supplier SupplierAll1">
 										<td class="center"><input class="CheckedDel" type="checkbox" tal:attributes="data-id Supplier/getId"/></td>
 										<td><a class="update-item" href="#DialogEdit" data-toggle="modal" tal:attributes="data-id Supplier/getId" tal:content="Supplier/getName"/></td>
-										<td class="center"><a tal:attributes="href Supplier/getURLResource"> <span tal:content="Supplier/getResourceAll/count" /> món</a></td>
+										<td class="right"><a tal:attributes="href Supplier/getURLResource"> <span tal:content="Supplier/getResourceAll/count" /> món</a></td>
 										<td class="center">
 											<a class="update-item" href="#DialogEdit" data-toggle="modal" tal:attributes="data-id Supplier/getId">
 												<i class="glyphicon glyphicon-pencil"/>
@@ -58,7 +58,7 @@
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h3><i class="glyphicons-fast_food modal-icon"/>THÊM NHÀ CUNG CẤP</h3>
+									<h3><i class="glyphicons-truck modal-icon"/>THÊM NHÀ CUNG CẤP</h3>
 								</div>
 								<div class="form-horizontal">
 									<div class="modal-body">
@@ -108,7 +108,7 @@
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h3><i class="glyphicons-fast_food modal-icon"/>CẬP NHẬT NHÀ CUNG CẤP</h3>
+									<h3><i class="glyphicons-truck modal-icon"/>CẬP NHẬT NHÀ CUNG CẤP</h3>
 								</div>
 								<div class="form-horizontal">
 									<div class="form-group">

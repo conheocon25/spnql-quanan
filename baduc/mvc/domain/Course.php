@@ -1,11 +1,9 @@
 <?php
 Namespace MVC\Domain;
 use MVC\Library\Number;
-
 require_once( "mvc/base/domain/DomainObject.php");
 
 class Course extends Object{
-
     private $Id;
 	private $IdCategory;
 	private $Name;
@@ -16,7 +14,7 @@ class Course extends Object{
 	private $Price3;
 	private $Price4;
 	private $Picture;
-	private $Rate;
+	private $Prepare;
 	
 	//-------------------------------------------------------------------------------
 	//ACCESSING MEMBER PROPERTY
@@ -32,19 +30,20 @@ class Course extends Object{
 		$Price3=null, 
 		$Price4=null, 
 		$Picture=Null,
-		$Rate=Null) 
+		$Prepare=Null) 
 	{
-        $this->Id = $Id;
-		$this->IdCategory = $IdCategory;
-		$this->Name = $Name;
-		$this->ShortName = $ShortName;
-		$this->Unit = $Unit;
-		$this->Price1 = $Price1;
-		$this->Price2 = $Price2;
-		$this->Price3 = $Price3;
-		$this->Price4 = $Price4;
-		$this->Picture = $Picture;
-		$this->Rate = $Rate;
+        $this->Id 			= $Id;
+		$this->IdCategory 	= $IdCategory;
+		$this->Name 		= $Name;
+		$this->ShortName 	= $ShortName;
+		$this->Unit 		= $Unit;
+		$this->Price1 		= $Price1;
+		$this->Price2 		= $Price2;
+		$this->Price3 		= $Price3;
+		$this->Price4 		= $Price4;
+		$this->Picture 		= $Picture;
+		$this->Prepare 		= $Prepare;
+		
         parent::__construct( $Id );
     }
     function getId( ) {return $this->Id;}
@@ -81,8 +80,8 @@ class Course extends Object{
 	function setPicture( $Picture ) {$this->Picture = $Picture;$this->markDirty();}	
 	function getPicture( ) {return $this->Picture;}
 	
-	function setRate( $Rate ) {$this->Rate = $Rate;$this->markDirty();}	
-	function getRate( ) {return $this->Rate;}
+	function setPrepare( $Picture ) {$this->Prepare = $Prepare;$this->markDirty();}	
+	function getPrepare( ) {return $this->Prepare;}
 	
 	public function toJSON(){
 		$json = array(
@@ -96,7 +95,7 @@ class Course extends Object{
 		 	'Price3'		=> $this->getPrice3(),
 		 	'Price4'		=> $this->getPrice4(),
 		 	'Picture'		=> $this->getPicture(),
-		 	'Rate'			=> $this->getRate()
+			'Prepare'		=> $this->getPrepare()
 		);
 		return json_encode($json);
 	}
@@ -111,9 +110,15 @@ class Course extends Object{
 		$this->Price3 		= $Data[7];
 		$this->Price4 		= $Data[8];
 		$this->Picture 		= $Data[9];
-		$this->Rate 		= $Data[10];
+		$this->Prepare 		= $Data[10];
     }
-				
+	
+	function getURLRecipe(){return "/setting/category/".$this->getIdCategory()."/".$this->getId()."/recipe";}	
+	function getRecipeAll(){
+		$mR2C = new \MVC\Mapper\R2C();
+		$R2CAll = $mR2C->findBy(array($this->getId()));
+		return $R2CAll;
+	}
 	//----------------------------------------------------------------------------------
     static function findAll() {$finder = self::getFinder( __CLASS__ ); return $finder->findAll();}
     static function find( $Id ){$finder = self::getFinder( __CLASS__ ); return $finder->find( $Id );}
