@@ -21,18 +21,28 @@
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------			
-			$CLAll 		= $mCL->findBy(array());			
-			$CL 		= $CLAll->current();
-			$mCL->delete(array($CL->getId()));
+			$CLAll 		= $mCL->findBy(array());
+			if ($CLAll->count()>0){
+				$CL 		= $CLAll->current();
+				$mCL->delete(array($CL->getId()));
+				$json = array(
+					'result' 	=> "OK",
+					'id' 		=> $CL->getId(),
+					'title' 	=> $CL->getTable()->getDomain()->getName()."/".$CL->getTable()->getName(),
+					'message'	=> $CL->getCourse()->getName().' đã quá thời gian chuẩn bị'
+				);
+			}else{
+				$json = array(
+					'result' 	=> "NO",
+					'id' 		=> '',
+					'title' 	=> '',
+					'message'	=> ''
+				);			
+			}
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------									
-			$json = array(
-				'result' 	=> "OK",
-				'id' 		=> $CL->getId(),
-				'title' 	=> $CL->getTable()->getDomain()->getName()."/".$CL->getTable()->getName(),
-				'message'	=> $CL->getCourse()->getName().' đã quá thời gian chuẩn bị'
-			);
+			
 			echo json_encode($json);
 		}
 	}
