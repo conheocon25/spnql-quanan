@@ -167,8 +167,9 @@
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
 		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
         <script>
-			//THIẾT LẬP NOTIFY CHO HỆ THỐNG
+			//THIẾT LẬP NOTIFY CHO HỆ THỐNG			
 			function getNotifyCourse(){
+				var TypeNotify;
 				$.ajax({
 					type: "POST",
 					dataType: "json",
@@ -190,12 +191,17 @@
 							//TĂNG SỐ LẦN NOTIFY
 							nCountNotify = nCountNotify + 1;
 							
-							//HIỂN THỊ THÔNG BÁO						
+							//HIỂN THỊ THÔNG BÁO
+							if (data.type==1){
+								TypeNotify = "gritter-red";
+							}else{
+								TypeNotify = "gritter-green";
+							}
 							$.gritter.add({
 								title:	data.title,
 								text:	data.message,
 								position: 'bottom-left',														
-								class_name:'gritter-green',
+								class_name:TypeNotify,
 								sticky:true,
 								after_close: function(){
 									nCountNotify = nCountNotify - 1;

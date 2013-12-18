@@ -255,7 +255,7 @@ class Session extends Mapper implements \MVC\Domain\SessionFinder {
         return new SessionCollection( $this->findByTableTrackingStmt->fetchAll(), $this );
     }
 		
-	function findByTracking($values ){
+	function findByTracking($values ){		
         $this->findByTrackingStmt->execute( $values );
         return new SessionCollection( $this->findByTrackingStmt->fetchAll(), $this );
     }
