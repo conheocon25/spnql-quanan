@@ -14,55 +14,34 @@
 			<div class="row">																	
 				<div class="col-12">
 					<div class="widget-box">
-						<div class="widget-content nopadding">
-							<table class="table table-bordered table-striped table-hover">
-								<thead>
-									<tr>
-										<th width="40"><i class="glyphicons-clock"/></th>										
-										<th><div class="text-left">TÊN MÓN</div></th>
-										<th><div class="text-left">ĐỊA CHỈ</div></th>
-										<th width="120"><div class="text-left">THỜI GIAN</div></th>
-										<th width="70"><div class="text-right">ĐÃ ...</div></th>
-										<th width="70"><div class="text-right">SL</div></th>
-										<th width="120"><div class="text-left">LÀM XONG</div></th>
-									</tr>
-								</thead>
-								<tbody role="alert" aria-live="polite" aria-relevant="all">
-									<tr tal:repeat="CL CLAll">
-										<td align="center" tal:content="repeat/CL/number"/>
-										<td><span tal:content="CL/getCourse/getName"/></td>
-										<td><span tal:content="CL/getTable/getDomain/getName"/> / <span tal:content="CL/getTable/getName"/></td>
-										<td><span tal:content="CL/getDateTimePrint"/></td>
-										<td align="right"><span tal:content="CL/getRemainWaiting"/> / <span tal:content="CL/getCourse/getPrepare"/></td>
-										<td align="right"><span tal:content="CL/getCount"/></td>
-										<td>											
-											<a class="remove-item" tal:attributes="data-id CL/getId">Xác nhận</a>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+						<div class="widget-content">
+							<p>Cứ mỗi 10 giây hệ thống sẽ tự cập nhật lại DANH SÁCH MÓN GỌI ...<B id="CountShow"/> giây</p>
 						</div>
-					</div>					
+					</div>
+					<div class="widget-box">
+						<div class="widget-content nopadding">
+							<div id="CourseLog" />
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
 		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
 		<script type="text/javascript">
-		/*<![CDATA[*/												
-			//-----------------------------------------------------------------------------------
-			//Delete 1 REPORT			
-			//-----------------------------------------------------------------------------------
-			$('.remove-item').click(function(){				
-				var URL = "/object/del/CourseLog/" + $(this).attr('data-id');
-				$.ajax({
-					type: "POST",
-					url: URL,
-					success: function(msg){
-						location.reload();
-					}
-				});
-			});						
+		/*<![CDATA[*/
+			var Count = 10;
+			$("#CountShow").html(Count);
+			$("#CourseLog").load("/calllog/loading");
+			//Thiết lập mặc định 10 giây
+			setInterval(function () {
+				Count --;
+				if (Count<0){
+					Count = 10;
+					$("#CourseLog").load("/calllog/loading");
+				}
+				$("#CountShow").html(Count);
+			},1000);
 		/*]]>*/
 		</script>
 	</body>

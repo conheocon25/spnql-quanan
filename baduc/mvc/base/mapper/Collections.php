@@ -32,6 +32,7 @@ class CustomerCollection 		extends Collection implements \MVC\Domain\CustomerCol
 class EmployeeCollection 		extends Collection implements \MVC\Domain\EmployeeCollection		{function targetClass( ) {return "\MVC\Domain\Employee";}}
 
 class UnitCollection 			extends Collection implements \MVC\Domain\UnitCollection			{function targetClass(){return "\MVC\Domain\Unit";}}
+class NotifyCollection 			extends Collection implements \MVC\Domain\NotifyCollection			{function targetClass(){return "\MVC\Domain\Notify";}}
 class ConfigCollection 			extends Collection implements \MVC\Domain\ConfigCollection			{function targetClass(){return "\MVC\Domain\Config";}}
 
 class TrackingCollection 		extends Collection implements \MVC\Domain\TrackingCollection		{function targetClass(){return "\MVC\Domain\Tracking";}}

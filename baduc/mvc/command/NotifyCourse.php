@@ -16,7 +16,8 @@
 			//-------------------------------------------------------------
 			//MAPPER DỮ LIỆU
 			//-------------------------------------------------------------
-			$mCL = new \MVC\Mapper\CourseLog();
+			$mCL 		= new \MVC\Mapper\CourseLog();
+			$mNotify 	= new \MVC\Mapper\Notify();
 			
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
@@ -25,19 +26,37 @@
 			if ($CLAll->count()>0){
 				$CL 		= $CLAll->current();
 				$mCL->delete(array($CL->getId()));
+				
+				$Notify = new \MVC\Domain\Notify(
+					null,
+					$CL->getTable()->getDomain()->getName()."/".$CL->getTable()->getName(),
+					1,
+					$CL->getCourse()->getName().' đã quá thời gian chuẩn bị'
+				);
+				$mNotify->insert($Notify);				
+			}
+			
+			$NotifyAll = $mNotify->findAll();
+			if ($NotifyAll->count()>0){
+				$Notify = $NotifyAll->current();
+				$mNotify->delete(array($Notify->getId()));
+				
 				$json = array(
 					'result' 	=> "OK",
-					'id' 		=> $CL->getId(),
-					'title' 	=> $CL->getTable()->getDomain()->getName()."/".$CL->getTable()->getName(),
-					'message'	=> $CL->getCourse()->getName().' đã quá thời gian chuẩn bị'
+					'id' 		=> $Notify->getId(),
+					'title' 	=> $Notify->getTitle(),
+					'type' 		=> $Notify->getType(),
+					'message'	=> $Notify->getMessage()
 				);
-			}else{
+			}
+			else{
 				$json = array(
 					'result' 	=> "NO",
 					'id' 		=> '',
 					'title' 	=> '',
+					'type' 		=> '',
 					'message'	=> ''
-				);			
+				);
 			}
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
