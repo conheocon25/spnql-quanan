@@ -43,21 +43,20 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 							ORDER BY count DESC
 							LIMIT 20
 							" , $tblCourse, $tblSessionDetail);
-				
-		$this->selectAllStmt = self::$PDO->prepare($selectAllStmt);
-        $this->selectStmt = self::$PDO->prepare($selectStmt);
-        $this->updateStmt = self::$PDO->prepare($updateStmt);
-        $this->insertStmt = self::$PDO->prepare($insertStmt);
-		$this->deleteStmt = self::$PDO->prepare($deleteStmt);		
-		$this->findByCategoryStmt = self::$PDO->prepare($findByCategoryStmt);		
-		$this->findTop20Stmt = self::$PDO->prepare($findTop20Stmt);
-		$this->findByPageStmt = self::$PDO->prepare($findByPageStmt);
+		$findByNameStmt = sprintf("select * from %s where name like :name ORDER BY name", $tblCourse);
+		
+		$this->selectAllStmt 		= self::$PDO->prepare($selectAllStmt);
+        $this->selectStmt 			= self::$PDO->prepare($selectStmt);
+        $this->updateStmt 			= self::$PDO->prepare($updateStmt);
+        $this->insertStmt 			= self::$PDO->prepare($insertStmt);
+		$this->deleteStmt 			= self::$PDO->prepare($deleteStmt);		
+		$this->findByCategoryStmt 	= self::$PDO->prepare($findByCategoryStmt);		
+		$this->findTop20Stmt 		= self::$PDO->prepare($findTop20Stmt);
+		$this->findByPageStmt 		= self::$PDO->prepare($findByPageStmt);
+		$this->findByNameStmt 		= self::$PDO->prepare($findByNameStmt);
         
     } 
-    function getCollection( array $raw ) {
-        return new CourseCollection( $raw, $this );
-    }
-
+    function getCollection( array $raw ) {return new CourseCollection( $raw, $this );}
     protected function doCreateObject( array $array ) {
         $obj = new \MVC\Domain\Course( 
 			$array['id'],
@@ -74,12 +73,8 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 		);
         return $obj;
     }
-
-    protected function targetClass() {        
-		return "Course";
-    }
-
-    protected function doInsert( \MVC\Domain\Object $object ) {
+    protected function targetClass() {return "Course";}
+    protected function doInsert( \MVC\Domain\Object $object ){
         $values = array( 
 			$object->getIdCategory(),
 			$object->getName(),
@@ -134,5 +129,12 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 		$this->findByPageStmt->execute();
         return new CourseCollection( $this->findByPageStmt->fetchAll(), $this );
     }
+	
+	function findByName( $values ) {		
+		$this->findByNameStmt->bindValue(':name', $values[0]."%", \PDO::PARAM_STR);
+		$this->findByNameStmt->execute();
+        return new CourseCollection( $this->findByNameStmt->fetchAll(), $this );
+    }
+	
 }
 ?>
