@@ -106,6 +106,10 @@ class TrackingDaily extends Object{
 	function getURLReportPaid()		{return "/report/".$this->getIdTracking()."/".$this->getId()."/paid";}
 	function getURLReportCollect()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/collect";}
 	function getURLReportCourse()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/course";}
+	function getURLReportCustomer()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/customer";}
+	function getURLReportCustomerDetail($IdCustomer){
+		return "/report/".$this->getIdTracking()."/".$this->getId()."/customer/".$IdCustomer;
+	}
 	
 	//-------------------------------------------------------------------------------
     static function findAll() {$finder = self::getFinder( __CLASS__ ); return $finder->findAll();}

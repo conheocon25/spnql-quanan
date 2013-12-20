@@ -49,11 +49,9 @@
 		<command name="ReportPaidDaily">	<view>ReportPaidDaily</view>	</command>
 		<command name="ReportCollectDaily">	<view>ReportCollectDaily</view>	</command>
 		<command name="ReportCourseDaily">	<view>ReportCourseDaily</view>	</command>
-		
-		<command name="ReportGeneral">		<view>ReportGeneral</view>		</command>		
-		<command name="ReportCustomer"><view>ReportCustomer</view></command>
-		<command name="ReportCustomerDetail"><view>ReportCustomerDetail</view></command>				
-						
+		<command name="ReportCustomerDaily"><view>ReportCustomerDaily</view></command>
+		<command name="ReportCustomerDailyDetail"><view>ReportCustomerDailyDetail</view></command>
+										
 		<!-- ============================================================================== -->
 		<!-- SELLING		 																-->
 		<!-- ============================================================================== -->		

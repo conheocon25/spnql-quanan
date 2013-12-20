@@ -144,6 +144,16 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label class="control-label">Tính tiền</label>
+										<div class="controls">
+											<select name="Status1" id="Status1" style="width:80%;">
+												<option value="0">Chưa tính</option>
+												<option value="1">Thanh toán đủ</option>
+												<option value="2">Nợ phiếu</option>												
+											</select>											
+										</div>
+									</div>
+									<div class="form-group">
 										<label class="control-label">Gõ/quét mã thẻ</label>
 										<div class="controls">
 											<input id="SearchIdCustomer" name="SearchIdCustomer" type="text" class="form-control input-small" />
@@ -373,8 +383,8 @@
 															
 					$('#IdUser1').attr('alt'			, data.IdUser);
 					$('#IdCustomer1').attr('alt'		, data.IdCustomer);
-					$('#Note1').attr('alt'				, data.Note);
-					$('#Status1').attr('alt'			, data.Status);
+					$('#Note1').attr('alt'				, data.Note);					
+					$('#Status1').select2('val'			, data.Status);
 					$('#DiscountValue1').attr('alt'		, data.DiscountValue);
 					$('#Surtax1').attr('alt'			, data.Surtax);
 					$('#Payment1').attr('alt'			, data.Payment);
@@ -454,8 +464,8 @@
 				Data[4] 	= $('#DateTime1').val();
 				Data[5] 	= $('#DateTimeEnd1').val();
 				Data[6] 	= "";//$('#Note1').attr('alt');
-				Data[7] 	= $('#Status1').attr('alt');
-				Data[8] 	= $('#DiscountValue1').attr('alt');
+				Data[7] 	= $('#Status1').val();
+				Data[8] 	= $('#DiscountValue1').val();
 				Data[9] 	= $('#DiscountPercent1').val();
 				Data[10] 	= $('#Surtax1').val();
 				Data[11] 	= "0";//$('#Payment1').val();
@@ -469,6 +479,7 @@
 					data: {Data:Data},
 					url: URL,
 					success: function(msg){
+						
 						$("#Session").load("/selling/load/table/"+IdTable);
 					}
 				});				
