@@ -1,6 +1,6 @@
 <?php		
 	namespace MVC\Command;	
-	class ReportCustomerDailyDetail extends Command{
+	class ReportDailyCustomerDetail extends Command{
 		function doExecute( \MVC\Controller\Request $request ){
 			require_once("mvc/base/domain/HelperFactory.php");			
 			//-------------------------------------------------------------

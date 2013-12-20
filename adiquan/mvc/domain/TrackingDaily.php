@@ -75,12 +75,26 @@ class TrackingDaily extends Object{
 		$TDPreAll 	= $mTD->findByPre(array($this->getIdTracking(), $this->getDate()));
 		if ($TDPreAll->count()==0){
 			$OldValue 	= 0;
-		}			
+			$NewValue  	= 
+							$OldValue + 
+							$this->getSelling() + 
+							$this->getCollect() + 
+							$this->getStore() - 
+							$this->getImport() - 
+							$this->getPaid();
+		}
 		else{
 			$OldValue 	= $TDPreAll->current()->getValue();
-		}
-			
-		return ($OldValue + $this->getSelling() + $this->getCollect() + $this->getStore() - $this->getImport() - $this->getPaid()) ;}
+			$NewValue  	= 
+							$OldValue + 
+							$this->getSelling() + 
+							$this->getCollect() + 
+							($this->getStore() - $TDPreAll->current()->getStore()) - 
+							$this->getImport() - 
+							$this->getPaid();
+		}			
+		return $NewValue ;
+	}
 	function getValuePrint( ) {$N = new \MVC\Library\Number($this->getValue());return $N->formatCurrency();}
 		
 	//-------------------------------------------------------------------------------
@@ -100,6 +114,7 @@ class TrackingDaily extends Object{
 	//-------------------------------------------------------------------------------
 	//DEFINE URL
 	//-------------------------------------------------------------------------------
+	function getURLReport()			{return "/report/".$this->getIdTracking()."/".$this->getId();}
 	function getURLReportSelling()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/selling";}
 	function getURLReportImport()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/import";}
 	function getURLReportStore()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/store";}

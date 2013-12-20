@@ -6,20 +6,7 @@
 	</head>
 	
 	<body data-menu-position="closed">
-		<div metal:use-macro="mAdmin.xhtml/Header"/>
-		<!--
-		<div class="menu">			
-			<div id="sidebar">
-				<ul style="display: block;">																				
-					<li tal:repeat="Tracking1 TrackingAll" tal:attributes="class php:Tracking1->getId()==Tracking->getId()?'active':'disable'">
-						<a tal:attributes="href Tracking1/getURLView">
-							<i class="icon-book" /><span tal:content="Tracking1/getName"/>							
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-		!-->
+		<div metal:use-macro="mAdmin.xhtml/Header"/>		
 		<div id="content">
 			<div metal:use-macro="mAdmin.xhtml/ContentHeader"/>			
 			<div metal:use-macro="mAdmin.xhtml/LocationBar"/>
