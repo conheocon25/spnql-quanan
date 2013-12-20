@@ -31,7 +31,7 @@
 			<tr>
 				<th width="42%"><b>TÊN HÀNG</b></th>
 				<th width="11%" align="right"><b>SL</b></th>
-				<th width="21%" align="right"><b>Đ.GIÁ</b></th>			
+				<th width="21%" align="right"><b>Đ.GIÁ</b></th>
 				<th width="26%" align="right"><b>T.TIỀN</b></th>
 			</tr>
 		</thead>
@@ -41,7 +41,7 @@
 				<td width="11%" align='right' tal:content="Detail/getCount" />
 				<td width="21%" align='right' tal:content="Detail/getPricePrint" />
 				<td width="26%" align='right' ><span tal:content="Detail/getValuePrint" /></td>
-			</tr>		
+			</tr>
 		</tbody>
 	</table>
 	<table style="padding-bottom:2px;" width="100%" cellpadding="2" cellspacing="0" border="0">
@@ -64,7 +64,7 @@
 			<tr><td></td></tr>
 			<tr>
 				<td align='center' colspan="5" width="100%">
-					<B>CÁM ƠN QUÍ KHÁCH. HẸN GẶP LẠI !</B>
+					<B>CÁM ƠN QUÍ KHÁCH. HẸN GẶP LẠI ! <span tal:content="Session/getStatus"/></B>
 				</td>
 			</tr>
 		</tbody>
