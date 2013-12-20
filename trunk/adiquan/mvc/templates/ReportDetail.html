@@ -42,7 +42,7 @@
 									</thead>
 									<tbody>
 										<tr tal:repeat="TD Tracking/getDailyAll">
-											<td><span tal:content="TD/getDatePrint"/></td>
+											<td><div class="TDExe" tal:attributes="alt TD/getURLReport"><span tal:content="TD/getDatePrint"/></div></td>
 											<td align="right"><a tal:attributes="href TD/getURLReportSelling"><span tal:content="TD/getSellingPrint"/></a></td>
 											<td align="right"><a tal:attributes="href TD/getURLReportImport"><span tal:content="TD/getImportPrint"/></a></td>
 											<td align="right"><a tal:attributes="href TD/getURLReportStore"><span tal:content="TD/getStorePrint"/></a></td>
@@ -53,7 +53,7 @@
 											<td align="center"><a tal:attributes="href TD/getURLReportCustomer">Xem</a></td>
 										</tr>
 										<tr>
-											<td align="right"><B>TỔNG CỘNG</B></td>
+											<td align="right"><B>TỔNG KẾT</B></td>
 											<td align="right"><B tal:content="ValueSelling/formatCurrency"/></td>
 											<td align="right"><B tal:content="ValueImport/formatCurrency"/></td>
 											<td align="right"><B tal:content="ValueStore/formatCurrency"/></td>
@@ -73,5 +73,23 @@
 		</div>
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
 		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
+		<script type="text/javascript">
+		/*<![CDATA[*/
+			//-----------------------------------------------------------------------------------
+			//EXE DAILY			
+			//-----------------------------------------------------------------------------------						
+			$('.TDExe').click(function(){
+				var URL = $(this).attr('alt');				
+				$.ajax({
+					type: "POST",					
+					url: URL,
+					success: function(msg){
+						
+					}
+				});
+				location.reload();
+			});														
+		/*]]>*/
+		</script>
 	</body>
 </html>
