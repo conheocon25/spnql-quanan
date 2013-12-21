@@ -390,7 +390,7 @@ class CUSTOMPDF extends TCPDF {
 		$this->Ln(5);			 
         $this->Cell(0, 0, 'Long Xuyên, An Giang', 0, false, 'C', 0, '', 0, false, 'M', 'M');
 		$this->Ln(5);
-        $this->Cell(0, 0, '0919 153 189', 0, false, 'C', 0, '', 0, false, 'M', 'M');		
+        $this->Cell(0, 0, '090 99 222 74', 0, false, 'C', 0, '', 0, false, 'M', 'M');
     }
 
     // Page footer

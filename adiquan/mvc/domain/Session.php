@@ -244,7 +244,7 @@ class Session extends Object{
 	
 	function getURLPrint(){
 		$Domain = $this->getTable()->getDomain();
-		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/".$this->getId()."/print";
+		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/".$this->getId()."/print.pdf";
     }
 	
 	//---------------------------------------------------------	

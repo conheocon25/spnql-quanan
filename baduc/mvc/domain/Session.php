@@ -44,6 +44,7 @@ class Session extends Object{
 			'IdTable'			=> $this->getIdTable(),			
 			'IdUser'			=> $this->getIdUser(),						
 			'IdCustomer'		=> $this->getIdCustomer(),
+			'CustomerName'		=> $this->getCustomer()->getName(),
 			'DateTime'			=> $this->getDateTime(),
 			'DateTimeEnd'		=> $this->getDateTimeEnd(),
 			'Note'				=> $this->getNote(),
@@ -156,7 +157,10 @@ class Session extends Object{
 	function getStatus( ) {return $this->Status;}	
 	function setStatus( $Status ) {$this->Status = $Status;$this->markDirty();}
 			
-	function getStatusPrint(){if ( isset($this->DateTime) )return "Đang có khách";else return "Chưa có khách";}
+	function getStatusPrint(){
+		$Arr = array("Chưa tính", "Thanh toán đủ", "Thiếu nợ phiếu");
+		return $Arr[$this->Status];
+	}
 	
 	//Tiền khách trả
 	function getPayment( ) {return $this->Payment;}	
@@ -240,7 +244,7 @@ class Session extends Object{
 	
 	function getURLPrint(){
 		$Domain = $this->getTable()->getDomain();
-		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/".$this->getId()."/print";
+		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/".$this->getId()."/print.pdf";
     }
 	
 	//---------------------------------------------------------	
