@@ -64,7 +64,7 @@
 								<div class="modal-header">
 									<h3><i class="glyphicons-fast_food modal-icon"/>THÊM MÓN</h3>
 								</div>
-								<div class="form-horizontal">
+								<form id="FormCourseInsert" action="#" class="form-horizontal" novalidate="novalidate">
 									<div class="modal-body">													
 										<div class="form-group">
 											<label class="control-label">Tên</label>
@@ -101,11 +101,11 @@
 											</div>
 										</div>
 									</div>
-									<div class="modal-footer">
-										<button id="URLInsButton" class="btn btn-primary btn-small"><i class="glyphicons-download_alt"/> Lưu</button>
+									<div class="modal-footer">										
+										<button class="btn btn-primary btn-small" type="submit" value="Validate"><i class="glyphicons-download_alt"/> Lưu</button>
 										<button data-dismiss="modal" class="btn btn-default btn-small"><i class="glyphicons-undo"/> Hủy</button>
 									</div>
-								</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -118,7 +118,7 @@
 								<div class="modal-header">
 									<h3><i class="glyphicons-fast_food modal-icon"/>CHỈNH SỬA MÓN</h3>
 								</div>
-								<div class="form-horizontal">
+								<form id="FormCourseUpdate" action="#" class="form-horizontal" novalidate="novalidate">
 									<div class="form-group">
 										<label class="control-label">Tên</label>
 										<div class="controls">
@@ -154,10 +154,10 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button id="URLUpdButton" class="btn btn-primary btn-small"><i class="glyphicons-download_alt"/> Lưu</button>
+										<button id="URLUpdButton" class="btn btn-primary btn-small" type="submit" value="Validate"><i class="glyphicons-download_alt"/> Lưu</button>
 										<button data-dismiss="modal" class="btn btn-default btn-small"><i class="glyphicons-undo"/> Hủy</button>
 									</div>
-								</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -213,32 +213,65 @@
 			});
 		
 			//-----------------------------------------------------------------------------------
-			//Insert 1 COURSE
-			$('#URLInsButton').click(function(){
-				var Data = [];
-				Data[0] = 'null';								
-				Data[1] = $('#IdCategory').attr('alt');				
-				Data[2] = $('#Name1').val();
-				Data[3] = $('#ShortName1').val();
-				Data[4] = $('#Unit1').val();
-				Data[5] = $('#Price1').val();
-				Data[6] = $('#Price1').val();
-				Data[7] = $('#Price1').val();
-				Data[8] = $('#Price1').val();
-				Data[9] = "";
-				Data[10] = $('#Prepare1').val();
-				
-				var URL = "/object/ins/Course";
-				$.ajax({
-					type: "POST",
-					data: {Data:Data},
-					url: URL,
-					success: function(msg){
-						location.reload();
+			//Insert 1 RESOURCE			
+			$("#FormCourseInsert").validate({
+				rules:{
+					Name1:{
+						minlength: 2,
+						required:true
+					},
+					ShortName1:{
+						minlength: 2,
+						required:true
+					},
+					Price1:{
+						number:true,
+						required:true,
+						min:0,
+						max:10000000
+					},
+					Prepare1:{
+						number:true,
+						required:true,
+						min:0,
+						max:120
 					}
-				});
-			});
-			
+				},
+				errorClass: "help-inline",
+				errorElement: "span",
+				highlight:function(element, errorClass, validClass) {
+					$(element).parents('.form-group').addClass('has-error');
+				},
+				unhighlight: function(element, errorClass, validClass) {
+					$(element).parents('.form-group').removeClass('has-error');
+					$(element).parents('.form-group').addClass('has-success');
+				},
+				submitHandler: function (form) {					
+					var Data = [];
+					Data[0] = 'null';								
+					Data[1] = $('#IdCategory').attr('alt');				
+					Data[2] = $('#Name1').val();
+					Data[3] = $('#ShortName1').val();
+					Data[4] = $('#Unit1').val();
+					Data[5] = $('#Price1').val();
+					Data[6] = $('#Price1').val();
+					Data[7] = $('#Price1').val();
+					Data[8] = $('#Price1').val();
+					Data[9] = "";
+					Data[10] = $('#Prepare1').val();
+					
+					var URL = "/object/ins/Course";
+					$.ajax({
+						type: "POST",
+						data: {Data:Data},
+						url: URL,
+						success: function(msg){
+							location.reload();
+						}
+					});
+					return false;
+				}
+			});				
 			//-----------------------------------------------------------------------------------
 			//Load 1 COURSE
 			//-----------------------------------------------------------------------------------
@@ -260,30 +293,64 @@
 			//-----------------------------------------------------------------------------------
 			//Update 1 RESOURCE
 			//-----------------------------------------------------------------------------------
-			$('#URLUpdButton').click(function(){
-				var Data = [];								
-				Data[0] = $('#URLUpdButton').attr('alt');
-				Data[1] = $('#IdCategory').attr('alt');				
-				Data[2] = $('#Name2').val();
-				Data[3] = $('#ShortName2').val();
-				Data[4] = $('#Unit2').val();
-				Data[5] = $('#Price2').val();
-				Data[6] = $('#Price2').val();
-				Data[7] = $('#Price2').val();
-				Data[8] = $('#Price2').val();
-				Data[9] = "";
-				Data[10] = $('#Prepare2').val();
-				
-				var URL = "/object/upd/Course";
-				$.ajax({
-					type: "POST",
-					data: {Data:Data},
-					url: URL,
-					success: function(msg){
-						location.reload();
+			$("#FormCourseUpdate").validate({
+				rules:{
+					Name2:{
+						minlength: 2,
+						required:true
+					},
+					ShortName2:{
+						minlength: 2,
+						required:true
+					},
+					Price2:{
+						number:true,
+						required:true,
+						min:0,
+						max:10000000
+					},
+					Prepare2:{
+						number:true,
+						required:true,
+						min:0,
+						max:120
 					}
-				});
-			});			
+				},
+				errorClass: "help-inline",
+				errorElement: "span",
+				highlight:function(element, errorClass, validClass) {
+					$(element).parents('.form-group').addClass('has-error');
+				},
+				unhighlight: function(element, errorClass, validClass) {
+					$(element).parents('.form-group').removeClass('has-error');
+					$(element).parents('.form-group').addClass('has-success');
+				},
+				submitHandler: function (form) {					
+					var Data = [];								
+					Data[0] = $('#URLUpdButton').attr('alt');
+					Data[1] = $('#IdCategory').attr('alt');				
+					Data[2] = $('#Name2').val();
+					Data[3] = $('#ShortName2').val();
+					Data[4] = $('#Unit2').val();
+					Data[5] = $('#Price2').val();
+					Data[6] = $('#Price2').val();
+					Data[7] = $('#Price2').val();
+					Data[8] = $('#Price2').val();
+					Data[9] = "";
+					Data[10] = $('#Prepare2').val();
+					
+					var URL = "/object/upd/Course";
+					$.ajax({
+						type: "POST",
+						data: {Data:Data},
+						url: URL,
+						success: function(msg){
+							location.reload();
+						}
+					});
+					return false;
+				}
+			});				
 		/*]]>*/
 		</script>		
 	</body>

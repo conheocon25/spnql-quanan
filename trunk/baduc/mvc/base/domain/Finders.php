@@ -41,7 +41,9 @@ interface CustomerFinder 		extends Finder {}
 interface EmployeeFinder 		extends Finder {}
 interface UnitFinder 			extends Finder {}
 interface ConfigFinder 			extends Finder {}
+
 interface TrackingFinder 		extends Finder {}
+interface TrackingCustomerFinder 	extends Finder {}
 interface TrackingStoreFinder 	extends Finder {}
 interface TrackingCourseFinder 	extends Finder {}
 interface TrackingDailyFinder 	extends Finder {}
