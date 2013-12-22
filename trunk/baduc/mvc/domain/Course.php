@@ -15,6 +15,7 @@ class Course extends Object{
 	private $Price4;
 	private $Picture;
 	private $Prepare;
+	private $IsDiscount;
 	
 	//-------------------------------------------------------------------------------
 	//ACCESSING MEMBER PROPERTY
@@ -29,8 +30,9 @@ class Course extends Object{
 		$Price2=null, 
 		$Price3=null, 
 		$Price4=null, 
-		$Picture=Null,
-		$Prepare=Null) 
+		$Picture=null,
+		$Prepare=null,
+		$IsDiscount=null) 
 	{
         $this->Id 			= $Id;
 		$this->IdCategory 	= $IdCategory;
@@ -43,7 +45,7 @@ class Course extends Object{
 		$this->Price4 		= $Price4;
 		$this->Picture 		= $Picture;
 		$this->Prepare 		= $Prepare;
-		
+		$this->IsDiscount 	= $IsDiscount;		
         parent::__construct( $Id );
     }
     function getId( ) {return $this->Id;}
@@ -83,6 +85,9 @@ class Course extends Object{
 	function setPrepare( $Picture ) {$this->Prepare = $Prepare;$this->markDirty();}	
 	function getPrepare( ) {return $this->Prepare;}
 	
+	function setIsDiscount( $IsDiscount ) {$this->IsDiscount = $IsDiscount;$this->markDirty();}	
+	function getIsDiscount( ) {return $this->IsDiscount;}
+	
 	public function toJSON(){
 		$json = array(
 			'Id' 			=> $this->getId(),
@@ -95,7 +100,8 @@ class Course extends Object{
 		 	'Price3'		=> $this->getPrice3(),
 		 	'Price4'		=> $this->getPrice4(),
 		 	'Picture'		=> $this->getPicture(),
-			'Prepare'		=> $this->getPrepare()
+			'Prepare'		=> $this->getPrepare(),
+			'IsDiscount'	=> $this->getIsDiscount()
 		);
 		return json_encode($json);
 	}
@@ -111,6 +117,7 @@ class Course extends Object{
 		$this->Price4 		= $Data[8];
 		$this->Picture 		= $Data[9];
 		$this->Prepare 		= $Data[10];
+		$this->IsDiscount 	= $Data[11];
     }
 	
 	function getURLRecipe(){return "/setting/category/".$this->getIdCategory()."/".$this->getId()."/recipe";}	
