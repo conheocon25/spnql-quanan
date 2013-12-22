@@ -1,6 +1,5 @@
 <?php
 namespace MVC\Mapper;
-
 require_once( "mvc/base/Mapper.php" );
 class Course extends Mapper implements \MVC\Domain\CourseFinder {
 
@@ -9,11 +8,11 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 		$tblCourse = "tbl_course";
 		$tblSessionDetail = "tbl_session_detail";
 		
-		$selectAllStmt = sprintf("select * from %s ORDER BY name", $tblCourse);								
+		$selectAllStmt = sprintf("select * from %s ORDER BY name", $tblCourse);
 		$selectStmt = sprintf("select * from %s where id=?", $tblCourse);
-		$updateStmt = sprintf("update %s set idcategory=?, name=?, shortname=?, unit=?, price1=?, price2=?, price3=?, price4=?, picture=?, prepare=? where id=?", $tblCourse);
-		$insertStmt = sprintf("insert into %s (idcategory, name, shortname, unit, price1, price2, price3, price4, picture, prepare) 
-							values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $tblCourse);
+		$updateStmt = sprintf("update %s set idcategory=?, name=?, shortname=?, unit=?, price1=?, price2=?, price3=?, price4=?, picture=?, prepare=?, is_discount=? where id=?", $tblCourse);
+		$insertStmt = sprintf("insert into %s (idcategory, name, shortname, unit, price1, price2, price3, price4, picture, prepare, is_discount) 
+							values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $tblCourse);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblCourse);
 		$findByPageStmt = sprintf("
 							SELECT *
@@ -35,7 +34,8 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 								C.price4,
 								C.picture, 
 								sum(SD.count) as count,
-								C.prepare
+								C.prepare,
+								C.is_discount
 							FROM 
 								 %s C LEFT JOIN %s SD
 								 ON C.id = SD.idcourse
@@ -69,7 +69,8 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 			$array['price3'],
 			$array['price4'],
 			$array['picture'],
-			$array['prepare']			
+			$array['prepare'],
+			$array['is_discount']
 		);
         return $obj;
     }
@@ -85,7 +86,8 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 			$object->getPrice3(),
 			$object->getPrice4(),
 			$object->getPicture(),
-			$object->getPrepare()
+			$object->getPrepare(),
+			$object->getIsDiscount()
 		); 
         $this->insertStmt->execute( $values );
         $id = self::$PDO->lastInsertId();
@@ -104,6 +106,7 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 			$object->getPrice4(),
 			$object->getPicture(),
 			$object->getPrepare(),
+			$object->getIsDiscount(),
 			$object->getId()
 		);
         $this->updateStmt->execute( $values );
@@ -134,7 +137,6 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 		$this->findByNameStmt->bindValue(':name', $values[0]."%", \PDO::PARAM_STR);
 		$this->findByNameStmt->execute();
         return new CourseCollection( $this->findByNameStmt->fetchAll(), $this );
-    }
-	
+    }	
 }
 ?>
