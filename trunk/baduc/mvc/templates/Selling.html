@@ -23,74 +23,76 @@
 		<div id="content">
 			<div metal:use-macro="mAdmin.xhtml/ContentHeader"/>
 			<div metal:use-macro="mAdmin.xhtml/LocationBar"/>
-			<div class="row">
-				<div class="col-4">
-					<div id="TableAll"/>
-					<div class="widget-box">
-						<div class="controls">
-							<input id="SearchName" type="text" placeholder="Nhập tìm món ăn" style="width:55%;"/>
-							<a href="#DialogInsCourse" class="btn" data-toggle="modal" tal:attributes="data-id-category Config/getValue">
-								<i class="glyphicons-plus" />
-							</a>
-							<a href="#DialogCallCourse" class="btn CallCourse" data-toggle="modal">
-								<i class="glyphicons-bell" />
-							</a>
-							<a href="#DialogPrepareCourse" class="btn CoursePreparePrint" data-toggle="modal">
-								<i class="glyphicons-stopwatch" />
-							</a>
-						</div>
-					</div>
-					<div id="CourseF"/>
-				</div>
-				<div class="col-5">
-					<div id="Session"/>
-				</div>
-				<div class="col-3">					
-					<div class="accordion widget-box" id="collapse-group">						
-						<div class="accordion-group widget-box">
-							<div class="accordion-heading">
-								<div class="widget-title">
-									<a data-parent="#collapse-group" tal:attributes="href php:'#Top10'" data-toggle="collapse">
-										<span class="icon"><i class="glyphicons-fast_food"></i></span><h5 tal:content="string:Top10"/>
-									</a>
-								</div>
-							</div>							
-							<div class="collapse in accordion-body" id="Top10">
-								<div class="widget-content nopadding size-12">
-                                    <ul class="activity-list">
-                                        <li tal:repeat="T Top10">
-											<a class="course-item">
-												<strong tal:content="T/getCourse/getShortName"/>
-												<button class="Course pull-right btn-primary" tal:attributes="alt T/getCourse/getId;data-delta 'plus' "><i class="glyphicons-ok_2"/></button>
-											</a>
-										</li>
-                                    </ul>
-                                </div>
+			<div class="row background-fix">
+				<div class="background-cont clearfix">
+					<div class="col-4">
+						<div id="TableAll"/>
+						<div class="widget-box">
+							<div class="controls">
+								<input id="SearchName" type="text" placeholder="Nhập tìm món ăn" style="width:55%;"/>
+								<a href="#DialogInsCourse" class="btn" data-toggle="modal" tal:attributes="data-id-category Config/getValue">
+									<i class="glyphicons-plus" />
+								</a>
+								<a href="#DialogCallCourse" class="btn CallCourse" data-toggle="modal">
+									<i class="glyphicons-bell" />
+								</a>
+								<a href="#DialogPrepareCourse" class="btn CoursePreparePrint" data-toggle="modal">
+									<i class="glyphicons-stopwatch" />
+								</a>
 							</div>
 						</div>
-						<div class="accordion-group widget-box" tal:repeat="Category CategoryAll">
-							<div class="accordion-heading">
-								<div class="widget-title">
-									<a data-parent="#collapse-group" tal:attributes="href php:'#'.Category->getIdString();" data-toggle="collapse">
-										<span class="icon"><i class="glyphicons-fast_food"></i></span><h5 tal:content="Category/getName"/>
-									</a>
+						<div id="CourseF"/>
+					</div>
+					<div class="col-5">
+						<div id="Session"/>
+					</div>
+					<div class="col-3">					
+						<div class="accordion widget-box" id="collapse-group">						
+							<div class="accordion-group widget-box">
+								<div class="accordion-heading">
+									<div class="widget-title">
+										<a data-parent="#collapse-group" tal:attributes="href php:'#Top10'" data-toggle="collapse">
+											<span class="icon"><i class="glyphicons-fast_food"></i></span><h5 tal:content="string:Top10"/>
+										</a>
+									</div>
+								</div>							
+								<div class="collapse in accordion-body" id="Top10">
+									<div class="widget-content nopadding size-12">
+										<ul class="activity-list">
+											<li tal:repeat="T Top10">
+												<a class="course-item">
+													<strong tal:content="T/getCourse/getShortName"/>
+													<button class="Course pull-right btn-primary" tal:attributes="alt T/getCourse/getId;data-delta 'plus' "><i class="glyphicons-ok_2"/></button>
+												</a>
+											</li>
+										</ul>
+									</div>
 								</div>
 							</div>
-							<div class="collapse accordion-body" tal:attributes="id Category/getIdString">
-								<div class="widget-content nopadding size-12">
-                                    <ul class="activity-list">
-                                        <li tal:repeat="Course Category/getCourseAll">
-											<a class="course-item">
-												<strong tal:content="Course/getShortName"/>
-												<button class="Course pull-right btn-primary" tal:attributes="alt Course/getId;data-delta 'plus' "><i class="glyphicons-ok_2"/></button>
-											</a>
-										</li>
-                                    </ul>
-                                </div>
+							<div class="accordion-group widget-box" tal:repeat="Category CategoryAll">
+								<div class="accordion-heading">
+									<div class="widget-title">
+										<a data-parent="#collapse-group" tal:attributes="href php:'#'.Category->getIdString();" data-toggle="collapse">
+											<span class="icon"><i class="glyphicons-fast_food"></i></span><h5 tal:content="Category/getName"/>
+										</a>
+									</div>
+								</div>
+								<div class="collapse accordion-body" tal:attributes="id Category/getIdString">
+									<div class="widget-content nopadding size-12">
+										<ul class="activity-list">
+											<li tal:repeat="Course Category/getCourseAll">
+												<a class="course-item">
+													<strong tal:content="Course/getShortName"/>
+													<button class="Course pull-right btn-primary" tal:attributes="alt Course/getId;data-delta 'plus' "><i class="glyphicons-ok_2"/></button>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>			
 		</div>
 		<div id="TableActive" />

@@ -21,3 +21,13 @@
 	.size-12 { font-size: 12px; }
 
 	.course-item button { width: 26px; margin-top: -5px; }
+	
+	.background-fix {
+		background: url("/data/images/bg/bg_fix.jpg") no-repeat fixed center center transparent;
+		-webkit-background-size: cover !important;
+		-moz-background-size: cover !important;
+		-o-background-size: cover !important;
+		background-size: cover !important;
+	}
+	
+	.background-cont { background-color: rgba(0, 0, 0, .5); }
