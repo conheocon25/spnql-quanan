@@ -126,15 +126,15 @@
 									<div class="form-group">
 										<div id="DocPreview" width="320px" height="480px"/>
 									</div>
-									<div class="form-actions">
-										<button data-dismiss="modal" class="btn btn-default btn-small"><i class="glyphicons-undo"/> Đóng lại</button>
+									<div class="modal-footer">									
+										<button data-dismiss="modal" class="btn btn-default btn-small"><i class="glyphicons-undo"/> Đóng</button>
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
 					<!-- END DIALOG EDIT -->
-					
+														
 					<!-- DIALOG SESSION EDIT	-->
 					<div id="DialogSession" class="modal fade">
 						<div class="modal-dialog">
@@ -154,12 +154,22 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label class="control-label">Nhân viên</label>
+										<div class="controls">
+											<select name="IdEmployee1" id="IdEmployee1" style="width:80%;" class="form-control">
+												<option tal:repeat="Employee EmployeeAll" tal:attributes="value Employee/getId;selected php:Session->getIdEmployee()==Employee->getId()?true:false">
+													<span tal:content="Employee/getName" />
+												</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
 										<label class="control-label">Tính tiền</label>
 										<div class="controls">
-											<select name="Status1" id="Status1" style="width:80%;">
-												<option value="0">Chưa tính</option>
-												<option value="1">Thanh toán đủ</option>
-												<option value="2">Nợ phiếu</option>
+											<select name="Status1" id="Status1" style="width:80%;" class="form-control">
+												<option tal:attributes="selected php:Session->getStatus()==0?'true':false">Chưa tính</option>
+												<option tal:attributes="selected php:Session->getStatus()==1?'true':false">Thanh toán đủ</option>
+												<option tal:attributes="selected php:Session->getStatus()==2?'true':false">Nợ phiếu</option>
 											</select>
 										</div>
 									</div>
@@ -187,8 +197,7 @@
 									</div>
 									<div id="IdUser1"/>
 									<div id="IdCustomer1"/>
-									<div id="Note1"/>
-									<div id="Status1"/>
+									<div id="Note1"/>									
 									<div id="DiscountValue1"/>
 									<div id="Surtax1"/>
 									<div id="Payment1"/>									
@@ -304,8 +313,8 @@
 				</div>
 			</div>
 		</div>
-		
-        <script>
+        <script type="text/javascript">
+		/*<![CDATA[*/
 			$('#DateTime1').datetimepicker({
 				language:  'vi',
 				weekStart: 1,
@@ -334,7 +343,7 @@
 					$("#CustomerName").val(data.Name);
 				});				
 			});
-			$(".SessionPreview").click(function(){				
+			$(".SessionPreview").click(function(){
 				URL = $(this).attr('alt');
 				var mPDF = new PDFObject({ 		
 					url: URL,				
@@ -402,12 +411,15 @@
 					$('#DateTime1').attr('value'		, data.DateTime);
 					$('#DateTimeEnd1').attr('value'		, data.DateTimeEnd);
 					$('#DiscountPercent1').attr('value'	, data.DiscountPercent);
-					$('#CustomerName').attr('value'		, data.CustomerName);
-															
+					$('#CustomerName').attr('value'		, data.CustomerName);					
+					
+					//$('#IdEmployee1').select2('val'		, 2);
+					
 					$('#IdUser1').attr('alt'			, data.IdUser);
 					$('#IdCustomer1').attr('alt'		, data.IdCustomer);
 					$('#Note1').attr('alt'				, data.Note);					
-					$('#Status1').select2('val'			, data.Status);
+					//$('#Status1').select2('val'			, data.Status);
+					//$('#Status1').select2('val'			, 2);
 					$('#DiscountValue1').attr('alt'		, data.DiscountValue);
 					$('#Surtax1').attr('alt'			, data.Surtax);
 					$('#Payment1').attr('alt'			, data.Payment);
@@ -420,14 +432,15 @@
 				Data[1] 	= IdTable;
 				Data[2] 	= $('#IdUser1').attr('alt');				
 				Data[3] 	= $('#IdCustomer1').attr('alt');				
-				Data[4] 	= $('#DateTime1').val();
-				Data[5] 	= $('#DateTimeEnd1').val();
-				Data[6] 	= "";//$('#Note1').attr('alt');
-				Data[7] 	= $('#Status1').val();
-				Data[8] 	= $('#DiscountValue1').val();
-				Data[9] 	= $('#DiscountPercent1').val();
-				Data[10] 	= $('#Surtax1').val();
-				Data[11] 	= "0";//$('#Payment1').val();				
+				Data[4] 	= $('#IdEmployee1').val();
+				Data[5] 	= $('#DateTime1').val();
+				Data[6] 	= $('#DateTimeEnd1').val();
+				Data[7] 	= "";//$('#Note1').attr('alt');
+				Data[8] 	= $('#Status1').val();
+				Data[9] 	= $('#DiscountValue1').val();
+				Data[10] 	= $('#DiscountPercent1').val();
+				Data[11] 	= $('#Surtax1').val();
+				Data[12] 	= "0";//$('#Payment1').val();
 				$("#DialogSession").modal('hide');
 									
 				var URL = "/object/upd/Session";
@@ -447,7 +460,7 @@
 			//-----------------------------------------------------------------------------------
 			$('.Course').click(function(e){
 				var IdCourse 	= $(this).attr('alt');
-				var Delta 		= $(this).attr('data-delta');				
+				var Delta 		= $(this).attr('data-delta');
 				var IdTable 	= $("#CurrentTable").attr('alt');
 				URL = "/selling/call/table/"+IdTable+"/"+IdCourse+"/"+Delta;				
 				e.stopImmediatePropagation();
@@ -548,7 +561,7 @@
 					return false;
 				}
 			});
-							
-        </script>
+		/*]]>*/
+		</script>
 	</body>
 </html>

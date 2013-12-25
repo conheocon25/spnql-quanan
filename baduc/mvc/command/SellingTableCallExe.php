@@ -21,6 +21,7 @@
 			$mCategory 	= new \MVC\Mapper\Category();
 			$mCourse 	= new \MVC\Mapper\Course();
 			$mSession 	= new \MVC\Mapper\Session();
+			$mEmployee 	= new \MVC\Mapper\Employee();
 			$mSD 		= new \MVC\Mapper\SessionDetail();
 			$mCL 		= new \MVC\Mapper\CourseLog();
 						
@@ -30,6 +31,13 @@
 			$Table = $mTable->find($IdTable);
 			$Course = $mCourse->find($IdCourse);
 			
+			$EmployeeAll = $mEmployee->findAll();
+			$Employee = $EmployeeAll->current();
+			if (!isset($Employee)){
+				$IdEmployee = 0;
+			}else{
+				$IdEmployee = $Employee->getId();
+			}
 			
 			//Nếu chưa có Session thì tạo
 			$Session = $Table->getSessionActive();			
@@ -39,6 +47,7 @@
 					$IdTable,				//IdTable
 					1,						//IdUser
 					1,						//IdCustomer	
+					$IdEmployee,			//IdEmployee
 					\date("Y-m-d H:i:s"), 	//DateTime
 					null, 					//DateTimeEnd
 					"",						//Note
@@ -70,8 +79,9 @@
 						null,
 						$IdTable,
 						$IdCourse,
-						\date('Y-m-d H:i:s'),
-						1
+						\date('Y-m-d H:i:s'),	//Ngày giờ hiện hành
+						1,						//Số lượng
+						0						//Mới gọi món
 					);
 					$mCL->insert($CL);
 				}
@@ -88,7 +98,8 @@
 						$IdTable,
 						$SD->getIdCourse(),					
 						\date('Y-m-d H:i:s'),
-						$Delta
+						$Delta,					//Số lượng gọi
+						0						//Mới gọi món
 					);
 					$mCL->insert($CL);
 				}
