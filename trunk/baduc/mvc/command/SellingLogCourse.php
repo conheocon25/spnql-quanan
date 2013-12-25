@@ -16,12 +16,16 @@
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------
-			$CLAll 	= $mCL->findAll();
-						
+			$CLAllPrint 	= $mCL->findByPrint(array());
+			$CLAllKitchen 	= $mCL->findByKitchen(array());
+			$CLAllFinished 	= $mCL->findByFinished(array());
+			
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------									
-			$request->setObject('CLAll'			, $CLAll);
+			$request->setObject('CLAllPrint'			, $CLAllPrint);
+			$request->setObject('CLAllKitchen'			, $CLAllKitchen);
+			$request->setObject('CLAllFinished'			, $CLAllFinished);
 		}
 	}
 ?>

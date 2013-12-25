@@ -4,26 +4,29 @@ require_once( "mvc/base/domain/DomainObject.php");
 
 class CourseLog extends Object{
     private $Id;	
-	private $IdCourse;
 	private $IdTable;
+	private $IdCourse;	
 	private $DateTime;
 	private $Count;
-		
+	private $State;
+	
 	//-------------------------------------------------------------------------------
 	//ACCESSING MEMBER PROPERTY
 	//-------------------------------------------------------------------------------
     function __construct( 
-		$Id			= null, 
-		$IdCourse	= null, 
+		$Id			= null, 		
 		$IdTable	= null, 
+		$IdCourse	= null, 
 		$DateTime	= null, 		
-		$Count		= null) 
+		$Count		= null,
+		$State		= null) 
 	{
         $this->Id 		= $Id;
-		$this->IdCourse = $IdCourse;
-		$this->IdTable 	= $IdTable;
+		$this->IdTable 	= $IdTable;	
+		$this->IdCourse = $IdCourse;		
 		$this->DateTime = $DateTime;		
 		$this->Count 	= $Count;
+		$this->State 	= $State;
 		
         parent::__construct( $Id );
     }
@@ -52,23 +55,32 @@ class CourseLog extends Object{
 	function setCount( $Count ) {$this->Count = $Count; $this->markDirty();}
 	function getCount( ) {return $this->Count;}
 	function getCountPrint( ){$num = new Number($this->Count);return $num->formatCurrency();}
-				
+	
+	function setState( $State ) {$this->State = $State; $this->markDirty();}
+	function getState( ) {return $this->State;}
+	function getStatePrint( ){
+		$Arr = array("Mới", "Bếp", "Đã xong");
+		return $Arr[$this->getState()];
+	}
+	
 	public function toJSON(){
 		$json = array(
 			'Id' 			=> $this->getId(),
 			'IdTable'		=> $this->getIdTable(),
 			'IdCourse'		=> $this->getIdCourse(),
 		 	'DateTime'		=> $this->getDateTime(),
-		 	'Count'			=> $this->getCount()
+		 	'Count'			=> $this->getCount(),
+			'State'			=> $this->getState()
 		);
 		return json_encode($json);
 	}
 	function setArray( $Data ){
         $this->Id 			= $Data[0];		
-		$this->IdCourse 	= $Data[1];
-		$this->IdTable 		= $Data[2];
+		$this->IdTable 		= $Data[1];
+		$this->IdCourse 	= $Data[2];		
 		$this->DateTime 	= $Data[3];		
 		$this->Count 		= $Data[4];
+		$this->State 		= $Data[5];
     }
 		
 	//----------------------------------------------------------------------------------
