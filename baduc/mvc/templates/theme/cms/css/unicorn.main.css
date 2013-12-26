@@ -1328,9 +1328,10 @@ ul#icons li {
     color: #888888;
     display: block;
     padding: 7px 10px;
+	cursor: pointer;
 }
 .activity-list li a:hover {
-    background-color: #FBFBFB;
+    background-color: #EFEDF2;
 }
 .activity-list li a span {
     color: #AAAAAA;
