@@ -283,7 +283,8 @@
 								<td><div class="text-center" tal:content="repeat/Session/number"/></td>
 								<td><div class="text-left" tal:content="Session/getDateTimePrint"/></td>
 								<td>
-									<a tal:attributes="href Session/getURLPrint" target="blank">
+									<a title="Xem phiếu" data-toggle="modal" class="SessionPreview" href="#DialogPreview" 
+										tal:attributes="alt Session/getURLPrint">
 										<div class="text-right" tal:content="Session/getValuePrint"/>
 									</a>
 								</td>

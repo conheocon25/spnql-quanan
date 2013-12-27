@@ -12,13 +12,13 @@ class CourseLog extends Mapper implements \MVC\Domain\CourseLogFinder{
 		$selectAllStmt 		= sprintf("SELECT * FROM %s", $tblCourseLog);
 		$findByPrintStmt 	= sprintf("SELECT * FROM %s CL WHERE state=0", $tblCourseLog);
 		$findByKitchenStmt 	= sprintf("SELECT * FROM %s CL WHERE state=1", $tblCourseLog);
-		$findByFinishedStmt = sprintf("SELECT * FROM %s CL WHERE state=2", $tblCourseLog);
+		$findByFinishedStmt = sprintf("SELECT * FROM %s CL WHERE state=2 ORDER BY date_time DESC LIMIT 10", $tblCourseLog);
 		
 		$findByStmt = sprintf("
 			SELECT *
 			FROM %s CL
 			WHERE
-				MINUTE(TIMEDIFF(now(), date_time)) >= (SELECT `prepare` FROM %s WHERE id=CL.id_course)	AND state=2
+				MINUTE(TIMEDIFF(now(), date_time)) >= (SELECT `prepare` FROM %s WHERE id=CL.id_course)	AND state=3
 		", $tblCourseLog, $tblCourse);
 		
 		$selectStmt = sprintf("select * from %s where id=?", $tblCourseLog);
