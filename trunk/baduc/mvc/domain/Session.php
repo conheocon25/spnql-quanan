@@ -107,7 +107,7 @@ class Session extends Object{
 	function setIdEmployee( $IdEmployee ) {$this->IdEmployee = $IdEmployee; $this->markDirty();}
 	function getEmployee( ) {
 		$mEmployee 	= new \MVC\Mapper\Employee();
-		$Employee 	= $mCustomer->find($this->IdEmployee);
+		$Employee 	= $mEmployee->find($this->IdEmployee);
         return $Employee;
     }
 	
@@ -230,7 +230,7 @@ class Session extends Object{
 	}
 	
 	
-	function getValuePrint(){$num = new Number($this->getValue());return $num->formatCurrency()." đ";}	
+	function getValuePrint(){$num = new Number($this->getValue());return $num->formatCurrency();}	
 	function getValueStrPrint(){$num = new Number($this->getValue());return $num->readDigit()." đồng";}	
 	function getValueBase(){
 		$Value = 0;
