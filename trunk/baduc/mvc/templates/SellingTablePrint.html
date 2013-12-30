@@ -25,6 +25,11 @@
 				<span tal:content="Session/getDateTimePrint" />
 			</td>
 		</tr>
+		<tr tal:condition="Session/getNote">
+			<td width="100%" align="left">
+				<span tal:content="Session/getNote"/>
+			</td>
+		</tr>
 	</table>
 </font>
 <br/>
@@ -46,12 +51,17 @@
 				<td width="26%" align='right' ><span tal:content="Detail/getValuePrint" /></td>
 			</tr>
 		</tbody>
-	</table>
+	</table>	
 	<table style="padding-bottom:2px;" width="100%" cellpadding="2" cellspacing="0" border="0">
 		<tbody>
 			<tr tal:condition="Session/getDiscountPercent">
 				<td align='right' colspan="5" width="100%">
 					<font align='right' size="12pt">GIẢM GIÁ: <b tal:content="Session/getDiscountPercentPrint"/></font>
+				</td>
+			</tr>
+			<tr tal:condition="Session/getDiscountValue">
+				<td align='right' colspan="5" width="100%">
+					<font align='right' size="12pt">GIẢM GIÁ: <b tal:content="Session/getDiscountValuePrint"/></font>
 				</td>
 			</tr>
 			<tr>
@@ -67,7 +77,7 @@
 			<tr><td></td></tr>
 			<tr>
 				<td align='center' colspan="5" width="100%">
-					<B>CÁM ƠN QUÍ KHÁCH. HẸN GẶP LẠI ! <span tal:content="Session/getStatus"/></B>
+					<B>CÁM ƠN QUÍ KHÁCH. HẸN GẶP LẠI !</B>
 				</td>
 			</tr>
 		</tbody>
