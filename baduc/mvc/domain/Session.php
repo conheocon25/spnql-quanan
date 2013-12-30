@@ -150,7 +150,7 @@ class Session extends Object{
     }
 	function getDiscountValuePrint(){
 		$num = new Number($this->getDiscountValue());
-		return $num->formatCurrency()." đ";
+		return $num->formatCurrency();
 	}
 	
 	function setDiscountPercent( $DiscountPercent ) {
@@ -170,7 +170,7 @@ class Session extends Object{
 	function setStatus( $Status ) {$this->Status = $Status;$this->markDirty();}
 			
 	function getStatusPrint(){
-		$Arr = array("Chưa tính", "Thanh toán đủ", "Thiếu nợ phiếu");
+		$Arr = array("Chưa tính", "Thanh toán đủ", "Thiếu nợ phiếu", "Tiếp khách");
 		return $Arr[$this->Status];
 	}
 	
@@ -225,11 +225,10 @@ class Session extends Object{
 			}
 			$SDAll->next();
 		}		
-		$Value = $this->getSurtax() + (int)( ($Sum2 *(1.0 - $this->getDiscountPercent()/100.0) + $Sum1) /1000)*1000;
+		$Value = $this->getSurtax() + (int)( ($Sum2 *(1.0 - $this->getDiscountPercent()/100.0) + $Sum1) /1000)*1000 - $this->getDiscountValue();
 		return $Value;
 	}
-	
-	
+		
 	function getValuePrint(){$num = new Number($this->getValue());return $num->formatCurrency();}	
 	function getValueStrPrint(){$num = new Number($this->getValue());return $num->readDigit()." đồng";}	
 	function getValueBase(){

@@ -32,9 +32,14 @@
 							<a href="#DialogInsCourse" class="btn" data-toggle="modal" tal:attributes="data-id-category Config/getValue">
 								<i class="glyphicons-plus" />
 							</a>
+							<a class="btn RemoveCourseSearch">
+								<i class="glyphicons-circle_remove" />
+							</a>
+							<!--
 							<a href="#DialogCallCourse" class="btn CallCourse" data-toggle="modal">
 								<i class="glyphicons-bell" />
 							</a>
+							!-->
 							<a href="#DialogPrepareCourse" class="btn CoursePreparePrint" data-toggle="modal">
 								<i class="glyphicons-stopwatch" />
 							</a>
@@ -243,11 +248,12 @@
 				fade_in_speed: 'medium', 
 				fade_out_speed: 2000 
 			});
-
+			/*
 			setInterval(function(){
 				getNotifyCourse();
 			}, 10000);
-									
+			*/
+			
 			//NẠP DANH SÁCH CÁC BÀN			
 			$('.Domain').click(function(){
 				var IdDomain = $(this).attr('alt');
@@ -293,8 +299,8 @@
 			
 			//-----------------------------------------------------------------------------------
 			//CALL COURSE
-			$(".CallCourse").click(function(){
-				$("#CourseLog").load("/selling/log/course");
+			$(".RemoveCourseSearch").click(function(){
+				$("#CourseF").html("");
 			});
 			
 			//-----------------------------------------------------------------------------------
