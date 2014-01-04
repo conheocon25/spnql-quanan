@@ -26,10 +26,11 @@
 					<div class="col-12">
 						<div class="widget-box">
 							<div class="widget-content nopadding">								
-								<table class="table table-bordered table-striped table-hover">
+								<table tal:condition="php: @\MVC\Base\SessionRegistry::instance()->getCurrentUser()->isAdmin()" class="table table-bordered table-striped table-hover">
 									<thead>
 										<tr>										
-											<th><div class="text-left">NGÀY</div></th>
+											<th width="32"></th>
+											<th><div class="text-left">NGÀY</div></th>											
 											<th width="90"><div class="text-right">BÁN HÀNG</div></th>
 											<th width="90"><div class="text-right">NHẬP HÀNG</div></th>
 											<th width="90"><div class="text-right">KHO HÀNG</div></th>
@@ -42,7 +43,8 @@
 									</thead>
 									<tbody>
 										<tr tal:repeat="TD Tracking/getDailyAll">
-											<td><a href="#DialogInfo" class="TDExe" data-toggle="modal" tal:attributes="alt TD/getURLReport"><span tal:content="TD/getDatePrint"/></a></td>
+											<td><a tal:attributes="href TD/getURLReportLog"><i class="glyphicons-edit"/></a></td>
+											<td><div class="TDExe" tal:attributes="alt TD/getURLReport" tal:content="TD/getDatePrint"></div></td>
 											<td align="right"><a tal:attributes="href TD/getURLReportSelling"><span tal:content="TD/getSellingPrint"/></a></td>
 											<td align="right"><a tal:attributes="href TD/getURLReportImport"><span tal:content="TD/getImportPrint"/></a></td>
 											<td align="right"><a tal:attributes="href TD/getURLReportStore"><span tal:content="TD/getStorePrint"/></a></td>
@@ -53,7 +55,7 @@
 											<td align="center"><a tal:attributes="href TD/getURLReportCustomer">Xem</a></td>
 										</tr>
 										<tr>
-											<td align="right"><B>TỔNG KẾT</B></td>
+											<td colspan="2" align="right"><B>TỔNG KẾT</B></td>
 											<td align="right"><B tal:content="ValueSelling/formatCurrency"/></td>
 											<td align="right"><B tal:content="ValueImport/formatCurrency"/></td>
 											<td align="right"><B tal:content="ValueStore/formatCurrency"/></td>
@@ -64,29 +66,31 @@
 											<td align="center"></td>
 										</tr>
 									</tbody>
-								</table>								
+								</table>
+								<table tal:condition="php: @\MVC\Base\SessionRegistry::instance()->getCurrentUser()->isSeller()" class="table table-bordered table-striped table-hover">
+									<thead>
+										<tr>										
+											<th><div class="text-left">NGÀY</div></th>
+											<th width="90"><div class="text-right">BÁN HÀNG</div></th>											
+										</tr>
+									</thead>
+									<tbody>
+										<tr tal:repeat="TD Tracking/getDailyAll">
+											<td><div class="TDExe" tal:attributes="alt TD/getURLReport"><span tal:content="TD/getDatePrint"/></div></td>
+											<td align="right"><a tal:attributes="href TD/getURLReportSelling"><span tal:content="TD/getSellingPrint"/></a></td>											
+										</tr>
+										<tr>
+											<td align="right"><B>TỔNG KẾT</B></td>
+											<td align="right"><B tal:content="ValueSelling/formatCurrency"/></td>											
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div id="DialogInfo" class="modal fade">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header"><h3><i class="glyphicons-book modal-icon"/>THÔNG BÁO</h3></div>
-					<div class="form-horizontal">
-						<div class="modal-body">
-							<p>Đã thực hiện tính toán xong !</p>
-						</div>
-						<div class="modal-footer">							
-							<button data-dismiss="modal" class="btn btn-default btn-small"><i class="glyphicons-undo"/> Đóng</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-					
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
 		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
 		<script type="text/javascript">
@@ -102,7 +106,7 @@
 					success: function(msg){
 						
 					}
-				});				
+				});
 				location.reload();
 			});														
 		/*]]>*/
