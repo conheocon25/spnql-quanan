@@ -140,6 +140,12 @@ class Table extends Object{
 		return $mSession->trackingCount(array($this->getId(), $DateStart, $DateEnd));
 	}
 	
+	function getLog($Date){
+		$mLog 	= new \MVC\Mapper\TableLog();
+		$LogAll = $mLog->findBy(array($this->getId(), $Date));
+		return $LogAll;
+	}
+	
 	function toJSON(){
 		$json = array(
 			'Id' 			=> $this->getId(),

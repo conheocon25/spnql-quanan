@@ -49,7 +49,12 @@
 			$NValueStore 	= new \MVC\Library\Number($ValueStore);
 			$NValuePaid 	= new \MVC\Library\Number($ValuePaid);
 			$NValueCollect 	= new \MVC\Library\Number($ValueCollect);
-			$NValueNew 		= new \MVC\Library\Number($TDAll->last()->getValue());
+			if ($TDAll->count()==0)
+				$ValueNew = 0;
+			else
+				$ValueNew = $TDAll->last()->getValue();
+				
+			$NValueNew 		= new \MVC\Library\Number($ValueNew);
 			
 			$Title = $Tracking->getName();
 			$Navigation = array(				

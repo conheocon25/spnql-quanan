@@ -49,6 +49,7 @@
 		<command name="ReportDailyImport">	<view>ReportDailyImport</view>	</command>
 		<command name="ReportDailyStore">	<view>ReportDailyStore</view>	</command>
 		<command name="ReportDailyPaid">	<view>ReportDailyPaid</view>	</command>
+		<command name="ReportDailyLog">		<view>ReportDailyLog</view>		</command>
 		<command name="ReportDailyCollect">	<view>ReportDailyCollect</view>	</command>
 		<command name="ReportDailyCourse">	<view>ReportDailyCourse</view>	</command>
 		<command name="ReportDailyCustomer"><view>ReportDailyCustomer</view></command>

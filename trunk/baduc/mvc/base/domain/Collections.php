@@ -6,6 +6,7 @@ interface UserCollection 			extends \Iterator {function add( Object $user );}
 interface NotifyCollection 			extends \Iterator {function add( Object $notify );}
 interface DomainCollection 			extends \Iterator {function add( Object $domain );}
 interface TableCollection 			extends \Iterator {function add( Object $table );}
+interface TableLogCollection 		extends \Iterator {function add( Object $TableLog );}
 interface SessionCollection 		extends \Iterator {function add( Object $session );	}
 interface SessionDetailCollection 	extends \Iterator {function add( Object $SessionDetail );	}
 interface CategoryCollection 		extends \Iterator {function add( Object $category );	}
