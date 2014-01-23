@@ -48,7 +48,7 @@ class Viewer {
 		$pdf->AddPage();
 		$pdf->SetFont('arial', 'N', 10);
 		$pdf->writeHTML($html, true, false, true, false, '');
-		$Out = $pdf->Output("bao_cao_karaoke_bdc.pdf", 'I');
+		$Out = $pdf->Output("phieu_quan_an_lang_chai.pdf", 'I');
 		unset($pdf);
 		return $Out;
 	}
@@ -63,15 +63,16 @@ class Viewer {
 		
 		// set default header data		
 		$pdf->setHeaderFont(Array('arial', '', '10'));
+		$pdf->setPrintHeader(false);
 		$pdf->setPrintFooter(false);
-		$pdf->SetMargins(1, 18, 1);
+		$pdf->SetMargins(1, 1, 1);
 		
 		$pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM);
 				
 		$pdf->AddPage();
 		$pdf->SetFont('arial', 'N', 8);					
 		$pdf->writeHTML($html, true, false, true, false, '');
-		$Out = $pdf->Output('phieu_quan_an_baduc.pdf', 'I');
+		$Out = $pdf->Output('phieu_quan_an_lang_chai.pdf', 'I');
 		unset($Out);
 		return $Out;
 	}
@@ -95,7 +96,7 @@ class Viewer {
 		$pdf->AddPage();
 		$pdf->SetFont('arial', 'N', 8);					
 		$pdf->writeHTML($html, true, false, true, false, '');
-		$Out = $pdf->Output('phieu_quan_an_baduc_bep.pdf', 'I');
+		$Out = $pdf->Output('phieu_quan_an_lang_chai.pdf', 'I');
 		unset($Out);
 		return $Out;
 	}
