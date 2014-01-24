@@ -46,6 +46,8 @@
 		
 		<command name="ReportDaily">		<view>ReportDaily</view>		</command>
 		<command name="ReportDailySelling">	<view>ReportDailySelling</view>	</command>
+		<command name="ReportDailySellingByCategory">	<view>ReportDailySellingByCategory</view></command>
+		<command name="ReportDailySellingByDomain">		<view>ReportDailySellingByDomain</view>	</command>
 		<command name="ReportDailyImport">	<view>ReportDailyImport</view>	</command>
 		<command name="ReportDailyStore">	<view>ReportDailyStore</view>	</command>
 		<command name="ReportDailyPaid">	<view>ReportDailyPaid</view>	</command>

@@ -1,0 +1,46 @@
+<table width="100%" cellpadding="1" cellspacing="0" border="0" bordercolor="#FFF">
+	<tr>
+		<td width="100%" align="center">
+			<font size="18pt"><B>QUÁN ĂN LÀNG BIỂN</B></font>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" align="center">
+			<font size="10pt">193-195 Điện Biên Phủ - Mỹ Phú - Cao Lãnh</font>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" align="center">
+			<font size="11pt"><B>067 394 8888 - 0918 107 132</B></font>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" align="center">
+			<font size="14pt"><b>DOANH SỐ THEO KHU VỰC</b></font>
+		</td>
+	</tr>
+</table>
+<br/>
+<font size="9pt">
+	<table style="padding-bottom:0px;" width="100%" cellpadding="2" cellspacing="0" border="1">
+		<thead>
+			<tr>
+				<th width="50%"><b>KHU VỰC</b></th>
+				<th width="35%" align="right"><b>DOANH SỐ</b></th>
+				<th width="15%" align="right"><b>TỈ LỆ</b></th>
+			</tr>
+		</thead>		
+		<tbody>
+			<tr tal:repeat="Domain DomainAll">
+				<td width="50%" align='left' tal:content="Domain/getName" />				
+				<td width="35%" align='right' tal:content="php: TD->getSellingByDomainValuePrint(Domain->getId())" />
+				<td width="15%" align='right' tal:content="php: TD->getSellingByDomainPercent(Domain->getId())" />
+			</tr>
+			<tr>
+				<td align="right">TỔNG CỘNG</td>
+				<td width="35%" align='right' tal:content="TD/getSellingPrint" />
+				<td width="15%" align='right' tal:content="string:100%" />
+			</tr>
+		</tbody>		
+	</table>
+</font>

@@ -53,8 +53,21 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		", $tblSession, $tblSessionDetail);
 		
 		$trackByCategoryStmt = sprintf("
-			select				
+			select
 				sum(count)
+			from 
+				%s S inner join 
+				(%s SD inner join %s C on SD.idcourse = C.id )
+				on S.id = SD.idsession
+			where
+				C.idcategory=? AND date(S.datetime) >=? AND date(S.datetime) <=?
+			group by
+				C.idcategory
+		", $tblSession, $tblSessionDetail, $tblCourse);
+		
+		$trackByCategoryValueStmt = sprintf("
+			select
+				sum(count*price)
 			from 
 				%s S inner join 
 				(%s SD inner join %s C on SD.idcourse = C.id )
@@ -115,6 +128,7 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		$this->trackByCount1Stmt 	= self::$PDO->prepare( $trackByCount1Stmt);
 		$this->trackByCount2Stmt 	= self::$PDO->prepare( $trackByCount2Stmt);
 		$this->trackByCategoryStmt 	= self::$PDO->prepare( $trackByCategoryStmt);
+		$this->trackByCategoryValueStmt 	= self::$PDO->prepare( $trackByCategoryValueStmt);
 		$this->trackByCourseStmt 	= self::$PDO->prepare( $trackByCourseStmt);
 		$this->trackByExportStmt 	= self::$PDO->prepare( $trackByExportStmt);
 		
@@ -206,6 +220,14 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 	function trackByCategory( $values ){
         $this->trackByCategoryStmt->execute( $values );
 		$result = $this->trackByCategoryStmt->fetchAll();		
+		if (!isset($result) || $result==null)
+			return null;
+        return $result[0][0];
+    }
+	
+	function trackByCategoryValue( $values ){
+        $this->trackByCategoryValueStmt->execute( $values );
+		$result = $this->trackByCategoryValueStmt->fetchAll();
 		if (!isset($result) || $result==null)
 			return null;
         return $result[0][0];

@@ -61,7 +61,7 @@ class Session extends Mapper implements \MVC\Domain\SessionFinder {
 							"
 		, $tblSession);
 
-		$findByTracking1Stmt = sprintf(
+		$findByTrackingDomainStmt = sprintf(
 							"select
 								*
 							from 
@@ -144,7 +144,7 @@ class Session extends Mapper implements \MVC\Domain\SessionFinder {
 		$this->findByTableTrackingStmt = self::$PDO->prepare($findByTableTrackingStmt);
 		
 		$this->findByTrackingStmt = self::$PDO->prepare($findByTrackingStmt);
-		$this->findByTracking1Stmt = self::$PDO->prepare($findByTracking1Stmt);
+		$this->findByTrackingDomainStmt = self::$PDO->prepare($findByTrackingDomainStmt);
 		$this->findByTrackingCustomerStmt = self::$PDO->prepare($findByTrackingCustomerStmt);
 		$this->findByTrackingDebtCustomerStmt = self::$PDO->prepare($findByTrackingDebtCustomerStmt);
 		$this->findByTrackingFullCustomerStmt = self::$PDO->prepare($findByTrackingFullCustomerStmt);
@@ -263,9 +263,9 @@ class Session extends Mapper implements \MVC\Domain\SessionFinder {
         return new SessionCollection( $this->findByTrackingStmt->fetchAll(), $this );
     }
 	
-	function findByTracking1($values ){
-        $this->findByTracking1Stmt->execute( $values );
-        return new SessionCollection( $this->findByTracking1Stmt->fetchAll(), $this );
+	function findByTrackingDomain($values ){
+        $this->findByTrackingDomainStmt->execute( $values );
+        return new SessionCollection( $this->findByTrackingDomainStmt->fetchAll(), $this );
     }	         
 	function findByTrackingCustomer($values ){
         $this->findByTrackingCustomerStmt->execute( $values );

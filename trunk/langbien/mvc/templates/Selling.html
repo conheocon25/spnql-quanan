@@ -36,13 +36,10 @@
 								<i class="glyphicons-circle_remove" />
 							</a>
 							<!--
-							<a href="#DialogCallCourse" class="btn CallCourse" data-toggle="modal">
-								<i class="glyphicons-bell" />
-							</a>
-							!-->
 							<a href="#DialogPrepareCourse" class="btn CoursePreparePrint" data-toggle="modal">
 								<i class="glyphicons-stopwatch" />
 							</a>
+							!-->
 						</div>
 					</div>
 					<div id="CourseF"/>
@@ -259,6 +256,7 @@
 				var IdDomain = $(this).attr('alt');
 				$("#TableAll").load("/selling/load/domain/"+IdDomain);
 				$(this).toggleClass('active').siblings().removeClass('active');
+				$("#SearchName").focus();
 			});
 			$('.Domain:first').click();
 			
@@ -319,6 +317,10 @@
 					}				
 				}).embed("CoursePrepare");
 			});
+			
+			//Mặc định vào ô tìm kiếm
+			$("#SearchName").focus();
+			
         </script>
 	</body>
 </html>

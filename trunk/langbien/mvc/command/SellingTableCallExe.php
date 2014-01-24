@@ -74,6 +74,7 @@
 						
 			//Kiểm tra xem IdCourse đã có tồn tại trong Session hiện tại chưa
 			$IdSD = $mSD->check(array($IdSession, $IdCourse));
+			$Count = 1;
 			if (!isset($IdSD) || $IdSD==null){
 				$SD = new \MVC\Domain\SessionDetail(
 					null,
