@@ -111,11 +111,47 @@ class TrackingDaily extends Object{
 		return $Count;
 	}
 	
+	//DOANH SỐ THEO KHU VỰC
+	function getSellingByDomainValue($IdDomain){
+		$mSession 	= new \MVC\Mapper\Session();
+		$SessionAll = $mSession->findByTrackingDomain(array($IdDomain, $this->getDate(), $this->getDate()));
+		$Value 		= 0;
+		while ($SessionAll->valid()){
+			$Session = $SessionAll->current();
+			$Value += $Session->getValue();
+			$SessionAll->next();
+		}		
+		return $Value;
+	}
+	function getSellingByDomainValuePrint($IdDomain){
+		$N = new \MVC\Library\Number($this->getSellingByDomainValue($IdDomain));
+		return $N->formatCurrency();
+	}
+	function getSellingByDomainPercent($IdDomain){
+		return round(($this->getSellingByDomainValue($IdDomain) / $this->getSelling())*100,0)." %";
+	}
+	
+	//DOANH SỐ THEO DANH MỤC MÓN
+	function getSellingByCategoryValue($IdCategory){
+		$mSD 	= new \MVC\Mapper\SessionDetail();
+		$Value = $mSD->trackByCategoryValue(array($IdCategory, $this->getDate(), $this->getDate()));		 		
+		return $Value;
+	}
+	function getSellingByCategoryValuePrint($IdCategory){
+		$N = new \MVC\Library\Number($this->getSellingByCategoryValue($IdCategory));
+		return $N->formatCurrency();
+	}
+	function getSellingByCategoryPercent($IdCategory){
+		return round(($this->getSellingByCategoryValue($IdCategory) / $this->getSelling())*100,0)." %";
+	}
+	
 	//-------------------------------------------------------------------------------
 	//DEFINE URL
 	//-------------------------------------------------------------------------------
 	function getURLReport()			{return "/report/".$this->getIdTracking()."/".$this->getId();}
 	function getURLReportSelling()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/selling";}
+	function getURLReportSellingByCategory()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/selling/bycategory";}
+	function getURLReportSellingByDomain()		{return "/report/".$this->getIdTracking()."/".$this->getId()."/selling/bydomain";}
 	function getURLReportImport()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/import";}
 	function getURLReportStore()	{return "/report/".$this->getIdTracking()."/".$this->getId()."/store";}
 	function getURLReportPaid()		{return "/report/".$this->getIdTracking()."/".$this->getId()."/paid";}
