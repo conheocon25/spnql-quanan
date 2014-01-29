@@ -578,6 +578,11 @@
 					return false;
 				}
 			});
+			$("#DialogEdit").on('show.bs.modal', function(event){
+				window.setTimeout(function(){
+				$(event.currentTarget).find('input#Count1').first().focus()
+				}, 0500);
+			});
 		/*]]>*/
 		</script>
 	</body>

@@ -34,20 +34,17 @@
 							</a>
 							<a class="btn RemoveCourseSearch">
 								<i class="glyphicons-circle_remove" />
-							</a>
-							<!--
-							<a href="#DialogPrepareCourse" class="btn CoursePreparePrint" data-toggle="modal">
-								<i class="glyphicons-stopwatch" />
-							</a>
-							!-->
+							</a>							
 						</div>
 					</div>
 					<div id="CourseF"/>
 				</div>
-				<div class="col-5">
-					<div id="Session"/>
-				</div>
-				<div class="col-3">					
+				
+				<!-- BẬT / TẮT MÀN HÌNH GỌI MÓN !-->
+				<div class="col-8" tal:condition="not:ConfigSwitchBoardCall/getValue"><div id="Session"/></div>
+				<div class="col-5" tal:condition="ConfigSwitchBoardCall/getValue"><div id="Session"/></div>
+				
+				<div class="col-3" tal:condition="ConfigSwitchBoardCall/getValue">
 					<div class="accordion widget-box" id="collapse-group">						
 						<div class="accordion-group widget-box">
 							<div class="accordion-heading">

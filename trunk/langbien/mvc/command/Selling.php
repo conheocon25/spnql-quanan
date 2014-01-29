@@ -29,6 +29,7 @@
 			$UnitAll		= $mUnit->findAll();
 			$Domain			= $DomainAll->current();
 			$Config			= $mConfig->findByName("CATEGORY_AUTO");
+			$ConfigSwitchBoardCall	= $mConfig->findByName("SWITCH_BOARD_CALL");
 			$Top10			= $mSD->findByTop10(array());
 			
 			//-------------------------------------------------------------
@@ -48,6 +49,7 @@
 			$request->setObject('CategoryAll'	, $CategoryAll);
 			$request->setObject('Top10'			, $Top10);
 			$request->setObject('Config'		, $Config);
+			$request->setObject('ConfigSwitchBoardCall'		, $ConfigSwitchBoardCall);
 			
 			return self::statuses('CMD_DEFAULT');
 		}

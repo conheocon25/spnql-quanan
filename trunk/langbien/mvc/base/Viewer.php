@@ -37,8 +37,7 @@ class Viewer {
 	//-------------------------------------------------
 	//Hỗ trợ template xuất ra dưới dạng HTML    
 	//-------------------------------------------------
-	function pdf(){
-			
+	function pdfA4(){
 		$html = $this->html();		
 		$pdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 		$pdf->SetMargins(3, 1, 3);		
@@ -47,16 +46,16 @@ class Viewer {
 		$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 		$pdf->AddPage();
 		$pdf->SetFont('arial', 'N', 10);
-		$pdf->writeHTML($html, true, false, true, false, '');
-		$Out = $pdf->Output("phieu_quan_an_lang_chai.pdf", 'I');
+		$pdf->writeHTML($html, true, false, true, false, '');		
+		$Out = $pdf->Output("bao_cao_quan_an_lang_chai.pdf", 'I');
 		unset($pdf);
 		return $Out;
 	}
-	
-	function custompdf(){		
+			
+	function pdfReceipt1(){
 		$html = $this->html();		
 		$pdf = new \CUSTOMPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-		$width = 73; //76 mm 
+		$width 	= 73; //76 mm 
 		$height = 297; //30 mmm mac dinh nhung 1 vong giay la 83 mm	
 		$pdf->addFormat("custom", $width, $height);  
 		$pdf->reFormat("custom", 'P');
@@ -70,9 +69,35 @@ class Viewer {
 		$pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM);
 				
 		$pdf->AddPage();
-		$pdf->SetFont('arial', 'N', 8);					
+		$pdf->SetFont('arial', 'N', 8);							
 		$pdf->writeHTML($html, true, false, true, false, '');
-		$Out = $pdf->Output('phieu_quan_an_lang_chai.pdf', 'I');
+		$Out = $pdf->Output('phieu_quan_an_lang_chai_2_lien.pdf', 'I');
+		unset($Out);
+		return $Out;
+	}
+	
+	function pdfReceipt2(){		
+		$html = $this->html();		
+		$pdf = new \CUSTOMPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+		$width 	= 73; //76 mm 
+		$height = 297; //30 mmm mac dinh nhung 1 vong giay la 83 mm	
+		$pdf->addFormat("custom", $width, $height);  
+		$pdf->reFormat("custom", 'P');
+		
+		// set default header data		
+		$pdf->setHeaderFont(Array('arial', '', '10'));
+		$pdf->setPrintHeader(false);
+		$pdf->setPrintFooter(false);
+		$pdf->SetMargins(1, 1, 1);
+		
+		$pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM);
+				
+		$pdf->AddPage();
+		$pdf->SetFont('arial', 'N', 8);							
+		$pdf->writeHTML($html, true, false, true, false, '');
+		$pdf->AddPage();
+		$pdf->writeHTML($html, true, false, true, false, '');
+		$Out = $pdf->Output('phieu_quan_an_lang_chai_2_lien.pdf', 'I');
 		unset($Out);
 		return $Out;
 	}
