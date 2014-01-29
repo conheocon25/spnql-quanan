@@ -99,9 +99,15 @@
 			//Load 1 ORDER
 			//-----------------------------------------------------------------------------------
 			$('.update-item').click(function(){
+				var count = $(this).attr('data-count');
 				$('#IdResource2').attr('value', $(this).attr('data-idresource'));
 				$('#Name2').attr('value', $(this).attr('data-name'));
-				$('#Count2').attr('value', $(this).attr('data-count'));
+				if (count==null){
+					$('#Count2').attr('value', '1');
+				}else{
+					$('#Count2').attr('value', count);
+				}
+					
 				$('#Price2').attr('value', $(this).attr('data-price'));
 			});
 			
@@ -112,7 +118,7 @@
 				var Data = [];
 				Data[0] = $('#IdSupplier').attr('alt');
 				Data[1] = $('#IdOrder').attr('alt');
-				Data[2] = $('#IdResource2').val();
+				Data[2] = $('#IdResource2').val();									
 				Data[3] = $('#Count2').val();
 				Data[4] = $('#Price2').val();
 				
@@ -124,7 +130,13 @@
 						location.reload();
 					}
 				});
-			});			
+			});
+			$("#DialogEdit").on('show.bs.modal', function(event){
+				window.setTimeout(
+					function(){$(event.currentTarget).find('input#Count2').first().focus()},
+					0500
+				);
+			});
 		/*]]>*/
 		</script>
 	</body>
