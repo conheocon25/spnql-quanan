@@ -4,7 +4,6 @@
 		<div metal:use-macro="mAdmin.xhtml/IncludeMETA"/>		
 		<div metal:use-macro="mAdmin.xhtml/IncludeCSS"/>
 	</head>
-	
 	<body>
 		<div metal:use-macro="mAdmin.xhtml/Header"/>
 		<div metal:use-macro="mAdmin.xhtml/StyleTools"/>
@@ -245,6 +244,12 @@
 					return false;
 				}
 			});
+			$("#DialogIns").on('show.bs.modal', function(event){
+				window.setTimeout(
+					function(){$(event.currentTarget).find('input#Name1').first().focus()},
+					0500
+				);
+			});
 			
 			//-----------------------------------------------------------------------------------
 			//Load 1 COURSE
@@ -308,6 +313,13 @@
 					return false;
 				}
 			});
+			$("#DialogEdit").on('show.bs.modal', function(event){
+				window.setTimeout(
+					function(){$(event.currentTarget).find('input#Name2').first().focus()},
+					0500
+				);
+			});
+			
 		/*]]>*/
 		</script>
 		<div id="IdSupplier" tal:attributes="alt Supplier/getId" />
