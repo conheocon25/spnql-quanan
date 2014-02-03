@@ -27,10 +27,11 @@
 			$DomainAll 		= $mDomain->findAll();
 			$CategoryAll 	= $mCategory->findAll();
 			$UnitAll		= $mUnit->findAll();
-			$Domain			= $DomainAll->current();
-			$Config			= $mConfig->findByName("CATEGORY_AUTO");
-			$ConfigSwitchBoardCall	= $mConfig->findByName("SWITCH_BOARD_CALL");
+			$Domain			= $DomainAll->current();			
 			$Top10			= $mSD->findByTop10(array());
+			$Config			= $mConfig->findByName("CATEGORY_AUTO");
+			$ConfigName		= $mConfig->findByName("NAME");
+			$ConfigSwitchBoardCall	= $mConfig->findByName("SWITCH_BOARD_CALL");
 			
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
@@ -49,6 +50,7 @@
 			$request->setObject('CategoryAll'	, $CategoryAll);
 			$request->setObject('Top10'			, $Top10);
 			$request->setObject('Config'		, $Config);
+			$request->setObject('ConfigName'	, $ConfigName);
 			$request->setObject('ConfigSwitchBoardCall'		, $ConfigSwitchBoardCall);
 			
 			return self::statuses('CMD_DEFAULT');

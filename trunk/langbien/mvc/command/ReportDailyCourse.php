@@ -22,10 +22,12 @@
 			$mTC 		= new \MVC\Mapper\TrackingCourse();
 			$mSD 		= new \MVC\Mapper\SessionDetail();
 			$mCourse 	= new \MVC\Mapper\Course();
+			$mConfig 	= new \MVC\Mapper\Config();
 			
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------									
+			$ConfigName	= $mConfig->findByName("NAME");
 			$TD 		= $mTD->find($IdTD);
 			$Tracking	= $mTracking->find($IdTrack);
 			$CourseAll	= $mCourse->findAll();
@@ -65,8 +67,9 @@
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------
-			$request->setProperty('Title'		, $Title);			
-			$request->setObject('Navigation'	, $Navigation);			
+			$request->setProperty('Title'		, $Title);
+			$request->setObject('ConfigName'	, $ConfigName);
+			$request->setObject('Navigation'	, $Navigation);
 			$request->setObject('TCAll'			, $TCAll);
 		}
 	}

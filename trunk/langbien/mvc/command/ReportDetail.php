@@ -16,13 +16,15 @@
 			//-------------------------------------------------------------
 			//MAPPER DỮ LIỆU
 			//-------------------------------------------------------------			
-			$mTracking = new \MVC\Mapper\Tracking();			
+			$mTracking 	= new \MVC\Mapper\Tracking();			
+			$mConfig 	= new \MVC\Mapper\Config();
 												
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------
-			$Tracking = $mTracking->find($IdTrack);
-			$TrackingAll = $mTracking->findAll();
+			$Tracking 		= $mTracking->find($IdTrack);
+			$TrackingAll 	= $mTracking->findAll();
+			$ConfigName 	= $mConfig->findByName("NAME");
 			
 			$TDAll = $Tracking->getDailyAll();
 			if ($TDAll->count()==0){
@@ -68,6 +70,7 @@
 			$request->setObject('Navigation'	, $Navigation);
 			$request->setObject('TrackingAll'	, $TrackingAll);
 			$request->setObject('Tracking'		, $Tracking);
+			$request->setObject('ConfigName'	, $ConfigName);
 			
 			$request->setObject('ValueSelling'	, $NValueSelling);
 			$request->setObject('ValueImport'	, $NValueImport);

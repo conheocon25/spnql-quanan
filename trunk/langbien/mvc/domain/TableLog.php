@@ -36,6 +36,7 @@ class TableLog extends Object{
 
 	function getDateTime( ) {return $this->DateTime;}
 	function setDateTime( $DateTime ) {$this->DateTime = $DateTime;$this->markDirty();}
+	function getDateTimePrint( ){return date('d/m/y H:i',strtotime($this->DateTime));}
 
 	function getNote( ) {return $this->Note;}	
     function setNote( $Note ) {$this->Note = $Note;$this->markDirty();}
