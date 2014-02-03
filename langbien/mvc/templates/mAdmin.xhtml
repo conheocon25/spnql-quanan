@@ -105,8 +105,10 @@
 	
 	<!-- ======================================================================== -->
 	<!-- CONTENT HEADER															  -->
-	<!-- ======================================================================== -->
-	<div metal:define-macro="ContentHeader" id="content-header"><h1>HỆ THỐNG QUẢN LÝ QUÁN ĂN LÀNG BIỂN</h1></div>
+	<!-- ======================================================================== -->	
+	<div metal:define-macro="ContentHeader" id="content-header">
+		<h1>HỆ THỐNG QUẢN LÝ <span tal:content="ConfigName/getValue|'QUẮN ĂN'"/></h1>
+	</div>
 	
 	<!-- ======================================================================== -->
 	<!-- PAGE BAR																  -->

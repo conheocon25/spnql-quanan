@@ -20,10 +20,12 @@
 			$mSession 	= new \MVC\Mapper\Session();
 			$mTracking 	= new \MVC\Mapper\Tracking();
 			$mTD 		= new \MVC\Mapper\TrackingDaily();
+			$mConfig 	= new \MVC\Mapper\Config();
 			
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------									
+			$ConfigName	= $mConfig->findByName("NAME");
 			$TD 		= $mTD->find($IdTD);
 			$Tracking	= $mTracking->find($IdTrack);
 			
@@ -67,6 +69,7 @@
 			//-------------------------------------------------------------
 			$request->setProperty('Title'		, $Title);			
 			$request->setObject('Navigation'	, $Navigation);
+			$request->setObject('ConfigName'	, $ConfigName);
 			$request->setObject('TD'			, $TD);
 			$request->setObject('NTotal'		, $NTotal);
 			$request->setObject('NTotal1'		, $NTotal1);

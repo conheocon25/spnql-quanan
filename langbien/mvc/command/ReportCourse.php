@@ -18,12 +18,14 @@
 			//-------------------------------------------------------------									
 			$mTracking 	= new \MVC\Mapper\Tracking();			
 			$mTC 		= new \MVC\Mapper\TrackingCourse();
+			$mConfig	= new \MVC\Mapper\Config();
 						
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------			
 			$Tracking 	= $mTracking->find($IdTrack);
 			$TCAll 		= $mTC->findBy1(array($IdTrack));
+			$ConfigName	= $mConfig->findByName("NAME");
 			
 			$Title 		= "THỐNG KÊ MÓN";
 			$Navigation = array(
@@ -34,8 +36,9 @@
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------
-			$request->setProperty('Title'		, $Title);			
-			$request->setObject('Navigation'	, $Navigation);			
+			$request->setProperty('Title'		, $Title);
+			$request->setObject('ConfigName'	, $ConfigName);
+			$request->setObject('Navigation'	, $Navigation);
 			$request->setObject('TCAll'			, $TCAll);
 			$request->setObject('Tracking'		, $Tracking);
 		}

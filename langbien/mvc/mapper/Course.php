@@ -10,9 +10,9 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 		
 		$selectAllStmt = sprintf("select * from %s ORDER BY name", $tblCourse);
 		$selectStmt = sprintf("select * from %s where id=?", $tblCourse);
-		$updateStmt = sprintf("update %s set idcategory=?, name=?, shortname=?, unit=?, price1=?, price2=?, price3=?, price4=?, picture=?, prepare=?, is_discount=? where id=?", $tblCourse);
-		$insertStmt = sprintf("insert into %s (idcategory, name, shortname, unit, price1, price2, price3, price4, picture, prepare, is_discount) 
-							values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $tblCourse);
+		$updateStmt = sprintf("update %s set idcategory=?, name=?, shortname=?, unit=?, price1=?, price2=?, price3=?, price4=?, picture=?, prepare=?, is_discount=?, enable=? where id=?", $tblCourse);
+		$insertStmt = sprintf("insert into %s (idcategory, name, shortname, unit, price1, price2, price3, price4, picture, prepare, is_discount, enable) 
+							values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $tblCourse);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblCourse);
 		$findByPageStmt = sprintf("
 							SELECT *
@@ -70,7 +70,8 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 			$array['price4'],
 			$array['picture'],
 			$array['prepare'],
-			$array['is_discount']
+			$array['is_discount'],
+			$array['enable']
 		);
         return $obj;
     }
@@ -87,7 +88,8 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 			$object->getPrice4(),
 			$object->getPicture(),
 			$object->getPrepare(),
-			$object->getIsDiscount()
+			$object->getIsDiscount(),
+			$object->getEnable()
 		); 
         $this->insertStmt->execute( $values );
         $id = self::$PDO->lastInsertId();
@@ -107,6 +109,7 @@ class Course extends Mapper implements \MVC\Domain\CourseFinder {
 			$object->getPicture(),
 			$object->getPrepare(),
 			$object->getIsDiscount(),
+			$object->getEnable(),
 			$object->getId()
 		);
         $this->updateStmt->execute( $values );
