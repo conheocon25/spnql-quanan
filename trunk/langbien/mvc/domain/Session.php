@@ -210,6 +210,12 @@ class Session extends Object{
 		$SDs = $mSD->findBySession(array($this->getId()));
 		return $SDs;
 	}
+	
+	function getDetails1(){
+		$mSD = new \MVC\Mapper\SessionDetail();
+		$SDs = $mSD->findBySession1(array($this->getId()));
+		return $SDs;
+	}
 			
 	function getValue(){		
 		$SDAll = $this->getDetails();

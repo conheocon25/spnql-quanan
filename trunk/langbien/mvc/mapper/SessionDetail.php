@@ -25,7 +25,30 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 			LIMIT 10
 		", $tblSessionDetail);
 		
-		$findBySessionStmt = sprintf("select * from %s where idsession=?", $tblSessionDetail);
+		$findBySession1Stmt = sprintf("select * from %s where idsession=?", $tblSessionDetail);
+		$findBySessionStmt = sprintf("				
+				SELECT
+					SD.id,
+					idsession,
+					idcourse,
+					count,
+					price,
+					N.order
+				FROM 
+					%s SD inner join (
+						SELECT 
+							COU.id as id,
+							CAT.order as `order`
+						FROM 
+							tbl_category CAT inner join tbl_course COU on CAT.id=COU.idcategory
+						ORDER BY CAT.order
+					) as N 
+					on SD.idcourse = N.id
+				WHERE 
+					idsession=?
+				ORDER BY N.order
+		", $tblSessionDetail);
+		
 		$findItemStmt = sprintf("select * from %s where idsession=? and idcourse=?", $tblSessionDetail);
 		$evaluateStmt = sprintf("select sum(sd.count * price ) from %s sd where idsession=?", $tblSessionDetail);
 		
@@ -120,6 +143,7 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		$this->deleteStmt = self::$PDO->prepare( $deleteStmt );
                             
 		$this->findBySessionStmt 	= self::$PDO->prepare($findBySessionStmt);		
+		$this->findBySession1Stmt 	= self::$PDO->prepare($findBySession1Stmt);		
 		$this->findByTop10Stmt 		= self::$PDO->prepare($findByTop10Stmt);		
 		$this->findItemStmt 		= self::$PDO->prepare($findItemStmt);		
 		$this->evaluateStmt 		= self::$PDO->prepare( $evaluateStmt );		
@@ -174,6 +198,12 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
         $this->findBySessionStmt->execute( $values );
         return new SessionDetailCollection( $this->findBySessionStmt->fetchAll(), $this );
     }
+	
+	function findBySession1( $values ) {	
+        $this->findBySession1Stmt->execute( $values );
+        return new SessionDetailCollection( $this->findBySession1Stmt->fetchAll(), $this );
+    }
+	
 	function findByTop10( $values ) {	
         $this->findByTop10Stmt->execute( $values );
         return new SessionDetailCollection( $this->findByTop10Stmt->fetchAll(), $this );
