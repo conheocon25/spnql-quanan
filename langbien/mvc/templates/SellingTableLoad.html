@@ -47,7 +47,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr tal:repeat="Detail Table/getSessionActive/getDetails">
+								<tr tal:repeat="Detail Table/getSessionActive/getDetails1">
 									<td><div class="text-center" tal:content="repeat/Detail/number" /></td>
 									<td><a class="update-item" href="#DialogEdit" data-toggle="modal" tal:attributes="data-id Detail/getId" tal:content="Detail/getCourse/getName"/></td>
 									<td><div class="text-center" tal:content="Detail/getCountPrint"/></td>
