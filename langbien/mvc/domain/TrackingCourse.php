@@ -48,7 +48,7 @@ class TrackingCourse extends Object{
 	
 	function setCount( $Count ) {$this->Count = $Count;$this->markDirty();}   
 	function getCount( ) {return $this->Count;}
-	function getCountPrint( ) {$N = new \MVC\Library\Number($this->Count);return $N->formatCurrency();}
+	function getCountPrint( ) { return \round($this->Count,1);}
 	
 	function setPrice( $Price ) {$this->Price = $Price;$this->markDirty();}   
 	function getPrice( ) {return $this->Price;}
