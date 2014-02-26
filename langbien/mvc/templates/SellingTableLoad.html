@@ -42,8 +42,8 @@
 									<th><div class="text-left">TÊN</div></th>
 									<th width="30">SL</th>
 									<th width="80"><div class="text-right">Đ.GIÁ</div></th>
-									<th width="80"><div class="text-right">T.TIỀN</div></th>
-									<th width="30"><i class="glyphicons-bin"/></th>
+									<th width="80"><div class="text-right">T.TIỀN</div></th>									
+									<th width="30"><i class="glyphicons-bin"/></th>									
 								</tr>
 							</thead>
 							<tbody>
@@ -52,12 +52,12 @@
 									<td><a class="update-item" href="#DialogEdit" data-toggle="modal" tal:attributes="data-id Detail/getId" tal:content="Detail/getCourse/getName"/></td>
 									<td><div class="text-center" tal:content="Detail/getCountPrint"/></td>
 									<td><div class="text-right" tal:content="Detail/getPricePrint"/></td>
-									<td><div class="text-right" tal:content="Detail/getValuePrint"/></td>
+									<td><div class="text-right" tal:content="Detail/getValuePrint"/></td>									
 									<td class="center">
 										<a class="remove-item" href="#DialogDel" data-toggle="modal" tal:attributes="data-id Detail/getId">
 											<i class="glyphicons-remove_2"/>
 										</a>
-									</td>
+									</td>									
 								</tr>
 							</tbody>
 						</table>
@@ -275,7 +275,9 @@
 								<th width="30">STT</th>
 								<th><div class="text-left">NGÀY</div></th>
 								<th><div class="text-right">PHIẾU</div></th>
+								<!--
 								<th width="30"><i class="glyphicons-bin"/></th>
+								!-->
 							</tr>
 						</thead>
 						<tbody>
@@ -288,11 +290,13 @@
 										<div class="text-right" tal:content="Session/getValuePrint"/>
 									</a>
 								</td>
+								<!--
 								<td class="center">
 									<a class="remove-session-item" href="#DialogSessionDel" data-toggle="modal" tal:attributes="data-id Session/getId">
 										<i class="glyphicons-remove_2"/>
 									</a>
 								</td>
+								!-->
 							</tr>
 						</tbody>
 					</table>

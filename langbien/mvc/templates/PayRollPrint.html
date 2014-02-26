@@ -1,0 +1,60 @@
+<table width="100%" cellpadding="1" cellspacing="0" border="0" bordercolor="#FFF">
+	<tr>
+		<td width="100%" align="center">
+			<font size="18pt"><B tal:content="ConfigName/getValue"/></font>
+		</td>
+	</tr>	
+	<tr>
+		<td width="100%" align="center">
+			<font size="14pt"><b>CHI TIẾT LƯƠNG <span tal:content="php:mb_strtoupper(PayRoll->getEmployee()->getName(), 'UTF8')"/></b></font>
+		</td>
+	</tr>
+	<tr>
+		<td width="100%" align="center">
+			<font size="12pt"><B tal:content="Track/getName" /></font>
+		</td>
+	</tr>
+</table>
+<br/>
+<font size="9pt">
+	<table style="padding-bottom:0px;" width="100%" cellpadding="2" cellspacing="0" border="0">		
+		<tbody>
+			<tr>
+				<td width="60%" align='left'>1. LƯƠNG CB</td>
+				<td width="40%" align='right' tal:content="PayRoll/getBaseValuePrint"/>
+			</tr>						
+			<tr>
+				<td width="60%" align='left'>2. THƯỞNG</td>
+				<td width="40%" align='right' tal:content="PayRoll/getExtraValuePrint"/>
+			</tr>
+			<tr>
+				<td width="60%" align='left'>3. PHẠT</td>
+				<td width="40%" align='right' tal:content="PayRoll/getPunishValuePrint"/>
+			</tr>			
+			<tr>
+				<td width="60%" align='left'>4. NGHỈ (<span tal:content="PayRoll/getAbsentPrint"/>)</td>
+				<td width="40%" align='right' tal:content="PayRoll/getAbsentValuePrint"/>
+			</tr>
+			<tr>
+				<td width="100%" align='left'><span tal:content="PayRoll/getNote"/></td>
+			</tr>
+			<tr>
+				<td width="60%" align='left'>5. ỨNG</td>
+				<td width="40%" align='right' />
+			</tr>
+			<tr tal:repeat="Paid PaidAll">
+				<td width="30%" align='left' tal:content="Paid/getDatePrint"/>
+				<td width="35%" align='left' tal:content="Paid/getNote"/>
+				<td width="35%" align='right' tal:content="Paid/getValuePrint"/>
+			</tr>
+			<tr>
+				<td width="60%" align="right">-------------------------------------</td>
+				<td width="40%" align='left'>------------------------</td>
+			</tr>
+			<tr>
+				<td width="60%" align="left">THỰC LÃNH</td>
+				<td width="40%" align='right' tal:content="PayRoll/getValuePrint"/>
+			</tr>
+		</tbody>		
+	</table>	
+</font>

@@ -89,13 +89,7 @@
 		<!-- PAYROLL			 															-->
 		<!-- ============================================================================== -->		
 		<command name="PayRoll"><view>PayRoll</view></command>
-		<command name="PayRollWork"><view>PayRollWork</view></command>
-		<command name="PayRollWorkDetail">
-			<status value="CMD_OK">
-				<forward>PayRollWork</forward>
-			</status>
-			<view>PayRollWorkDetail</view>
-		</command>
+		<command name="PayRollPrint"><view>PayRollPrint</view></command>		
 		
 		<!-- ============================================================================== -->
 		<!-- MONEY		 																	-->

@@ -1,9 +1,7 @@
 <?php
 namespace MVC\Mapper;
-
 require_once( "mvc/base/Mapper.php" );
 class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
-
     function __construct() {
         parent::__construct();
 				
@@ -11,32 +9,19 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
 		
 		$selectAllStmt = sprintf("select * from %s", $tblPayRoll);
 		$selectStmt = sprintf("select * from %s where id=?", $tblPayRoll);
-		$updateStmt = sprintf("update %s set id_employee=?, date=?, state=?, extra=?, late=? where id=?", $tblPayRoll);
-		$insertStmt = sprintf("insert into %s (id_employee, date, state, extra, late) values(?,?,?,?,?)", $tblPayRoll);
+		$updateStmt = sprintf("update %s set id_employee=?, id_tracking=?, absent=?, base_value=?, extra_value=?, punish_value=?, note=? where id=?", $tblPayRoll);
+		$insertStmt = sprintf("insert into %s (id_employee, id_tracking, absent, base_value, extra_value, punish_value, note) values(?,?,?,?,?,?,?)", $tblPayRoll);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblPayRoll);
-		$findByStmt = sprintf("select * from %s where id_employee = ? order by date DESC", $tblPayRoll);
+		$findByStmt = sprintf("select * from %s where id_employee = ? order by date DESC", $tblPayRoll);				
+		$findByTrackingStmt = sprintf("select * from %s where id_tracking = ?", $tblPayRoll);
 				
-		$findByTrackingStmt = sprintf(
-			"select * from %s
-			where
-				id_employee = ? AND `date` >= ? AND `date` <= ?
-			ORDER BY `date`
-			"
-		, $tblPayRoll);
-		$checkStmt = sprintf("
-			select distinct id 
-			from %s 
-			where id_employee=? and `date`=?
-		", $tblPayRoll);
-		
         $this->selectAllStmt = self::$PDO->prepare($selectAllStmt);
         $this->selectStmt = self::$PDO->prepare($selectStmt);
         $this->updateStmt = self::$PDO->prepare($updateStmt);
         $this->insertStmt = self::$PDO->prepare($insertStmt);
 		$this->deleteStmt = self::$PDO->prepare($deleteStmt);
 		$this->findByStmt = self::$PDO->prepare($findByStmt);		
-		$this->findByTrackingStmt = self::$PDO->prepare($findByTrackingStmt);
-		$this->checkStmt = self::$PDO->prepare($checkStmt);
+		$this->findByTrackingStmt = self::$PDO->prepare($findByTrackingStmt);		
     } 
     function getCollection( array $raw ) {return new PayRollCollection( $raw, $this );}
 
@@ -44,11 +29,13 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
         $obj = new \MVC\Domain\PayRoll( 
 			$array['id'],
 			$array['id_employee'],
-			$array['date'],
-			$array['state'],
-			$array['extra'],
-			$array['late']
-		);
+			$array['id_tracking'],
+			$array['absent'],
+			$array['base_value'],
+			$array['extra_value'],
+			$array['punish_value'],
+			$array['note']
+		);		
         return $obj;
     }
 
@@ -59,10 +46,12 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
     protected function doInsert( \MVC\Domain\Object $object ) {
         $values = array(
 			$object->getIdEmployee(),
-			$object->getDate(),
-			$object->getState(),
-			$object->getExtra(),
-			$object->getLate()
+			$object->getIdTracking(),
+			$object->getAbsent(),
+			$object->getBaseValue(),
+			$object->getExtraValue(),
+			$object->getPunishValue(),
+			$object->getNote()
 		); 
         $this->insertStmt->execute( $values );
         $id = self::$PDO->lastInsertId();
@@ -72,10 +61,12 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
     protected function doUpdate( \MVC\Domain\Object $object ) {
         $values = array( 
 			$object->getIdEmployee(),
-			$object->getDate(),
-			$object->getState(),
-			$object->getExtra(),			
-			$object->getLate(),
+			$object->getIdTracking(),
+			$object->getAbsent(),
+			$object->getBaseValue(),
+			$object->getExtraValue(),
+			$object->getPunishValue(),
+			$object->getNote(),
 			$object->getId()
 		);
         $this->updateStmt->execute( $values );
@@ -90,19 +81,10 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
         return new PayRollCollection( $this->findByStmt->fetchAll(), $this );
     }
 			
-	function findByTracking($values ){
-		//print_r($values);
+	function findByTracking($values ){	
         $this->findByTrackingStmt->execute( $values );
         return new PayRollCollection( $this->findByTrackingStmt->fetchAll(), $this );
     }
-	
-	function check( $values ) {	
-        $this->checkStmt->execute( $values );
-		$result = $this->checkStmt->fetchAll();		
-		if (!isset($result) || $result==null)
-			return null;        
-        return $result[0][0];
-    }
-	
+		
 }
 ?>
