@@ -6,34 +6,36 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
     function __construct() {
         parent::__construct();
 			
-		$tblCourse = "tbl_course";
-		$tblSession = "tbl_session";
-		$tblSessionDetail = "tbl_session_detail";
-		$tblR2C = "tbl_r2c";
+		$tblCourse 			= "tbl_course";
+		$tblSession 		= "tbl_session";
+		$tblSessionDetail 	= "tbl_session_detail";
+		$tblR2C 			= "tbl_r2c";
 		
 		$selectAllStmt = sprintf("select * from %s", $tblSessionDetail);
 		$selectStmt = sprintf("select * from %s where id=?", $tblSessionDetail);
-		$updateStmt = sprintf("update %s set idsession=?, idcourse=?, count=?, price=? where id=?", $tblSessionDetail);
-		$insertStmt = sprintf("insert into %s (idsession, idcourse, count, price) values(?, ?, ?, ?)", $tblSessionDetail);		
+		$updateStmt = sprintf("update %s set idsession=?, idcourse=?, count=?, price=?, `enable`=? where id=?", $tblSessionDetail);
+		$insertStmt = sprintf("insert into %s (idsession, idcourse, count, price, `enable`) values(?, ?, ?, ?, ?)", $tblSessionDetail);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblSessionDetail);
 
 		$findByTop10Stmt = sprintf("
-			SELECT 1 as id, 2 as idsession, idcourse, sum(count) as count, 3 as price 
+			SELECT 1 as id, 2 as idsession, idcourse, sum(count) as count, 3 as price, 1 as `enable`
 				FROM `tbl_session_detail`
 			GROUP BY idcourse
 			ORDER BY count DESC
 			LIMIT 10
 		", $tblSessionDetail);
 		
-		$findBySession1Stmt = sprintf("select * from %s where idsession=?", $tblSessionDetail);
-		$findBySessionStmt = sprintf("				
+		$findBySession1Stmt = sprintf("select * from %s where idsession=? AND `enable`=1", $tblSessionDetail);
+		$findBySession2Stmt = sprintf("select * from %s where idsession=?", $tblSessionDetail);
+		$findBySessionStmt = sprintf("
 				SELECT
 					SD.id,
 					idsession,
 					idcourse,
 					count,
 					price,
-					N.order
+					N.order,
+					SD.enable
 				FROM 
 					%s SD inner join (
 						SELECT 
@@ -45,7 +47,7 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 					) as N 
 					on SD.idcourse = N.id
 				WHERE 
-					idsession=?
+					idsession=? AND SD.enable=1
 				ORDER BY N.order
 		", $tblSessionDetail);
 		
@@ -55,21 +57,21 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		$checkStmt = sprintf("select distinct id from %s where idsession=? and idcourse=?", $tblSessionDetail);		
 		$trackByCountStmt = sprintf("
 			select 
-				sum(count)
+				sum(count*SD.enable)
 			from 
 				%s S inner join %s SD on S.id = SD.idsession			
 			where idcourse=? and date(datetime) >= ? and date(datetime) <= ?
 		", $tblSession, $tblSessionDetail);		
 		$trackByCount1Stmt = sprintf("
 			select 
-				sum(count)
+				sum(count*SD.enable)
 			from 
 				%s S inner join %s SD on S.id = SD.idsession			
 			where idcourse=? and date(datetime) >= ? and date(datetime) <= ? and status=1
 		", $tblSession, $tblSessionDetail);
 		$trackByCount2Stmt = sprintf("
 			select 
-				sum(count)
+				sum(count*SD.enable)
 			from 
 				%s S inner join %s SD on S.id = SD.idsession			
 			where idcourse=? and date(datetime) >= ? and date(datetime) <= ? and status=2
@@ -77,7 +79,7 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		
 		$trackByCategoryStmt = sprintf("
 			select
-				sum(count)
+				sum(count*SD.enable)
 			from 
 				%s S inner join 
 				(%s SD inner join %s C on SD.idcourse = C.id )
@@ -90,7 +92,7 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		
 		$trackByCategoryValueStmt = sprintf("
 			select
-				sum(count*price)
+				sum(count*price*SD.enable)
 			from 
 				%s S inner join 
 				(%s SD inner join %s C on SD.idcourse = C.id )
@@ -119,7 +121,7 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 						
 		$trackByCourseStmt = sprintf("
 			SELECT
-				0 as id, 0 as idsession, idcourse, sum(SD.count) as count, 0 as price
+				0 as id, 0 as idsession, idcourse, sum(SD.count*SD.enable) as count, 0 as price
 			FROM
 				%s S INNER JOIN %s SD
 				ON S.id = SD.idsession
@@ -143,7 +145,8 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		$this->deleteStmt = self::$PDO->prepare( $deleteStmt );
                             
 		$this->findBySessionStmt 	= self::$PDO->prepare($findBySessionStmt);		
-		$this->findBySession1Stmt 	= self::$PDO->prepare($findBySession1Stmt);		
+		$this->findBySession1Stmt 	= self::$PDO->prepare($findBySession1Stmt);
+		$this->findBySession2Stmt 	= self::$PDO->prepare($findBySession2Stmt);
 		$this->findByTop10Stmt 		= self::$PDO->prepare($findByTop10Stmt);		
 		$this->findItemStmt 		= self::$PDO->prepare($findItemStmt);		
 		$this->evaluateStmt 		= self::$PDO->prepare( $evaluateStmt );		
@@ -164,7 +167,8 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 			$array['idsession'],
 			$array['idcourse'], 
 			$array['count'], 			
-			$array['price']
+			$array['price'],
+			$array['enable']
 		);
         return $obj;
     }
@@ -174,7 +178,8 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 			$object->getIdSession(),
 			$object->getIdCourse(),
 			$object->getCount(),
-			$object->getPrice()
+			$object->getPrice(),
+			$object->getEnable()
 		); 
         $this->insertStmt->execute( $values );
         $id = self::$PDO->lastInsertId();
@@ -186,6 +191,7 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 			$object->getIdCourse(),
 			$object->getCount(),
 			$object->getPrice(),
+			$object->getEnable(),
 			$object->getId()
 		);		
         $this->updateStmt->execute( $values );
@@ -199,9 +205,14 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
         return new SessionDetailCollection( $this->findBySessionStmt->fetchAll(), $this );
     }
 	
-	function findBySession1( $values ) {	
+	function findBySession1( $values ){
         $this->findBySession1Stmt->execute( $values );
         return new SessionDetailCollection( $this->findBySession1Stmt->fetchAll(), $this );
+    }
+	
+	function findBySession2( $values ){
+        $this->findBySession2Stmt->execute( $values );
+        return new SessionDetailCollection( $this->findBySession2Stmt->fetchAll(), $this );
     }
 	
 	function findByTop10( $values ) {	
