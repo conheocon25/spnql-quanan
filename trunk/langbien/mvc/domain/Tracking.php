@@ -51,6 +51,12 @@ class Tracking extends Object{
 	//-------------------------------------------------------------------------------
 	//GET LISTs
 	//-------------------------------------------------------------------------------
+	function getPayRollAll(){
+		$mPayRoll 	= new \MVC\Mapper\PayRoll();
+		$PRAll		= $mPayRoll->findByTracking(array($this->getId()));
+		return $PRAll;
+	}
+	
 	function getDailyAll(){
 		$mTD 	= new \MVC\Mapper\TrackingDaily();
 		$TDAll 	= $mTD->findBy(array($this->getId()));
@@ -191,8 +197,8 @@ class Tracking extends Object{
 	//-------------------------------------------------------------------------------
 	//DEFINE URL
 	//-------------------------------------------------------------------------------
-	function getURLView(){return "/report/".$this->getId();}
-	function getURLReportCourse()	{return "/report/".$this->getId()."/course";}
+	function getURLView(){			return "/report/".$this->getId();}
+	function getURLReportCourse(){	return "/report/".$this->getId()."/course";}
 	
 	function getURLPayRoll(){return "/payroll/".$this->getId();}	
 	function getURLPayRollEmployee( $Employee ){return "/payroll/".$this->getId()."/".$Employee->getId();}
