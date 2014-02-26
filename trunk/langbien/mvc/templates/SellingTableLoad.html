@@ -289,14 +289,7 @@
 										tal:attributes="alt Session/getURLPrint">
 										<div class="text-right" tal:content="Session/getValuePrint"/>
 									</a>
-								</td>
-								<!--
-								<td class="center">
-									<a class="remove-session-item" href="#DialogSessionDel" data-toggle="modal" tal:attributes="data-id Session/getId">
-										<i class="glyphicons-remove_2"/>
-									</a>
-								</td>
-								!-->
+								</td>								
 							</tr>
 						</tbody>
 					</table>
@@ -385,43 +378,36 @@
 			//-----------------------------------------------------------------------------------
 			//Delete 1 DETAIL			
 			//-----------------------------------------------------------------------------------
-			$('.remove-item').click(function(){
-				$('#URLDelButton').attr('alt', $(this).attr('data-id'));
-			});			
-			$('#URLDelButton').click(function(e){								
-				var URL = "/object/del/SessionDetail/" + $(this).attr('alt');
+			$('.remove-item').click(function(){$('#URLDelButton').attr('alt', $(this).attr('data-id'));});
+			$('#URLDelButton').click(function(e){
+				//Load dữ liệu JSON về
+				var url = "/object/load/SessionDetail/" + $(this).attr('alt');
 				var IdTable = $("#CurrentTable").attr('alt');
-				$("#DialogDel").modal('hide');
-				e.stopImmediatePropagation();
-				$.ajax({
-					type: "POST",					
-					url: URL,
-					success: function(msg){
-						$("#Session").load("/selling/load/table/"+IdTable);
-					}
+				
+				//Load dữ liệu JSON lên FORM
+				$.getJSON(url, function(data){										
+					$("#DialogDel").modal('hide');					
+					var Data = [];
+					Data[0] = data.Id;
+					Data[1] = data.IdSession;
+					Data[2] = data.IdCourse;
+					Data[3] = data.Count;
+					Data[4] = data.Price;
+					Data[5] = 0;
+																				
+					var URL = "/object/upd/SessionDetail";
+					$.ajax({
+						type: "POST",
+						data: {Data:Data},
+						url: URL,
+						success: function(msg){
+							$("#Session").load("/selling/load/table/"+IdTable);
+						}
+					});
+				
 				});
 			});
-			
-			//-----------------------------------------------------------------------------------
-			//Delete 1 SESSION			
-			//-----------------------------------------------------------------------------------
-			$('.remove-session-item').click(function(){
-				$('#URLSessionDelButton').attr('alt', $(this).attr('data-id'));
-			});			
-			$('#URLSessionDelButton').click(function(e){								
-				var URL = "/object/del/Session/" + $(this).attr('alt');
-				var IdTable = $("#CurrentTable").attr('alt');
-				$("#DialogSessionDel").modal('hide');
-				e.stopImmediatePropagation();
-				$.ajax({
-					type: "POST",					
-					url: URL,
-					success: function(msg){
-						$("#Session").load("/selling/load/table/"+IdTable);
-					}
-				});
-			});
-			
+									
 			//-----------------------------------------------------------------------------------
 			//Update 1 SESSION
 			//-----------------------------------------------------------------------------------
@@ -565,11 +551,12 @@
 				submitHandler: function (form) {					
 					var IdTable = $("#CurrentTable").attr('alt');
 					var Data = [];
-					Data[0] = $('#URLUpdButton').attr('alt');				
+					Data[0] = $('#URLUpdButton').attr('alt');
 					Data[1] = $('#IdSession').attr('alt')				
 					Data[2] = $('#IdCourse1').val();
 					Data[3] = $('#Count1').val();
 					Data[4] = $('#Price1').val();
+					Data[5] = 1;
 					
 					$("#DialogEdit").modal('hide');
 										

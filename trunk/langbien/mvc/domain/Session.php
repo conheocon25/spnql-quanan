@@ -216,7 +216,23 @@ class Session extends Object{
 		$SDs = $mSD->findBySession1(array($this->getId()));
 		return $SDs;
 	}
-			
+	
+	function getDetails2(){
+		$mSD = new \MVC\Mapper\SessionDetail();
+		$SDs = $mSD->findBySession2(array($this->getId()));
+		return $SDs;
+	}
+	function checkDel(){
+		$SDAll = $this->getDetails2();
+		while ($SDAll->valid()){
+			$SD = $SDAll->current();
+			if ($SD->getEnable()==0)
+				return true;
+			$SDAll->next();
+		}
+		return false;
+	}
+	
 	function getValue(){		
 		$SDAll = $this->getDetails();
 		$Sum1 = 0;
@@ -274,6 +290,11 @@ class Session extends Object{
 	function getURLPrint(){
 		$Domain = $this->getTable()->getDomain();
 		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/".$this->getId()."/print.pdf";
+    }
+	
+	function getURLPrint1(){
+		$Domain = $this->getTable()->getDomain();
+		return "/selling/".$Domain->getId()."/".$this->getIdTable()."/".$this->getId()."/print1.pdf";
     }
 	
 	//---------------------------------------------------------	

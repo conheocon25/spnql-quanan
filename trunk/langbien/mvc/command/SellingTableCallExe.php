@@ -81,7 +81,8 @@
 					$IdSession, 
 					$IdCourse, 
 					1,
-					$Course->getPrice1()
+					$Course->getPrice1(),
+					1
 				);
 				$mSD->insert($SD);
 				

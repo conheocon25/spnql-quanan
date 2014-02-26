@@ -81,6 +81,7 @@
 			<status value="CMD_OK"><forward>Selling</forward></status>
 		</command>				
 		<command name="SellingTablePrint"><view>SellingTablePrint</view></command>
+		<command name="SellingTablePrint1"><view>SellingTablePrint1</view></command>
 		<command name="SellingTableCheckoutExe"><view>SellingTableCheckoutExe</view></command>
 		<command name="CallLog"><view>CallLog</view></command>
 		<command name="CallLogLoading"><view>CallLogLoading</view></command>

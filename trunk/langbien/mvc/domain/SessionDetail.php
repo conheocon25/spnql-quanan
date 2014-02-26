@@ -10,13 +10,15 @@ class SessionDetail extends Object{
 	private $IdCourse;
 	private $Count;	
 	private $Price;
+	private $Enable;
 	
-    function __construct( $Id=null, $IdSession=null, $IdCourse=null, $Count=null, $Price=null) {
-        $this->Id = $Id;
-		$this->IdSession = $IdSession;
-		$this->IdCourse = $IdCourse;
-		$this->Count = $Count;		
-		$this->Price = $Price;
+    function __construct( $Id=null, $IdSession=null, $IdCourse=null, $Count=null, $Price=null, $Enable=null) {
+        $this->Id 			= $Id;
+		$this->IdSession 	= $IdSession;
+		$this->IdCourse 	= $IdCourse;
+		$this->Count 		= $Count;		
+		$this->Price 		= $Price;
+		$this->Enable 		= $Enable;
         parent::__construct( $Id );
     }
 	
@@ -51,7 +53,10 @@ class SessionDetail extends Object{
 	function getPrice( ) {return $this->Price;}
 	function getPricePrint( ) {$num = new Number($this->Price);return $num->formatCurrency();}
 	
-	function getValue( ) {return $this->Price*$this->Count;}
+	function setEnable( $Enable){$this->Enable = $Enable;}
+	function getEnable( ) 		{return $this->Enable;}
+	
+	function getValue( ) {return $this->Price*$this->Count*$this->Enable;}
 	function getValuePrint( ) {$num = new Number($this->getValue());return $num->formatCurrency();}
 	
 	function getValueBase( ){
@@ -65,7 +70,8 @@ class SessionDetail extends Object{
 			'IdCourse'		=> $this->getIdCourse(),
 			'Name'			=> $this->getCourse()->getName(),
 			'Count'			=> $this->getCount(),			
-			'Price'			=> $this->getPrice()
+			'Price'			=> $this->getPrice(),
+			'Enable'		=> $this->getEnable()
 		);
 		return json_encode($json);
 	}
@@ -75,6 +81,7 @@ class SessionDetail extends Object{
 		$this->IdCourse			= $Data[2];
 		$this->Count			= $Data[3];
 		$this->Price			= $Data[4];
+		$this->Enable			= $Data[5];
     }
 	
 	//-------------------------------------------------------------------------------
