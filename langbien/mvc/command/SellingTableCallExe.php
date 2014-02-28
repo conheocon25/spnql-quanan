@@ -98,11 +98,13 @@
 					);
 					$mCL->insert($CL);
 				}
-			}else{
-				$SD = $mSD->find($IdSD);									
-				$Count = $SD->getCount() + $Delta;				
+			}else{				
+				$SD = $mSD->find($IdSD);
+				
+				$Count = $SD->getCount() + $Delta;
 				$SD->setCount($Count);
 				$mSD->update($SD);
+				
 				
 				//Thêm nhật kí gọi món
 				if ($SD->getCourse()->getPrepare()>0){
@@ -115,7 +117,7 @@
 						0						//Mới gọi món
 					);
 					$mCL->insert($CL);
-				}								
+				}
 			}
 			$Log = new \MVC\Domain\TableLog(
 				null,

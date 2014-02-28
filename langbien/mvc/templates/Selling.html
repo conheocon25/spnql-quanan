@@ -9,6 +9,9 @@
 		<div metal:use-macro="mAdmin.xhtml/StyleTools"/>
 		<div id="sidebar">
 			<ul>
+				<li>
+					<a>CA1</a>
+				</li>
 				<li tal:repeat="Domain DomainAll" class="Domain" tal:attributes="alt Domain/getId">
 					<a><i class="glyphicons-show_big_thumbnails" /><span tal:content="Domain/getName"/></a>
 				</li>

@@ -20,6 +20,7 @@
 			$mSD 		= new \MVC\Mapper\SessionDetail();
 			$mConfig	= new \MVC\Mapper\Config();
 			$mUnit 		= new \MVC\Mapper\Unit();
+			$mTD 		= new \MVC\Mapper\TrackingDaily();
 			
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
@@ -33,6 +34,8 @@
 			$ConfigName		= $mConfig->findByName("NAME");
 			$ConfigSwitchBoardCall	= $mConfig->findByName("SWITCH_BOARD_CALL");
 			
+			$TDAll = $mTD->findByDate(array('2013-2-18'));
+			
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------									
@@ -44,6 +47,7 @@
 			//-------------------------------------------------------------
 			$request->setProperty('Title'		, $Title);
 			$request->setObject('Navigation'	, $Navigation);
+			$request->setObject('TD'			, $TDAll->current());
 			$request->setObject('Domain'		, $Domain);
 			$request->setObject('DomainAll'		, $DomainAll);
 			$request->setObject('UnitAll'		, $UnitAll);
