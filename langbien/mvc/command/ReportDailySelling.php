@@ -48,7 +48,7 @@
 				$Value12 		= 0;
 				while ($SessionAll1->valid()){
 					$Session = $SessionAll1->current();
-					if ($Session->getStatus()==0)
+					if ($Session->getStatus()==2)
 						$Value12 += $Session->getValue();
 					else	
 						$Value11 += $Session->getValue();						
@@ -64,7 +64,7 @@
 				$Value22 		= 0;
 				while ($SessionAll2->valid()){
 					$Session = $SessionAll2->current();
-					if ($Session->getStatus()==0)
+					if ($Session->getStatus()==2)
 						$Value22 += $Session->getValue();
 					else	
 						$Value21 += $Session->getValue();						
@@ -91,7 +91,7 @@
 				$Value2 		= 0;
 				while ($SessionAll->valid()){
 					$Session = $SessionAll->current();
-					if ($Session->getStatus()==0)
+					if ($Session->getStatus()==2)
 						$Value2 += $Session->getValue();
 					else	
 						$Value1 += $Session->getValue();

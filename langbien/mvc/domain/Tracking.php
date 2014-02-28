@@ -76,7 +76,8 @@ class Tracking extends Object{
 				0, 
 				0, 
 				0, 
-				0
+				0,
+				"0000-00-00 00:00:00"
 			);
 			$mTD->insert($TD);
 			$Date = \date("Y-m-d", strtotime("+1 day", strtotime($Date)));
