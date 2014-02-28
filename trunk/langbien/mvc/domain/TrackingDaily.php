@@ -11,6 +11,7 @@ class TrackingDaily extends Object{
 	private $Store;
 	private $Paid;
 	private $Collect;
+	private $Time1;
 	
 	//-------------------------------------------------------------------------------
 	//ACCESSING MEMBER PROPERTY
@@ -23,7 +24,8 @@ class TrackingDaily extends Object{
 		$Import		= null, 
 		$Store		= null,
 		$Paid		= null,
-		$Collect	= null
+		$Collect	= null,
+		$Time1		= null
 	) {
         $this->Id 			= $Id;
 		$this->IdTracking 	= $IdTracking;
@@ -33,6 +35,7 @@ class TrackingDaily extends Object{
 		$this->Store 		= $Store;
 		$this->Paid 		= $Paid;
 		$this->Collect 		= $Collect;
+		$this->Time1 		= $Time1;
 		
         parent::__construct( $Id );
     }
@@ -67,9 +70,15 @@ class TrackingDaily extends Object{
 	function getPaid( ) {return $this->Paid;}
 	function getPaidPrint( ) {$N = new \MVC\Library\Number($this->Paid);return $N->formatCurrency();}
 	
-	function setCollect( $Collect ) {$this->Collect = $Collect; $this->markDirty();}   
+	function setCollect( $Collect ) {$this->Collect = $Collect; $this->markDirty();}
 	function getCollect( ) {return $this->Collect;}
 	function getCollectPrint( ) {$N = new \MVC\Library\Number($this->Collect);return $N->formatCurrency();}
+	
+	function isOne(){
+		if ($this->getTime1()=="0000-00-00 00:00:00")
+			return true;
+		return false;	
+	}
 	
 	function getValue(){
 		$mTD 		= new \MVC\Mapper\TrackingDaily();
@@ -97,7 +106,10 @@ class TrackingDaily extends Object{
 		return $NewValue ;
 	}
 	function getValuePrint( ) {$N = new \MVC\Library\Number($this->getValue());return $N->formatCurrency();}
-		
+	
+	function setTime1( $Time1 ) {$this->Time1 = $Time1; $this->markDirty();}
+	function getTime1( ) {return $this->Time1;}
+	
 	//-------------------------------------------------------------------------------
 	//GET LISTs
 	//-------------------------------------------------------------------------------
@@ -163,11 +175,9 @@ class TrackingDaily extends Object{
 	
 	function getURLReportCustomerDetail($IdCustomer){
 		return "/report/".$this->getIdTracking()."/".$this->getId()."/customer/".$IdCustomer;
-	}
-	
+	}	
 	//-------------------------------------------------------------------------------
     static function findAll() {$finder = self::getFinder( __CLASS__ ); return $finder->findAll();}
-    static function find( $Id ) {$finder = self::getFinder( __CLASS__ ); return $finder->find( $Id );}
-	
+    static function find( $Id ) {$finder = self::getFinder( __CLASS__ ); return $finder->find( $Id );}	
 }
 ?>

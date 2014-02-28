@@ -54,7 +54,7 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		$findItemStmt = sprintf("select * from %s where idsession=? and idcourse=?", $tblSessionDetail);
 		$evaluateStmt = sprintf("select sum(sd.count * price ) from %s sd where idsession=?", $tblSessionDetail);
 		
-		$checkStmt = sprintf("select distinct id from %s where idsession=? and idcourse=?", $tblSessionDetail);		
+		$checkStmt = sprintf("select distinct id from %s where idsession=? and idcourse=? and enable=1", $tblSessionDetail);
 		$trackByCountStmt = sprintf("
 			select 
 				sum(count*SD.enable)
