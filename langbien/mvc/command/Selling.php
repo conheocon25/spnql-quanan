@@ -34,7 +34,8 @@
 			$ConfigName		= $mConfig->findByName("NAME");
 			$ConfigSwitchBoardCall	= $mConfig->findByName("SWITCH_BOARD_CALL");
 			
-			$TDAll = $mTD->findByDate(array('2013-2-18'));
+			//Kiểm tra theo dõi ngày hiện tại
+			$TDAll = $mTD->findByDate(array(date('Y-m-d')));
 			
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI

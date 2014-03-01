@@ -10,7 +10,12 @@
 		<div id="sidebar">
 			<ul>
 				<li>
-					<a>CA1</a>
+					<a href="#DialogTime" data-toggle="modal" tal:condition="TD/isOne">
+						ĐANG Ở CA 1
+					</a>
+					<a tal:condition="not:TD/isOne">
+						ĐANG Ở CA 2
+					</a>
 				</li>
 				<li tal:repeat="Domain DomainAll" class="Domain" tal:attributes="alt Domain/getId">
 					<a><i class="glyphicons-show_big_thumbnails" /><span tal:content="Domain/getName"/></a>
@@ -142,6 +147,24 @@
 						</div>
 						<div class="modal-footer">
 							<button id="URLInsCourseButton" class="btn btn-primary btn-small"><i class="glyphicons-download_alt"/> Lưu</button>
+							<button data-dismiss="modal" class="btn btn-default btn-small"><i class="glyphicons-undo"/> Hủy</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- TIME DIALOG  -->
+		<div id="DialogTime" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header"><h3><i class="glyphicons-bell modal-icon"/>KẾT THÚC CA</h3></div>
+					<div class="form-horizontal">
+						<div class="modal-body">
+							<p>Bạn có muốn kết thúc CA ?</p>
+						</div>
+						<div class="modal-footer">
+							<button id="TimeButton" class="btn btn-primary btn-small"><i class="glyphicons-download_alt"/> Kết thúc</button>
 							<button data-dismiss="modal" class="btn btn-default btn-small"><i class="glyphicons-undo"/> Hủy</button>
 						</div>
 					</div>
@@ -286,6 +309,19 @@
 						location.reload();
 					}
 				});
+			});
+			
+			//-----------------------------------------------------------------------------------
+			//KẾT THÚC CA
+			$('#TimeButton').click(function(){				
+				var URL = "/selling/end/case/one";
+				$.ajax({
+					type: "POST",					
+					url: URL,
+					success: function(msg){
+						location.reload();
+					}
+				});				
 			});
 			
 			//---------------------------------------------------------------------------

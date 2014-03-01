@@ -60,6 +60,9 @@ RewriteRule ^calllog$ 											?cmd=CallLog [L]
 RewriteRule ^calllog/loading$ 									?cmd=CallLogLoading [L]
 RewriteRule ^calllog/loading/([0-9]+)$ 							?cmd=CallLogLoading&IdCL=$1 [L]
 
+RewriteRule ^selling/end/case/one$ 								?cmd=SellingEndCase&IdCase=1 [L]
+RewriteRule ^selling/end/case/two$ 								?cmd=SellingEndCase&IdCase=2 [L]
+
 #---------------------------------------------------------------------------------------------------------------------------
 # MONEY
 #---------------------------------------------------------------------------------------------------------------------------
