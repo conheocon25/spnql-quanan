@@ -45,11 +45,19 @@ class PayRoll extends Object{
     	
 	function setIdTracking( $IdTracking ){ $this->IdTracking = $IdTracking; $this->markDirty(); }
 	function getIdTracking( ) 			{ return $this->IdTracking;}
+	function getTracking()				{
+		$mTracking = new \MVC\Mapper\Tracking();
+		$Tracking = $mTracking->find($this->IdTracking);
+		return $Tracking;
+	}
 		
 	function setAbsent( $Absent ) 		{ $this->Absent = $Absent; $this->markDirty(); }
 	function getAbsent( ) 				{ return $this->Absent;}	
 	function getAbsentPrint( ) 			{ $N = new \MVC\Library\Number( $this->getAbsent() ); return $N->formatCurrency();}
-	function getAbsentValue( ) 			{ return $this->getAbsent()*($this->getBaseValue()/30);}
+	function getAbsentValue( ) 			{ 
+		//return $this->getAbsent()*($this->getBaseValue()/$this->getTracking()->getPayRollAll()->count());		
+		return $this->getAbsent()*($this->getBaseValue()/$this->getTracking()->getDailyAll()->count());		
+	}
 	function getAbsentValuePrint( ) 	{ $N = new \MVC\Library\Number( $this->getAbsentValue() ); return $N->formatCurrency();}
 
 	function setBaseValue( $BaseValue )	{ $this->BaseValue = $BaseValue; $this->markDirty();}
@@ -81,7 +89,7 @@ class PayRoll extends Object{
 		return (
 					$this->getBaseValue() + 
 					$this->getExtraValue() - 
-					$this->getAbsent()*($this->getBaseValue()/30) - 					
+					$this->getAbsentValue() - 
 					$this->getPunishValue() - 
 					$PV
 		);
