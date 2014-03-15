@@ -36,18 +36,18 @@
 												
 		//Quản lí User
 		function setCurrentUser( \MVC\Domain\User $user ) {
-			return self::instance()->set('cafe_current_user', $user);
+			return self::instance()->set('restaurant_langbien_current_user', $user);
 		}
 		function getCurrentUser() {
-			return self::instance()->get('cafe_current_user');
+			return self::instance()->get('restaurant_langbien_current_user');
 		}
 		
 		function setCurrentTheme( $theme ) {
-			return self::instance()->set('cafe_current_theme', $theme);
+			return self::instance()->set('restaurant_langbien_current_theme', $theme);
 		}
 		
 		function getCurrentTheme(){
-			$Theme = self::instance()->get('cafe_current_theme');
+			$Theme = self::instance()->get('restaurant_langbien_current_theme');
 			if (!isset($Theme)){
 				$mConfig = new \MVC\Mapper\Config();
 				$Config = $mConfig->findByName("THEME");
@@ -57,21 +57,16 @@
 					return $Config->getValue();
 			}
 				
-			return self::instance()->get('cafe_current_theme');
+			return self::instance()->get('restaurant_langbien_current_theme');
 		}
 		
 		function setCurrentIdUser( $Iduser ) {
-			return self::instance()->set('cafe_current_Iduser', $Iduser);
+			return self::instance()->set('restaurant_langbien_current_iduser', $Iduser);
 		}
 		function getCurrentIdUser() {
-			return self::instance()->get('cafe_current_Iduser');
+			return self::instance()->get('restaurant_langbien_current_iduser');
 		}
-		
-		function setCurrentAction( $Action ) {return self::instance()->set('cafe_current_action', $Action);}		
-		function getCurrentAction() {
-			$result = self::instance()->get('cafe_current_action');			
-			return $result;
-		}
+				
 	}
 	/*--------------------------------------------------------------------------------*/
 	class RequestRegistry extends Registry { 
