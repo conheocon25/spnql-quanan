@@ -211,6 +211,19 @@ class Session extends Object{
 		return $SDs;
 	}
 	
+	function getDetails3(){
+		$mSD = new \MVC\Mapper\SessionDetail();
+		$SDs = $mSD->findBySession3(array($this->getId()));
+		return $SDs;
+	}
+	
+	function getDetails4(){
+		$mSD = new \MVC\Mapper\SessionDetail();
+		$SDs = $mSD->findBySession4(array($this->getId()));
+		return $SDs;
+	}
+	
+	
 	function getDetails1(){
 		$mSD = new \MVC\Mapper\SessionDetail();
 		$SDs = $mSD->findBySession1(array($this->getId()));
