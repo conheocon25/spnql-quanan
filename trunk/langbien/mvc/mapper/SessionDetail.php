@@ -51,6 +51,54 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 				ORDER BY N.order
 		", $tblSessionDetail);
 		
+		$findBySession3Stmt = sprintf("
+				SELECT
+					SD.id,
+					idsession,
+					idcourse,
+					count,
+					price,
+					N.order,
+					SD.enable
+				FROM 
+					%s SD inner join (
+						SELECT 
+							COU.id as id,
+							CAT.order as `order`
+						FROM 
+							tbl_category CAT inner join tbl_course COU on CAT.id=COU.idcategory
+						ORDER BY CAT.order
+					) as N 
+					on SD.idcourse = N.id
+				WHERE 
+					idsession=? AND SD.enable=1 AND price>0
+				ORDER BY N.order
+		", $tblSessionDetail);
+		
+		$findBySession4Stmt = sprintf("
+				SELECT
+					SD.id,
+					idsession,
+					idcourse,
+					count,
+					price,
+					N.order,
+					SD.enable
+				FROM 
+					%s SD inner join (
+						SELECT 
+							COU.id as id,
+							CAT.order as `order`
+						FROM 
+							tbl_category CAT inner join tbl_course COU on CAT.id=COU.idcategory
+						ORDER BY CAT.order
+					) as N 
+					on SD.idcourse = N.id
+				WHERE 
+					idsession=? AND SD.enable=1 AND price=0
+				ORDER BY N.order
+		", $tblSessionDetail);
+		
 		$findItemStmt = sprintf("select * from %s where idsession=? and idcourse=?", $tblSessionDetail);
 		$evaluateStmt = sprintf("select sum(sd.count * price ) from %s sd where idsession=?", $tblSessionDetail);
 		
@@ -147,6 +195,9 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		$this->findBySessionStmt 	= self::$PDO->prepare($findBySessionStmt);		
 		$this->findBySession1Stmt 	= self::$PDO->prepare($findBySession1Stmt);
 		$this->findBySession2Stmt 	= self::$PDO->prepare($findBySession2Stmt);
+		$this->findBySession3Stmt 	= self::$PDO->prepare($findBySession3Stmt);
+		$this->findBySession4Stmt 	= self::$PDO->prepare($findBySession4Stmt);
+		
 		$this->findByTop10Stmt 		= self::$PDO->prepare($findByTop10Stmt);		
 		$this->findItemStmt 		= self::$PDO->prepare($findItemStmt);		
 		$this->evaluateStmt 		= self::$PDO->prepare( $evaluateStmt );		
@@ -213,6 +264,16 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 	function findBySession2( $values ){
         $this->findBySession2Stmt->execute( $values );
         return new SessionDetailCollection( $this->findBySession2Stmt->fetchAll(), $this );
+    }
+	
+	function findBySession3( $values ){
+        $this->findBySession3Stmt->execute( $values );
+        return new SessionDetailCollection( $this->findBySession3Stmt->fetchAll(), $this );
+    }
+	
+	function findBySession4( $values ){
+        $this->findBySession4Stmt->execute( $values );
+        return new SessionDetailCollection( $this->findBySession4Stmt->fetchAll(), $this );
     }
 	
 	function findByTop10( $values ) {	
