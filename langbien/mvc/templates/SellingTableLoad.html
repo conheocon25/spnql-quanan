@@ -11,7 +11,7 @@
 					<a title="Gom bàn" data-toggle="modal" class="btn SessionMerge" href="#DialogMerge" tal:attributes="data-session-id Table/getSessionActive/getId"><i class="glyphicons-resize_small"/></a>
 					<a title="Chỉnh sửa giao dịch" data-toggle="modal" class="btn SessionUpdate" href="#DialogSession" tal:attributes="data-session-id Table/getSessionActive/getId"><i class="glyphicons-edit" /></a>
 					<a title="Tính phiếu" class="btn Checkout" tal:attributes="alt Table/getSessionActive/getURLCheckoutExe"><i class="glyphicons-ok_2" /></a>					
-					<a title="In phiếu" data-toggle="modal" class="btn SessionPreview" href="#DialogPreview" tal:attributes="alt Table/getSessionActive/getURLPrint"><i class="glyphicons-print"></i></a>
+					<a title="In phiếu" class="btn" tal:attributes="href Table/getSessionActive/getURLPrint" target="blank"><i class="glyphicons-print"></i></a>
 				</div>
 			</div>
 			<div class="widget-content nopadding size-12">
@@ -49,7 +49,15 @@
 							<tbody>
 								<tr tal:repeat="Detail Table/getSessionActive/getDetails1">
 									<td><div class="text-center" tal:content="repeat/Detail/number" /></td>
-									<td><a class="update-item" href="#DialogEdit" data-toggle="modal" tal:attributes="data-id Detail/getId" tal:content="Detail/getCourse/getName"/></td>
+									<td><a class="update-item" href="#DialogEdit" data-toggle="modal" 
+										tal:attributes="id 			Detail/getId;
+														idcourse 	Detail/getIdCourse;
+														name 		Detail/getCourse/getName;
+														count 		Detail/getCount;
+														price 		Detail/getPrice;
+										" 
+										tal:content="Detail/getCourse/getName"/>
+									</td>
 									<td><div class="text-center" tal:content="Detail/getCountPrint"/></td>
 									<td><div class="text-right" tal:content="Detail/getPricePrint"/></td>
 									<td><div class="text-right" tal:content="Detail/getValuePrint"/></td>									
@@ -274,10 +282,7 @@
 							<tr>										
 								<th width="30">STT</th>
 								<th><div class="text-left">NGÀY</div></th>
-								<th><div class="text-right">PHIẾU</div></th>
-								<!--
-								<th width="30"><i class="glyphicons-bin"/></th>
-								!-->
+								<th><div class="text-right">PHIẾU</div></th>								
 							</tr>
 						</thead>
 						<tbody>
@@ -285,8 +290,7 @@
 								<td><div class="text-center" tal:content="repeat/Session/number"/></td>
 								<td><div class="text-left" tal:content="Session/getDateTimePrint"/></td>
 								<td>
-									<a title="Xem phiếu" data-toggle="modal" class="SessionPreview" href="#DialogPreview" 
-										tal:attributes="alt Session/getURLPrint">
+									<a title="Xem phiếu" tal:attributes="href Session/getURLPrint" target="blank">
 										<div class="text-right" tal:content="Session/getValuePrint"/>
 									</a>
 								</td>								
@@ -331,28 +335,8 @@
 		</div>
 		<!-- END DIALOG EDIT -->
         <script type="text/javascript">
-		/*<![CDATA[*/
-			$('#DateTime1').datetimepicker({
-				language:  'vi',
-				weekStart: 1,
-				todayBtn:  1,
-				autoclose: 1,
-				todayHighlight: 1,
-				startView: 2,
-				forceParse: 0,
-				showMeridian: 1
-			});
-			$('#DateTimeEnd1').datetimepicker({
-				language:  'vi',
-				weekStart: 1,
-				todayBtn:  1,
-				autoclose: 1,
-				todayHighlight: 1,
-				startView: 2,
-				forceParse: 0,
-				showMeridian: 1
-			});			
-			$("#SearchIdCustomer").change(function(){				
+		/*<![CDATA[*/			
+			$("#SearchIdCustomer").change(function(){
 				URL = "/search/customer/"+$(this).val();
 				$.getJSON(URL, function(data){
 					$("#IdCustomer1").attr('alt', data.Id);					
@@ -360,21 +344,7 @@
 					$("#CustomerName").val(data.Name);
 				});				
 			});
-			$(".SessionPreview").click(function(){
-				URL = $(this).attr('alt');
-				var mPDF = new PDFObject({ 		
-					url: URL,				
-					height: "500px",
-					pdfOpenParams:{
-						view: 'Fit', 
-						toolbar: '1', 
-						statusbar: '1', 
-						messages: '1',
-						navpanes: '1' 
-					}				
-				}).embed("DocPreview");												
-				$("#DocPreview").show().printElement();	
-			});
+						
 			//-----------------------------------------------------------------------------------
 			//Delete 1 DETAIL			
 			//-----------------------------------------------------------------------------------
@@ -493,17 +463,11 @@
 			//Load 1 SESSION DETAIL
 			//-----------------------------------------------------------------------------------
 			$('.update-item').click(function(){
-				//Load dữ liệu JSON về
-				var url = "/object/load/SessionDetail/" + $(this).attr('data-id');
-				
-				//Load dữ liệu JSON lên FORM
-				$.getJSON(url, function(data){
-					$('#URLUpdButton').attr('alt', data.Id);
-					$('#IdCourse1').attr('value', data.IdCourse);
-					$('#Name1').attr('value', data.Name);
-					$('#Count1').attr('value', data.Count);
-					$('#Price1').attr('value', data.Price);
-				});
+				$('#URLUpdButton').attr('alt', 	$(this).attr('Id')			);
+				$('#IdCourse1').attr('value', 	$(this).attr('idcourse')	);
+				$('#Name1').attr('value', 		$(this).attr('name')		);
+				$('#Count1').attr('value', 		$(this).attr('count')		);
+				$('#Price1').attr('value', 		$(this).attr('price')		);
 			});
 			
 			//-----------------------------------------------------------------------------------
@@ -544,7 +508,7 @@
 				highlight:function(element, errorClass, validClass) {
 					$(element).parents('.form-group').addClass('has-error');
 				},
-				unhighlight: function(element, errorClass, validClass) {
+				unhighlight: function(element, errorClass, validClass){
 					$(element).parents('.form-group').removeClass('has-error');
 					$(element).parents('.form-group').addClass('has-success');
 				},

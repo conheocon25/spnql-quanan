@@ -3,8 +3,9 @@
 	$Viewer 	= new Viewer("mvc/templates/SellingTablePrint1.html");
 	$Request 	= \MVC\Base\RequestRegistry::getRequest();
 	$Config 	= $Request->getObject("Config");
-	if ($Config->getValue()==1){
-		echo $Viewer->pdfReceipt2();
-	}
-	echo $Viewer->pdfReceipt1();
+	//if ($Config->getValue()==1){
+	//	echo $Viewer->pdfReceipt2();
+	//}
+	//echo $Viewer->pdfReceipt1();
+	$Viewer->html();
 ?>
