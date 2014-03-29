@@ -47,8 +47,7 @@ class Viewer {
 		$pdf->AddPage();
 		$pdf->SetFont('arial', 'N', 10);
 		$pdf->writeHTML($html, true, false, true, false, '');		
-		$Out = $pdf->Output("bao_cao_quan_an_lang_chai.pdf", 'I');
-		unset($pdf);
+		$Out = $pdf->Output("bao_cao_quan_an_lang_chai.pdf", 'I');		
 		return $Out;
 	}
 			
@@ -57,6 +56,8 @@ class Viewer {
 		$pdf = new \CUSTOMPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 		$width 	= 73; //76 mm 
 		$height = 297; //30 mmm mac dinh nhung 1 vong giay la 83 mm	
+				
+		
 		$pdf->addFormat("custom", $width, $height);  
 		$pdf->reFormat("custom", 'P');
 		
@@ -64,15 +65,15 @@ class Viewer {
 		$pdf->setHeaderFont(Array('arial', '', '10'));
 		$pdf->setPrintHeader(false);
 		$pdf->setPrintFooter(false);
+		$pdf->setFontSubsetting(false);
 		$pdf->SetMargins(1, 1, 1);
 		
 		$pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM);
 				
 		$pdf->AddPage();
-		$pdf->SetFont('arial', 'N', 8);							
+		$pdf->SetFont('arial', 'N', 8, '','true');
 		$pdf->writeHTML($html, true, false, true, false, '');
-		$Out = $pdf->Output('phieu_quan_an_lang_chai_2_lien.pdf', 'I');
-		unset($Out);
+		$Out = $pdf->Output('phieu_quan_an_lang_bien_2_lien.pdf', 'I');		
 		return $Out;
 	}
 	
@@ -84,21 +85,19 @@ class Viewer {
 		$pdf->addFormat("custom", $width, $height);  
 		$pdf->reFormat("custom", 'P');
 		
-		// set default header data		
-		$pdf->setHeaderFont(Array('arial', '', '10'));
+		// set default header data				
 		$pdf->setPrintHeader(false);
 		$pdf->setPrintFooter(false);
+		$pdf->setFontSubsetting(false);
 		$pdf->SetMargins(1, 1, 1);
 		
-		$pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM);
-				
+		//$pdf->SetAutoPageBreak(FALSE, PDF_MARGIN_BOTTOM);			
 		$pdf->AddPage();
-		$pdf->SetFont('arial', 'N', 8);							
+		$pdf->SetFont('arial', 'N', 8, '','true');
 		$pdf->writeHTML($html, true, false, true, false, '');
 		$pdf->AddPage();
 		$pdf->writeHTML($html, true, false, true, false, '');
-		$Out = $pdf->Output('phieu_quan_an_lang_chai_2_lien.pdf', 'I');
-		unset($Out);
+		$Out = $pdf->Output('phieu_quan_an_lang_bien_2_lien.pdf', 'I');		
 		return $Out;
 	}
 	
@@ -110,8 +109,7 @@ class Viewer {
 		$pdf->addFormat("custom", $width, $height);  
 		$pdf->reFormat("custom", 'P');
 		
-		// set default header data		
-		$pdf->setHeaderFont(Array('arial', '', '10'));
+		// set default header data				
 		$pdf->setPrintFooter(false);
 		$pdf->setPrintHeader(false);
 		$pdf->SetMargins(1, 1, 1);
