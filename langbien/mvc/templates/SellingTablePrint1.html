@@ -78,11 +78,16 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr tal:repeat="Detail Session/getDetails2">
+		<tr tal:repeat="Detail Session/getDetails3">
+			<td width="42%" align='left' tal:content="Detail/getCourse/getName" />
+			<td width="11%" align='right' tal:content="Detail/getCount" 		/>
+			<td width="21%" align='right' tal:content="Detail/getPricePrint" 	/>
+			<td width="26%" align='right' ><span tal:content="Detail/getValuePrint" /></td>
+		</tr>
+		<tr tal:repeat="Detail Session/getDetails4" tal:condition="Session/getDetails4/count">
 			<td width="42%" align='left' tal:content="Detail/getCourse/getName" />
 			<td width="11%" align='right' tal:content="Detail/getCount" />
-			<td width="21%" align='right' tal:content="Detail/getPricePrint" />
-			<td width="26%" align='right' ><span tal:content="Detail/getValuePrint" /></td>
+			<td colspan="2" width="47%" align='left'>Quán tặng</td>
 		</tr>
 	</tbody>
 </table>	
@@ -175,11 +180,16 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr tal:repeat="Detail Session/getDetails2">
+		<tr tal:repeat="Detail Session/getDetails1">
 			<td width="42%" align='left' tal:content="Detail/getCourse/getName" />
 			<td width="11%" align='right' tal:content="Detail/getCount" />
 			<td width="21%" align='right' tal:content="Detail/getPricePrint" />
 			<td width="26%" align='right' ><span tal:content="Detail/getValuePrint" /></td>
+		</tr>
+		<tr tal:repeat="Detail Session/getDetails4" tal:condition="Session/getDetails4/count">
+			<td width="42%" align='left' tal:content="Detail/getCourse/getName" />
+			<td width="11%" align='right' tal:content="Detail/getCount" />
+			<td width="47%" align='left'>Quán tặng</td>
 		</tr>
 	</tbody>
 </table>	
@@ -214,3 +224,8 @@
 	</tbody>
 </table>
 </body>
+
+
+
+
+
