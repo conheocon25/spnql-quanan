@@ -53,8 +53,7 @@
 											</a>
 										</td>
 										<td align="center">
-											<a class="print-item" href="#DialogPreview" data-toggle="modal" 
-												tal:attributes="alt PayRoll/getURLPrint">
+											<a tal:attributes="href PayRoll/getURLPrint" target="blank">
 												<span class="glyphicons-print"/>
 											</a>
 										</td>
@@ -67,6 +66,7 @@
 									</tr>
 								</tbody>
 							</table>
+							<div id="Reset" class="btn btn-primary" tal:attributes="alt URLReset">Khởi tạo lại dữ liệu</div>
 						</div>
 					</div>					
 				</div>
@@ -229,21 +229,16 @@
 					0500
 				);
 			});
-			
-			//IN PHIẾU LƯƠNG
-			$(".print-item").click(function(){
+									
+			$("#Reset").click(function(){
 				var URL = $(this).attr('alt');				
-				var mPDF = new PDFObject({ 
-					url: URL,				
-					height: "500px",
-					pdfOpenParams:{
-						view: 'Fit', 
-						toolbar: '1', 
-						statusbar: '1', 
-						messages: '1',
-						navpanes: '1' 
+				$.ajax({
+					type: "POST",					
+					url: URL,
+					success: function(msg){
+						location.reload();
 					}
-				}).embed("DocPreview");
+				});
 			});
 			
 		/*]]>*/

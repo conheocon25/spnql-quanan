@@ -14,6 +14,7 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
 		$deleteStmt = sprintf("delete from %s where id=?", $tblPayRoll);
 		$findByStmt = sprintf("select * from %s where id_employee = ? order by date DESC", $tblPayRoll);				
 		$findByTrackingStmt = sprintf("select * from %s where id_tracking = ?", $tblPayRoll);
+		$deleteByTrackingStmt = sprintf("delete from %s where id_tracking = ?", $tblPayRoll);
 				
         $this->selectAllStmt = self::$PDO->prepare($selectAllStmt);
         $this->selectStmt = self::$PDO->prepare($selectStmt);
@@ -21,7 +22,8 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
         $this->insertStmt = self::$PDO->prepare($insertStmt);
 		$this->deleteStmt = self::$PDO->prepare($deleteStmt);
 		$this->findByStmt = self::$PDO->prepare($findByStmt);		
-		$this->findByTrackingStmt = self::$PDO->prepare($findByTrackingStmt);		
+		$this->findByTrackingStmt 	= self::$PDO->prepare($findByTrackingStmt);
+		$this->deleteByTrackingStmt = self::$PDO->prepare($deleteByTrackingStmt);
     } 
     function getCollection( array $raw ) {return new PayRollCollection( $raw, $this );}
 
@@ -38,11 +40,7 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
 		);		
         return $obj;
     }
-
-    protected function targetClass() {        
-		return "PayRoll";
-    }
-
+    protected function targetClass() {return "PayRoll";}
     protected function doInsert( \MVC\Domain\Object $object ) {
         $values = array(
 			$object->getIdEmployee(),
@@ -84,6 +82,11 @@ class PayRoll extends Mapper implements \MVC\Domain\PayRollFinder{
 	function findByTracking($values ){	
         $this->findByTrackingStmt->execute( $values );
         return new PayRollCollection( $this->findByTrackingStmt->fetchAll(), $this );
+    }
+	
+	function deleteByTracking($values ){	
+        $this->deleteByTrackingStmt->execute( $values );
+        return true;
     }
 		
 }
