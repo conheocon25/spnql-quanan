@@ -64,11 +64,13 @@
 			
 			$Title = "CHẤM CÔNG";
 			$Navigation = array();
+			$URLReset = "/payroll/".$IdTrack."/reset";
 			
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------						
 			$request->setProperty('Title', 		$Title);
+			$request->setProperty('URLReset', 	$URLReset);
 			$request->setObject('TrackAll', 	$TrackAll);
 			$request->setObject('EmployeeAll', 	$EmployeeAll);
 			$request->setObject('Track', 		$Track);

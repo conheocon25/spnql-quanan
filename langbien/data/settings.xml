@@ -92,6 +92,7 @@
 		<!-- PAYROLL			 															-->
 		<!-- ============================================================================== -->		
 		<command name="PayRoll"><view>PayRoll</view></command>
+		<command name="PayRollReset"><view>PayRollReset</view></command>
 		<command name="PayRollPrint"><view>PayRollPrint</view></command>		
 		
 		<!-- ============================================================================== -->
