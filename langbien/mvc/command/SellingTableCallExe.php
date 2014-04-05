@@ -76,6 +76,7 @@
 				);
 				$mSD->insert($SD);								
 			}else{
+				$SD = $mSD->find($IdSD);
 				/*
 				$SD = $mSD->find($IdSD);
 				

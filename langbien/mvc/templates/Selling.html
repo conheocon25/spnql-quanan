@@ -14,8 +14,7 @@
 		<link rel="stylesheet" tal:attributes="href php:'/mvc/templates/theme/cms/css/unicorn.' . @\MVC\Base\SessionRegistry::instance()->getCurrentTheme() . '.css'" class="skin-color"/>
 	</head>
 	<body>
-		<div metal:use-macro="mAdmin.xhtml/Header"/>
-		<div metal:use-macro="mAdmin.xhtml/StyleTools"/>
+		<div metal:use-macro="mAdmin.xhtml/Header"/>		
 		<div id="sidebar">
 			<ul>
 				<li>
@@ -45,10 +44,7 @@
 					<div id="TableAll"/>
 					<div class="widget-box">
 						<div class="controls">
-							<input id="SearchName" type="text" placeholder="Nhập tìm món ăn" style="width:55%;"/>
-							<a href="#DialogInsCourse" class="btn" data-toggle="modal" tal:attributes="data-id-category Config/getValue">
-								<i class="glyphicons-plus" />
-							</a>
+							<input id="SearchName" type="text" placeholder="Nhập tìm món ăn" style="width:75%;"/>							
 							<a class="btn RemoveCourseSearch">
 								<i class="glyphicons-circle_remove" />
 							</a>							
@@ -87,7 +83,7 @@
 							<div class="accordion-heading">
 								<div class="widget-title">
 									<a data-parent="#collapse-group" tal:attributes="href php:'#'.Category->getIdString();" data-toggle="collapse">
-										<span class="icon"><i class="glyphicons-fast_food"></i></span><h5 tal:content="Category/getName"/>
+										<span class="icon"><i class="glyphicons-fast_food"></i></span><h5 tal:content="Category/getNameReduce"/>
 									</a>
 								</div>
 							</div>

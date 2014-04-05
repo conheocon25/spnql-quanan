@@ -141,7 +141,10 @@ class TrackingDaily extends Object{
 		return $N->formatCurrency();
 	}
 	function getSellingByDomainPercent($IdDomain){
-		return round(($this->getSellingByDomainValue($IdDomain) / $this->getSelling())*100,0)." %";
+		$SS = $this->getSelling();
+		if (!isset($SS) || $SS ==0)
+			return 0;
+		return round(($this->getSellingByDomainValue($IdDomain) / $SS)*100,0)." %";
 	}
 	
 	//DOANH SỐ THEO DANH MỤC MÓN
@@ -155,7 +158,10 @@ class TrackingDaily extends Object{
 		return $N->formatCurrency();
 	}
 	function getSellingByCategoryPercent($IdCategory){
-		return round(($this->getSellingByCategoryValue($IdCategory) / $this->getSelling())*100,0)." %";
+		$SS = $this->getSelling();
+		if (!isset($SS) || $SS ==0)
+			return 0;
+		return round(($this->getSellingByCategoryValue($IdCategory) / $SS )*100,0)." %";
 	}
 	
 	//-------------------------------------------------------------------------------

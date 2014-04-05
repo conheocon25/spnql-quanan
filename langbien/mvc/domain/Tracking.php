@@ -21,8 +21,8 @@ class Tracking extends Object{
 									
 			parent::__construct( $Id );
 	}
-    
-	function getId() {return $this->Id;}		
+    function setId($Id) {return $this->Id = $Id;}
+	function getId() {return $this->Id;}
 	function getName(){$Name = 'THÁNG '.\date("m/Y", strtotime($this->getDateStart()));return $Name;}
 	
     function setDateStart( $DateStart ) {$this->DateStart = $DateStart;$this->markDirty();}   
