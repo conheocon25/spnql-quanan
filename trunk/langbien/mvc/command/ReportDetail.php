@@ -26,11 +26,8 @@
 			$TrackingAll 	= $mTracking->findAll();
 			$ConfigName 	= $mConfig->findByName("NAME");
 			
-			$TDAll = $Tracking->getDailyAll();
-			if ($TDAll->count()==0){
-				$Tracking->generateDaily();
-			}
-			
+			$TDAll 			= $Tracking->getDailyAll();
+						
 			$ValueSelling 	= 0;
 			$ValueImport 	= 0;
 			$ValueStore 	= 0;
