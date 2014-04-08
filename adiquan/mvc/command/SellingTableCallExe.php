@@ -18,15 +18,13 @@
 			//-------------------------------------------------------------
 			//MAPPER DỮ LIỆU
 			//-------------------------------------------------------------
-			$mTable 	= new \MVC\Mapper\Table();
-			$mTableLog 	= new \MVC\Mapper\TableLog();
+			$mTable 	= new \MVC\Mapper\Table();			
 			$mCategory 	= new \MVC\Mapper\Category();
 			$mCourse 	= new \MVC\Mapper\Course();
 			$mSession 	= new \MVC\Mapper\Session();
 			$mEmployee 	= new \MVC\Mapper\Employee();
 			$mSD 		= new \MVC\Mapper\SessionDetail();
-			$mCL 		= new \MVC\Mapper\CourseLog();
-						
+									
 			//-------------------------------------------------------------
 			//XỬ LÝ CHÍNH
 			//-------------------------------------------------------------			
@@ -60,15 +58,7 @@
 					0						//Payment
 				);
 				$IdSession = $mSession->insert($Session);
-				
-				$Log = new \MVC\Domain\TableLog(
-					null,
-					@\MVC\Base\SessionRegistry::getCurrentIdUser(),
-					$Session->getIdTable(),
-					date('Y-m-d H:i:s'),
-					"Tạo mới giao dịch"
-				);
-				$mTableLog->insert($Log);
+								
 			}
 			$IdSession = $Session->getId();
 						
@@ -84,49 +74,17 @@
 					$Course->getPrice1(),
 					1
 				);
-				$mSD->insert($SD);
-				
-				//Thêm nhật kí gọi món
-				if ($SD->getCourse()->getPrepare()>0){
-					$CL = new \MVC\Domain\CourseLog(
-						null,
-						$IdTable,
-						$IdCourse,
-						\date('Y-m-d H:i:s'),	//Ngày giờ hiện hành
-						1,						//Số lượng
-						0						//Mới gọi món
-					);
-					$mCL->insert($CL);
-				}
-			}else{				
+				$mSD->insert($SD);								
+			}else{
+				$SD = $mSD->find($IdSD);
+				/*
 				$SD = $mSD->find($IdSD);
 				
 				$Count = $SD->getCount() + $Delta;
 				$SD->setCount($Count);
 				$mSD->update($SD);
-				
-				
-				//Thêm nhật kí gọi món
-				if ($SD->getCourse()->getPrepare()>0){
-					$CL = new \MVC\Domain\CourseLog(
-						null,
-						$IdTable,
-						$SD->getIdCourse(),					
-						\date('Y-m-d H:i:s'),
-						$Delta,					//Số lượng gọi
-						0						//Mới gọi món
-					);
-					$mCL->insert($CL);
-				}
-			}
-			$Log = new \MVC\Domain\TableLog(
-				null,
-				@\MVC\Base\SessionRegistry::getCurrentIdUser(),
-				$Session->getIdTable(),
-				date('Y-m-d H:i:s'),
-				"Cập nhật món ".$SD->getCourse()->getName()." ".$Count
-			);
-			$mTableLog->insert($Log);
+				*/								
+			}			
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------												
