@@ -1,5 +1,5 @@
 <?php	
 	require_once("mvc/base/Viewer.php");
 	$Viewer = new Viewer("mvc/templates/ReportDailySellingByCategory.html");
-	echo $Viewer->pdfReceipt1();
+	echo $Viewer->html();
 ?>

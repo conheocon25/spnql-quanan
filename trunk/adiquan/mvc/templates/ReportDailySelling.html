@@ -37,17 +37,17 @@
 											<td align="left"><span tal:content="Session/getTable/getName"/></td>
 											<td align="left"><span tal:content="Session/getCustomer/getName"/></td>											
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==1"  href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt Session/getURLPrint">
+												<a tal:condition="php:Session->getStatus()==1"  class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>	
 											</td>
 											<td align="right">
-												<a tal:condition="Session/checkDel"  href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt Session/getURLPrint1">
+												<a tal:condition="Session/checkDel" class="Ticket" tal:attributes="alt Session/getURLPrint1">
 													Xem
 												</a>
 											</td>
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==2"  href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt Session/getURLPrint">
+												<a tal:condition="php:Session->getStatus()==2" class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>
 											</td>											
@@ -85,17 +85,17 @@
 											<td align="left"><span tal:content="Session/getTable/getName"/></td>
 											<td align="left"><span tal:content="Session/getCustomer/getName"/></td>											
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==1"  href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt Session/getURLPrint">
+												<a tal:condition="php:Session->getStatus()==1"  class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>	
 											</td>
 											<td align="right">
-												<a tal:condition="Session/checkDel"  href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt Session/getURLPrint1">
+												<a tal:condition="Session/checkDel"  class="Ticket" tal:attributes="alt Session/getURLPrint1">
 													Xem
 												</a>
 											</td>
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==2"  href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt Session/getURLPrint">
+												<a tal:condition="php:Session->getStatus()==2"  class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>
 											</td>											
@@ -130,17 +130,17 @@
 											<td align="left"><span tal:content="Session/getTable/getName"/></td>
 											<td align="left"><span tal:content="Session/getCustomer/getName"/></td>											
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==1"  href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt Session/getURLPrint">
+												<a tal:condition="php:Session->getStatus()==1"  class="Ticket" href="#" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>	
 											</td>
 											<td align="right">
-												<a tal:condition="Session/checkDel"  href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt Session/getURLPrint1">
+												<a tal:condition="Session/checkDel" class="Ticket" tal:attributes="alt Session/getURLPrint1">
 													Xem
 												</a>
 											</td>
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==2"  href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt Session/getURLPrint">
+												<a tal:condition="php:Session->getStatus()==2"  class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>
 											</td>											
@@ -156,52 +156,27 @@
 							</div>
 						</div>
 						<div class="widget-box">
-							<a href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt TD/getURLReportSellingByCategory">
+							<a class="Ticket" tal:attributes="alt TD/getURLReportSellingByCategory">
 								<h3>XEM TỔNG KẾT DOANH SỐ THEO DANH MỤC MÓN</h3>
 							</a>
-							<a href="#DialogPreview" data-toggle="modal" class="ReportPreview" tal:attributes="alt TD/getURLReportSellingByDomain">
+							<a class="Ticket" tal:attributes="alt TD/getURLReportSellingByDomain">
 								<h3>XEM TỔNG KẾT DOANH SỐ THEO KHU VỰC</h3>
 							</a>							
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- DIALOG PREVIEW	-->
-		<div id="DialogPreview" class="modal fade">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header"><h3><i class="glyphicons-print modal-icon"/>XEM BÁO CÁO</h3></div>
-					<div class="form-horizontal">
-						<div class="form-group">
-							<div id="DocPreview" />
-						</div>
-						<div class="modal-footer">
-							<button id="ButtonDocPreview" data-dismiss="modal" class="btn btn-default btn-small"><i class="glyphicons-undo"/> Đóng lại</button>
-						</div>									
-					</div>
-				</div>
-			</div>
-		</div>
+		</div>		
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
-		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>
-		<script>
-			$(".ReportPreview").click(function(){
-				var URL = $(this).attr('alt');
-				//alert(URL);				
-				var mPDF = new PDFObject({ 
-					url: URL,				
-					height: "500px",
-					pdfOpenParams:{
-						view: 'Fit', 
-						toolbar: '1', 
-						statusbar: '1', 
-						messages: '1',
-						navpanes: '1' 
-					}				
-				}).embed("DocPreview");						
-				
-			});
-		</script>
+		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>	
+		<script type="text/javascript">
+		/*<![CDATA[*/
+			$(".Ticket").click(function(){
+				var url = $(this).attr('alt');
+				var thePopup = window.open( url, "In Phiếu", "menubar=0,location=0,height=700,width=700" );
+				thePopup.print();
+			});	
+		/*]]>*/
+		</script>	
 	</body>
 </html>

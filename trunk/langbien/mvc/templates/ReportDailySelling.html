@@ -37,17 +37,17 @@
 											<td align="left"><span tal:content="Session/getTable/getName"/></td>
 											<td align="left"><span tal:content="Session/getCustomer/getName"/></td>											
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==1"  tal:attributes="href Session/getURLPrint" target="blank">
+												<a tal:condition="php:Session->getStatus()==1"  class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>	
 											</td>
 											<td align="right">
-												<a tal:condition="Session/checkDel"  tal:attributes="href Session/getURLPrint1" target="blank">
+												<a tal:condition="Session/checkDel" class="Ticket" tal:attributes="alt Session/getURLPrint1">
 													Xem
 												</a>
 											</td>
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==2"  tal:attributes="href Session/getURLPrint" target="blank">
+												<a tal:condition="php:Session->getStatus()==2" class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>
 											</td>											
@@ -85,17 +85,17 @@
 											<td align="left"><span tal:content="Session/getTable/getName"/></td>
 											<td align="left"><span tal:content="Session/getCustomer/getName"/></td>											
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==1"  tal:attributes="href Session/getURLPrint" target="blank">
+												<a tal:condition="php:Session->getStatus()==1"  class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>	
 											</td>
 											<td align="right">
-												<a tal:condition="Session/checkDel"  tal:attributes="href Session/getURLPrint1" target="blank">
+												<a tal:condition="Session/checkDel"  class="Ticket" tal:attributes="alt Session/getURLPrint1">
 													Xem
 												</a>
 											</td>
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==2"  tal:attributes="href Session/getURLPrint" target="blank">
+												<a tal:condition="php:Session->getStatus()==2"  class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>
 											</td>											
@@ -130,17 +130,17 @@
 											<td align="left"><span tal:content="Session/getTable/getName"/></td>
 											<td align="left"><span tal:content="Session/getCustomer/getName"/></td>											
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==1"  target="blank" tal:attributes="href Session/getURLPrint">
+												<a tal:condition="php:Session->getStatus()==1"  class="Ticket" href="#" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>	
 											</td>
 											<td align="right">
-												<a tal:condition="Session/checkDel"  target="blank" tal:attributes="href Session/getURLPrint1">
+												<a tal:condition="Session/checkDel" class="Ticket" tal:attributes="alt Session/getURLPrint1">
 													Xem
 												</a>
 											</td>
 											<td align="right">
-												<a tal:condition="php:Session->getStatus()==2"  target="blank" tal:attributes="href Session/getURLPrint">
+												<a tal:condition="php:Session->getStatus()==2"  class="Ticket" tal:attributes="alt Session/getURLPrint">
 													<span tal:content="Session/getValuePrint"/>
 												</a>
 											</td>											
@@ -156,10 +156,10 @@
 							</div>
 						</div>
 						<div class="widget-box">
-							<a tal:attributes="href TD/getURLReportSellingByCategory" target="blank">
+							<a class="Ticket" tal:attributes="alt TD/getURLReportSellingByCategory">
 								<h3>XEM TỔNG KẾT DOANH SỐ THEO DANH MỤC MÓN</h3>
 							</a>
-							<a tal:attributes="href TD/getURLReportSellingByDomain" target="blank">
+							<a class="Ticket" tal:attributes="alt TD/getURLReportSellingByDomain">
 								<h3>XEM TỔNG KẾT DOANH SỐ THEO KHU VỰC</h3>
 							</a>							
 						</div>
@@ -168,6 +168,15 @@
 			</div>
 		</div>		
 		<div metal:use-macro="mAdmin.xhtml/Footer"/>
-		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>		
+		<div metal:use-macro="mAdmin.xhtml/IncludeJS"/>	
+		<script type="text/javascript">
+		/*<![CDATA[*/
+			$(".Ticket").click(function(){
+				var url = $(this).attr('alt');
+				var thePopup = window.open( url, "In Phiếu", "menubar=0,location=0,height=700,width=700" );
+				thePopup.print();
+			});	
+		/*]]>*/
+		</script>	
 	</body>
 </html>
