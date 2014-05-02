@@ -55,6 +55,7 @@
 														name 		Detail/getCourse/getName;
 														count 		Detail/getCount;
 														price 		Detail/getPrice;
+														idemployee	Detail/getIdEmployee;
 										" 
 										tal:content="Detail/getCourse/getName"/>
 									</td>
@@ -120,6 +121,16 @@
 										<label class="control-label">Đơn giá</label>
 										<div class="controls">
 											<input id="Price1" name="Price1" type="text" class="form-control input-small"/>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Nhân viên tặng</label>
+										<div class="controls">
+											<select name="IdEmployee1" id="IdEmployee1" style="width:80%;" class="form-control">
+												<option tal:repeat="Employee EmployeeAll" tal:attributes="value Employee/getId;selected php:Session->getIdEmployee()==Employee->getId()?true:false">
+													<span tal:content="Employee/getName" />
+												</option>
+											</select>
 										</div>
 									</div>
 									<div class="form-actions">										
@@ -468,6 +479,7 @@
 				$('#Name1').attr('value', 		$(this).attr('name')		);
 				$('#Count1').attr('value', 		$(this).attr('count')		);
 				$('#Price1').attr('value', 		$(this).attr('price')		);
+				$('#IdEmployee1').val( 			$(this).attr('idemployee')	);
 			});
 			
 			//-----------------------------------------------------------------------------------
@@ -521,6 +533,7 @@
 					Data[3] = $('#Count1').val();
 					Data[4] = $('#Price1').val();
 					Data[5] = 1;
+					Data[6] = $('#IdEmployee1').val();
 					
 					$("#DialogEdit").modal('hide');
 										

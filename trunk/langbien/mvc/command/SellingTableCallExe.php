@@ -72,7 +72,8 @@
 					$IdCourse, 
 					1,
 					$Course->getPrice1(),
-					1
+					1,
+					0
 				);
 				$mSD->insert($SD);								
 			}else{

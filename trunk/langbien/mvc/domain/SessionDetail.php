@@ -11,14 +11,16 @@ class SessionDetail extends Object{
 	private $Count;	
 	private $Price;
 	private $Enable;
+	private $IdEmployee;
 	
-    function __construct( $Id=null, $IdSession=null, $IdCourse=null, $Count=null, $Price=null, $Enable=null) {
+    function __construct( $Id=null, $IdSession=null, $IdCourse=null, $Count=null, $Price=null, $Enable=null, $IdEmployee=null) {
         $this->Id 			= $Id;
 		$this->IdSession 	= $IdSession;
 		$this->IdCourse 	= $IdCourse;
 		$this->Count 		= $Count;		
 		$this->Price 		= $Price;
 		$this->Enable 		= $Enable;
+		$this->IdEmployee 	= $IdEmployee;
         parent::__construct( $Id );
     }
 	
@@ -56,6 +58,14 @@ class SessionDetail extends Object{
 	function setEnable( $Enable){$this->Enable = $Enable;}
 	function getEnable( ) 		{return $this->Enable;}
 	
+	function setIdEmployee( $IdEmployee){$this->IdEmployee = $IdEmployee;}
+	function getIdEmployee( ){return $this->IdEmployee;}
+	function getEmployee( ){
+		$mEmployee = new \MVC\Mapper\Employee();
+		$Employee = $mEmployee->find($this->IdEmployee);
+		return $Employee;
+	}
+	
 	function getValue( ) {return $this->Price*$this->Count*$this->Enable;}
 	function getValuePrint( ) {$num = new Number($this->getValue());return $num->formatCurrency();}
 	
@@ -71,7 +81,8 @@ class SessionDetail extends Object{
 			'Name'			=> $this->getCourse()->getName(),
 			'Count'			=> $this->getCount(),			
 			'Price'			=> $this->getPrice(),
-			'Enable'		=> $this->getEnable()
+			'Enable'		=> $this->getEnable(),
+			'IdEmployee'	=> $this->getIdEmployee()
 		);
 		return json_encode($json);
 	}
@@ -82,6 +93,7 @@ class SessionDetail extends Object{
 		$this->Count			= $Data[3];
 		$this->Price			= $Data[4];
 		$this->Enable			= $Data[5];
+		$this->IdEmployee		= $Data[6];
     }
 	
 	//-------------------------------------------------------------------------------
