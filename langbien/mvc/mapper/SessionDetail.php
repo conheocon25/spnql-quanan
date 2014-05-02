@@ -13,12 +13,12 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 		
 		$selectAllStmt = sprintf("select * from %s", $tblSessionDetail);
 		$selectStmt = sprintf("select * from %s where id=?", $tblSessionDetail);
-		$updateStmt = sprintf("update %s set idsession=?, idcourse=?, count=?, price=?, `enable`=? where id=?", $tblSessionDetail);
-		$insertStmt = sprintf("insert into %s (idsession, idcourse, count, price, `enable`) values(?, ?, ?, ?, ?)", $tblSessionDetail);
+		$updateStmt = sprintf("update %s set idsession=?, idcourse=?, count=?, price=?, `enable`=?, idemployee=? where id=?", $tblSessionDetail);
+		$insertStmt = sprintf("insert into %s (idsession, idcourse, count, price, `enable`, idemployee) values(?, ?, ?, ?, ?, ?)", $tblSessionDetail);
 		$deleteStmt = sprintf("delete from %s where id=?", $tblSessionDetail);
 
 		$findByTop10Stmt = sprintf("
-			SELECT 1 as id, 2 as idsession, idcourse, sum(count) as count, 3 as price, 1 as `enable`
+			SELECT 1 as id, 2 as idsession, idcourse, sum(count) as count, 3 as price, 1 as `enable`, 1 as idemployee
 				FROM `tbl_session_detail`
 			GROUP BY idcourse
 			ORDER BY count DESC
@@ -35,7 +35,8 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 					count,
 					price,
 					N.order,
-					SD.enable
+					SD.enable,
+					SD.idemployee
 				FROM 
 					%s SD inner join (
 						SELECT 
@@ -59,7 +60,8 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 					count,
 					price,
 					N.order,
-					SD.enable
+					SD.enable,
+					SD.idemployee
 				FROM 
 					%s SD inner join (
 						SELECT 
@@ -83,7 +85,8 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 					count,
 					price,
 					N.order,
-					SD.enable
+					SD.enable,
+					SD.idemployee
 				FROM 
 					%s SD inner join (
 						SELECT 
@@ -219,7 +222,8 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 			$array['idcourse'], 
 			$array['count'], 			
 			$array['price'],
-			$array['enable']
+			$array['enable'],
+			$array['idemployee']
 		);
         return $obj;
     }
@@ -230,7 +234,8 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 			$object->getIdCourse(),
 			$object->getCount(),
 			$object->getPrice(),
-			$object->getEnable()
+			$object->getEnable(),
+			$object->getIdEmployee()
 		); 
         $this->insertStmt->execute( $values );
         $id = self::$PDO->lastInsertId();
@@ -243,6 +248,7 @@ class SessionDetail extends Mapper implements \MVC\Domain\UserFinder {
 			$object->getCount(),
 			$object->getPrice(),
 			$object->getEnable(),
+			$object->getIdEmployee(),
 			$object->getId()
 		);		
         $this->updateStmt->execute( $values );

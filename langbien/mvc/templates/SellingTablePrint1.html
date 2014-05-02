@@ -87,7 +87,7 @@
 		<tr tal:repeat="Detail Session/getDetails4" tal:condition="Session/getDetails4/count">
 			<td width="42%" align='left' tal:content="Detail/getCourse/getName" />
 			<td width="11%" align='right' tal:content="Detail/getCount" />
-			<td colspan="2" width="47%" align='left'>Quán tặng</td>
+			<td colspan="2" width="47%" align='left'><span tal:content="Detail/getEmployee/getName"/> tặng</td>
 		</tr>
 	</tbody>
 </table>	
@@ -188,8 +188,8 @@
 		</tr>
 		<tr tal:repeat="Detail Session/getDetails4" tal:condition="Session/getDetails4/count">
 			<td width="42%" align='left' tal:content="Detail/getCourse/getName" />
-			<td width="11%" align='right' tal:content="Detail/getCount" />
-			<td colspan="2" width="47%" align='left'>Quán tặng</td>
+			<td width="11%" align='right' tal:content="Detail/getCount" />			
+			<td colspan="2" width="47%" align='left'><span tal:content="Detail/getEmployee/getName"/> tặng</td>
 		</tr>
 	</tbody>
 </table>	

@@ -259,9 +259,12 @@ class Session extends Object{
 				$Sum2 += $SD->getValue();
 			}
 			$SDAll->next();
-		}		
-		$Value = $this->getSurtax() + (int)( ($Sum2 *(1.0 - $this->getDiscountPercent()/100.0) + $Sum1) /1000)*1000 - $this->getDiscountValue();
+		}
+		$Value = 	$this->getSurtax() + 					 
+					($Sum2 *(1.0 - $this->getDiscountPercent()/100.0) + $Sum1) - 
+					$this->getDiscountValue();
 		return $Value;
+		//return ;
 	}
 		
 	function getValuePrint(){$num = new Number($this->getValue());return $num->formatCurrency();}	
