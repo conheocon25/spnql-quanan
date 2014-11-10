@@ -50,6 +50,16 @@ class Category extends Object{
 		$this->Picture 	= $Data[2];
 		$this->Enable 	= $Data[3];
     }
+	
+	function toXML(){
+		$S = "
+		<object>
+			<id>".$this->getId()."</id>
+			<name>".$this->getName()."</name>
+		</object>
+		";
+		return $S;
+	}
 
 	//-------------------------------------------------------------------------------
 	//GET LISTs
