@@ -131,6 +131,7 @@ class Session extends Mapper implements \MVC\Domain\SessionFinder {
 		, $tblSession, $tblSessionDetail);
 		
 		$findLastStmt = sprintf("select * from %s where idtable=? and status<1 order by datetime desc limit 1", $tblSession);
+		$findByDateStmt 	= sprintf("select * from %s where date(`datetime`)=date(?) order by id LIMIT 3", $tblSession);
 				
 		$this->selectAllStmt = self::$PDO->prepare($selectAllStmt);
         $this->selectStmt = self::$PDO->prepare($selectStmt);
@@ -151,6 +152,7 @@ class Session extends Mapper implements \MVC\Domain\SessionFinder {
 		
 		$this->evalTrackingStmt = self::$PDO->prepare($evalTrackingStmt);
 		$this->findLastStmt = self::$PDO->prepare($findLastStmt);																			
+		$this->findByDateStmt = self::$PDO->prepare($findByDateStmt);																			
 		
     } 
     function getCollection( array $raw ) {
@@ -293,6 +295,11 @@ class Session extends Mapper implements \MVC\Domain\SessionFinder {
 		$this->findByTablePageStmt->bindValue(':max', (int)($values[2]), \PDO::PARAM_INT);		
 		$this->findByTablePageStmt->execute();
         return new SessionCollection( $this->findByTablePageStmt->fetchAll(), $this );
+    }
+	
+	function findByDate($values ){
+        $this->findByDateStmt->execute( $values );
+        return new SessionCollection( $this->findByDateStmt->fetchAll(), $this );
     }
 }
 ?>
