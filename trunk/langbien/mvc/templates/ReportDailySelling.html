@@ -31,7 +31,7 @@
 									</thead>
 									<tbody>
 										<tr tal:repeat="Session SessionAll">
-											<td align="center"><span tal:content="Session/getId"/></td>
+											<td align="center"><span tal:content="Session/getCode"/></td>
 											<td align="left"><span tal:content="Session/getDateTimePrint"/></td>
 											<td align="left"><span tal:content="Session/getUser/getName"/></td>
 											<td align="left"><span tal:content="Session/getTable/getName"/></td>

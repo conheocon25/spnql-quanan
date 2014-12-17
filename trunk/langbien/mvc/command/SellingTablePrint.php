@@ -31,6 +31,10 @@
 			$Session 	= $mSession->find($IdSession);
 			$Config 	= $mConfig->findByName("RECEIPT_VIRTUAL_DOUBLE");
 			
+			//Thanh toán đủ
+			$Session->setStatus(1);
+			$mSession->update($Session);
+			
 			//-------------------------------------------------------------
 			//THAM SỐ GỬI ĐI
 			//-------------------------------------------------------------									
