@@ -22,6 +22,7 @@ interface CategoryFinder  		extends Finder {}
 interface CourseFinder  		extends Finder {}
 interface CourseLogFinder  		extends Finder {}
 interface SupplierFinder 		extends Finder {}
+interface PrinterFinder 		extends Finder {}
 
 interface PaidSupplierFinder 	extends Finder {}
 interface PaidPayRollFinder 	extends Finder {}
